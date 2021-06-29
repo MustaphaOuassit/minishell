@@ -6,7 +6,7 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 13:16:12 by mouassit          #+#    #+#             */
-/*   Updated: 2021/06/29 18:29:22 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/06/29 19:23:28 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int main()
     while(1)
     {
         write(1,"-> mishell ",ft_strlen("-> mishell "));
-        get_next_line(1,&line);
+        get_next_line(0,&line);
     }
     return(0);
 }
