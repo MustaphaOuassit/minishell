@@ -6,7 +6,7 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 14:44:09 by mouassit          #+#    #+#             */
-/*   Updated: 2021/06/29 16:58:12 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/06/29 19:47:33 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include "./get_next_line/get_next_line.h"
-#include "./libft/libft.h"
+#include "./GET_NEXT_LINE/get_next_line.h"
+#include "./LIBFT/libft.h"
 
 #endif
