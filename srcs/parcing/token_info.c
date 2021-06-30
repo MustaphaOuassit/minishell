@@ -6,7 +6,7 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 09:07:58 by mouassit          #+#    #+#             */
-/*   Updated: 2021/06/30 17:11:25 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/06/30 20:11:14 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,37 @@ int     check_word(int indice , char *cmd)
     start = indice;
     if (cmd[indice] == ' ')
         return(indice++);
-    while((cmd[indice] != '\0') && (cmd[indice] != ' ') && (cmd[indice] != '\t') && (cmd[indice] != '|') && (cmd[indice] != '>'))
+    while((indice != (int)ft_strlen(cmd)) && (cmd[indice] != ' ') && (cmd[indice] != '\t') && (cmd[indice] != '|') && (cmd[indice] != '>'))
     {
-        indice++;
-        i++;   
-     }
-     if(i > 0)
-     {
-         str = (char *)malloc((i + 1) * sizeof(char));
-         while (start != indice)
-         {
-             str[j] = cmd[start];
-             start++;   
-             j++;
-         }
-         str[j] = '\0';
-         put_in_parcer(str,3);
-         free(str);
+        if(cmd[indice] == '"')
+        {
+            start = indice;
+            indice++;
+            while(indice != (int)ft_strlen(cmd))
+            {
+                if(cmd[indice] == '"')
+                    break;
+                indice++;
+                i++;
+            }
+            if(i > 0)
+            {
+                str = (char *)malloc((i + 1) * sizeof(char));
+                start++;
+                while (start != indice)
+                {
+                    str[j] = cmd[start];
+                    start++;   
+                    j++;
+                }
+                str[j] = '\0';
+                put_in_parcer(str,3);
+                free(str);
+            }
+            break;
+        }
+        else
+            indice++;
      }
      return(indice);   
 }
@@ -84,7 +98,7 @@ void    token_manipulation(int indice, char *cmd)
     {
         if(cmd[indice] == '|')
         {
-            put_in_parcer("|",0);  
+            put_in_parcer("|",0);
         }
         else if(cmd[indice] == '>')
             indice = check_arrow(indice,cmd);
