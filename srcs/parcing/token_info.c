@@ -6,7 +6,7 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 09:07:58 by mouassit          #+#    #+#             */
-/*   Updated: 2021/06/30 20:11:14 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/07/01 14:49:01 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,18 @@ int     check_word(int indice , char *cmd)
 {
     int i;
     char *str;
+    char *ptr;
     int j;
     int start;
+    int len;
+    int sword;
 
     i = 0;
     j = 0;
-    start = indice;
+    len = 0;
+    sword = indice;
+    ptr = NULL;
+    str = NULL;
     if (cmd[indice] == ' ')
         return(indice++);
     while((indice != (int)ft_strlen(cmd)) && (cmd[indice] != ' ') && (cmd[indice] != '\t') && (cmd[indice] != '|') && (cmd[indice] != '>'))
@@ -81,14 +87,35 @@ int     check_word(int indice , char *cmd)
                     j++;
                 }
                 str[j] = '\0';
-                put_in_parcer(str,3);
-                free(str);
             }
             break;
         }
         else
+        {
             indice++;
+            len = indice;   
+        }
      }
+     if(len > 0)
+     {
+         j = 0;
+         ptr = (char *)malloc((len + 1) * sizeof(char));
+         while (sword != len)
+         {
+             ptr[j] = cmd[sword];
+             sword++;
+             j++;
+         }
+         ptr[j] = '\0';
+     }
+     if(ptr && str)
+     {
+         printf("%s %s\n",ptr,str);
+     }
+     else if(ptr)
+        put_in_parcer(ptr,3);
+    else if(str)
+        put_in_parcer(str,3);
      return(indice);   
 }
 
