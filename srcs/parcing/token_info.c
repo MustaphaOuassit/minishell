@@ -6,7 +6,7 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 09:07:58 by mouassit          #+#    #+#             */
-/*   Updated: 2021/07/01 14:49:01 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/07/01 16:38:27 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,32 @@ int     check_word(int indice , char *cmd)
                     break;
                 indice++;
                 i++;
+                }
+            if(i > 0)
+            {
+                str = (char *)malloc((i + 1) * sizeof(char));
+                start++;
+                while (start != indice)
+                {
+                    str[j] = cmd[start];
+                    start++;   
+                    j++;
+                }
+                str[j] = '\0';
             }
+            break;
+        }
+        else if(cmd[indice] == '\'')
+        {
+            start = indice;
+            indice++;
+            while(indice != (int)ft_strlen(cmd))
+            {
+                if(cmd[indice] == '\'')
+                    break;
+                indice++;
+                i++;
+                }
             if(i > 0)
             {
                 str = (char *)malloc((i + 1) * sizeof(char));
@@ -109,13 +134,20 @@ int     check_word(int indice , char *cmd)
          ptr[j] = '\0';
      }
      if(ptr && str)
-     {
-         printf("%s %s\n",ptr,str);
-     }
+        put_in_parcer(ft_strjoin(ptr,str),3);
      else if(ptr)
         put_in_parcer(ptr,3);
     else if(str)
         put_in_parcer(str,3);
+    if(cmd[indice] && cmd[indice] != ' ' && cmd[indice] != '\t')
+    {
+        if(cmd[indice] == '|')
+        {
+            put_in_parcer("|",0);
+        }
+        else if(cmd[indice] == '>')
+            indice = check_arrow(indice,cmd);
+    }
      return(indice);   
 }
 
