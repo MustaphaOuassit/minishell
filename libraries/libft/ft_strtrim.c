@@ -57,7 +57,6 @@ char	*setdata(char *s1, int j, int start)
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	int		i;
-	int		j;
 	int		start;
 
 	if (s1 == NULL)
@@ -65,7 +64,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (set == NULL)
 		return (ft_strdup((char*)s1));
 	i = 0;
-	j = 0;
 	start = 0;
 	while (*(set + i) != '\0')
 	{

@@ -19,11 +19,9 @@ int		ft_separator(char str, char c)
 
 int		ft_count_words(char *str, char c)
 {
-	int		i;
 	int		in_word;
 	int		count;
 
-	i = 0;
 	in_word = 0;
 	count = 0;
 	if (!str)

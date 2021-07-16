@@ -15,7 +15,7 @@ NAME = minishell
 
 SRC = ./libraries/get_next_line/get_next_line.c \
 	  ./libraries/get_next_line/get_next_line_utils.c \
-      ./srcs/parcing/parcing.c \
+      ./srcs/parcing/parsing.c \
 	  ./srcs/parcing/token_info.c
 
 
