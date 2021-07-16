@@ -24,15 +24,15 @@ LIBFT = ./libraries/libft/libft.a
 all : $(NAME)
 
 $(NAME):
-	@make -C ./libraries/libft
+	@make -s -C ./libraries/libft
 	@gcc -Wall -Wextra -Werror -I . -fsanitize=address $(SRC) $(LIBFT) -D BUFFER_SIZE=1 -o $(NAME)
 
 
 clean:
-	@make -C ./libraries/libft clean
+	@make -s -C ./libraries/libft clean
 
 fclean: clean
-	@make -C ./libraries/libft fclean
+	@make -s -C ./libraries/libft fclean
 	@rm -rf $(NAME)
 
 re: fclean all
