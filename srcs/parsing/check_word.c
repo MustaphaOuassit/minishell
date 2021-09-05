@@ -6,7 +6,7 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 08:51:06 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/04 18:04:13 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/09/05 11:20:27 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,17 @@ int	add_to_string(char **str, int indice, char *cmd, int ele)
 	initial.start = indice - 1;
 	initial.i = 0;
 	initial.j = 0;
+	initial.t = 0;
+	ele = 0;
 	while (indice != (int)ft_strlen(cmd))
 	{
-		/*
-		if (cmd[indice] == ele)
+		if((initial.t == 1) && (cmd[indice] == ' '))
+			break;
+		if ((cmd[indice] == '"') || (cmd[indice] == '\''))
 		{
-			break ;
-		}*/
+			initial.t = 1;
+			initial.i--;
+		}
 		indice++;
 		initial.i++;
 	}
@@ -35,11 +39,12 @@ int	add_to_string(char **str, int indice, char *cmd, int ele)
 		initial.start++;
 		while (initial.start != indice)
 		{
-			if((initial.start < indice) && (cmd[initial.start] == ele))
-				initial.start++;
-			(*str)[initial.j] = cmd[initial.start];
+			if((cmd[initial.start] != '"') && (cmd[initial.start] != '\''))
+			{
+				(*str)[initial.j] = cmd[initial.start];
+				initial.j++;
+			}
 			initial.start++;
-			initial.j++;
 		}
 		(*str)[initial.j] = '\0';
 	}

@@ -6,7 +6,7 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 08:33:02 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/04 15:02:16 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/09/05 10:22:35 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ typedef struct s_initialisation
 {
 	int	i;
 	int	j;
+	int t;
 	int	len;
     int	sword;
 	int	start;
+	int end;
 }				t_initial;
 
 int				skipe_space(char *cmd);
