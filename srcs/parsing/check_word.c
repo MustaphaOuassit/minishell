@@ -6,45 +6,62 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 08:51:06 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/05 11:20:27 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/09/05 16:59:09 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libraries/parsing.h"
 
-int	add_to_string(char **str, int indice, char *cmd, int ele)
+int	add_to_string(char **str, int indice, char *cmd,char *ele)
 {
 	t_initial	initial;
-
+	int m;
+	
 	initial.start = indice - 1;
 	initial.i = 0;
 	initial.j = 0;
 	initial.t = 0;
-	ele = 0;
+	initial.r = 0;
+	m = 0;
 	while (indice != (int)ft_strlen(cmd))
 	{
-		if((initial.t == 1) && (cmd[indice] == ' '))
+		if((initial.t == 1) && ((cmd[indice] == ' ') || (cmd[indice] == '|')))
 			break;
-		if ((cmd[indice] == '"') || (cmd[indice] == '\''))
+		if (cmd[indice] == ele[0])
 		{
 			initial.t = 1;
+			initial.r = initial.i;
 			initial.i--;
 		}
 		indice++;
 		initial.i++;
 	}
+
 	if (initial.i > 0)
 	{
 		*str = (char *)malloc((initial.i + 1) * sizeof(char));
 		initial.start++;
 		while (initial.start != indice)
 		{
-			if((cmd[initial.start] != '"') && (cmd[initial.start] != '\''))
+			if(cmd[initial.start] != ele[0])
 			{
-				(*str)[initial.j] = cmd[initial.start];
-				initial.j++;
+				if(cmd[initial.start] == ele[1])
+				{
+					if(m < initial.r)
+					{
+						(*str)[initial.j] = cmd[initial.start];
+						initial.j++;
+					}
+				}
+				else
+					{
+						(*str)[initial.j] = cmd[initial.start];
+						initial.j++;
+					}
 			}
+			
 			initial.start++;
+			m++;
 		}
 		(*str)[initial.j] = '\0';
 	}
@@ -110,9 +127,9 @@ int	check_word(int indice, char *cmd)
 		if ((cmd[indice] == '"') || (cmd[indice] == '\''))
 		{
 			if (cmd[indice] == '"')
-				indice = add_to_string(&str, indice + 1, cmd, '"');
+				indice = add_to_string(&str, indice + 1, cmd,"\"'");
 			else if (cmd[indice] == '\'')
-				indice = add_to_string(&str, indice + 1, cmd, '\'');
+				indice = add_to_string(&str, indice + 1, cmd,"'\"");
 			break ;
 		}
 		else
