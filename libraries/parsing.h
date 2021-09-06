@@ -6,7 +6,7 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 08:33:02 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/05 13:50:24 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/09/06 14:52:44 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,17 @@ typedef struct s_initialisation
     int	sword;
 	int	start;
 	int r;
+	char **str;
 }				t_initial;
 
-int				skipe_space(char *cmd);
-void			token_manipulation(int indice, char *cmd);
+char	*g_cmd;
+char	*g_str;
+int		g_start;
+
+int				skipe_space();
+void			token_manipulation(int indice);
 void			put_in_parcer(char *value, int type);
-int				check_arrow(int indice, char *cmd);
-int				check_word(int indice, char *cmd);
+int				check_arrow(int indice);
+int				check_word(int indice);
 
 #endif
