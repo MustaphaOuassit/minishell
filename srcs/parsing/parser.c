@@ -6,7 +6,7 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 13:39:35 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/04 15:02:45 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/09/07 13:28:58 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	put_in_parcer(char *value, int type)
 {
-	printf("%s : %d\n",value,type);
+	printf("%s : %d\n", value, type);
 }

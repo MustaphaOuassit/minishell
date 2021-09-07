@@ -6,7 +6,7 @@
 #    By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/29 13:06:02 by mouassit          #+#    #+#              #
-#    Updated: 2021/09/04 16:25:53 by mouassit         ###   ########.fr        #
+#    Updated: 2021/09/07 13:20:52 by mouassit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = minishell
 
 SRC = ./libraries/get_next_line/get_next_line.c \
 	  ./libraries/get_next_line/get_next_line_utils.c \
+	  ./srcs/parsing/check_couts.c \
 	  ./srcs/parsing/check_word.c \
       ./srcs/parsing/parsing.c \
 	  ./srcs/parsing/lexer.c \

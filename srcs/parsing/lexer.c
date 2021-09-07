@@ -6,13 +6,13 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 16:25:28 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/06 14:15:54 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/09/07 13:26:50 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libraries/parsing.h"
 
-int	skipe_space()
+int	skipe_space(void)
 {
 	int	i;
 

@@ -6,92 +6,70 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 08:51:06 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/06 14:54:43 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/09/07 13:30:04 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libraries/parsing.h"
 
-int	fill_string(int start, int indice, int ele, int j)
+void	fill_string(int indice, int ele)
 {
-	start++;
-	while (start <= indice)
+	g_start++;
+	while (g_start <= indice)
 	{
-		if(g_cmd[start] == ele)
-			break;
+		if (g_cmd[g_start] == ele)
+			break ;
 		else
 		{
-			g_str[j] = g_cmd[start];
-			j++;
+			g_str[g_rmp] = g_cmd[g_start];
+			g_rmp++;
 		}
-		start++;	
+		g_start++;
 	}
-	return(start);
 }
 
-int	add_to_string(int indice,char *ele)
+int	check_character(int i, int indice, char *ele)
+{
+	if (i > 0)
+	{
+		g_str = (char *)malloc(((int)ft_strlen(g_cmd)) * sizeof(char));
+		while (g_start <= indice)
+		{
+			if (g_cmd[g_start] == ele[0])
+				fill_string(indice, ele[0]);
+			else if (g_cmd[g_start] == ele[1])
+				fill_string(indice, ele[1]);
+			else
+			{
+				g_str[g_rmp] = g_cmd[g_start];
+				g_rmp++;
+			}
+			g_start++;
+		}
+		g_str[g_rmp] = '\0';
+	}
+	return (indice);
+}
+
+int	add_to_string(int indice, char *ele)
 {
 	t_initial	initial;
-	int m;
-	
-	initial.start = indice - 1;
+
+	g_start = indice - 1;
 	initial.i = 0;
-	initial.j = 0;
+	g_rmp = 0;
 	initial.t = 0;
-	initial.r = 0;
-	m = 0;
 	while (indice != (int)ft_strlen(g_cmd))
 	{
-		if((initial.t == 1) && ((g_cmd[indice] == ' ') || (g_cmd[indice] == '|')))
-			break;
+		if ((initial.t == 1) && ((g_cmd[indice] == ' ')
+				|| (g_cmd[indice] == '|')))
+			break ;
 		if (g_cmd[indice] == ele[0])
 			initial.t = 1;
 		indice++;
 		initial.i++;
 	}
-
-	if(initial.i > 0)
-	{
-		g_str = (char *)malloc(((int)ft_strlen(g_cmd)) * sizeof(char));
-		while (initial.start <= indice)
-		{
-			if(g_cmd[initial.start] == ele[0])
-			{
-				//initial.start = fill_string(initial.start, indice,ele[0], initial.j);
-				
-				initial.start++;
-				while (initial.start <= indice)
-				{
-					if(g_cmd[initial.start] == ele[0])
-						break;
-					else
-					{
-						g_str[initial.j] = g_cmd[initial.start];
-						initial.j++;
-					}
-					initial.start++;	
-				}
-			}
-			if(g_cmd[initial.start] == ele[1])
-			{
-				initial.start++;
-				while (initial.start <= indice)
-				{
-					if(g_cmd[initial.start] == ele[1])
-						break;
-					else
-					{
-						g_str[initial.j] = g_cmd[initial.start];
-						initial.j++;
-					}
-					initial.start++;	
-				}
-			}
-			initial.start++;
-			
-		}
-		g_str[initial.j] = '\0';
-	}
+	indice = check_character(initial.i, indice, ele);
 	return (indice);
 }
 
@@ -115,28 +93,6 @@ int	check_type_word(char *ptr, int indice)
 	return (indice);
 }
 
-char	*continue_check(int len, int sword)
-{
-	int		j;
-	char	*ptr;
-
-	j = 0;
-	ptr = NULL;
-	if (len > 0)
-	{
-		j = 0;
-		ptr = (char *)malloc((len + 1) * sizeof(char));
-		while (sword != len)
-		{
-			ptr[j] = g_cmd[sword];
-			sword++;
-			j++;
-		}
-		ptr[j] = '\0';
-	}
-	return (ptr);
-}
-
 int	check_word(int indice)
 {
 	t_initial	initial;
@@ -152,10 +108,7 @@ int	check_word(int indice)
 	{
 		if ((g_cmd[indice] == '"') || (g_cmd[indice] == '\''))
 		{
-			if (g_cmd[indice] == '"')
-				indice = add_to_string(indice + 1,"\"'");
-			else if (g_cmd[indice] == '\'')
-				indice = add_to_string(indice + 1,"\"'");
+			indice = check_couts(indice);
 			break ;
 		}
 		else
