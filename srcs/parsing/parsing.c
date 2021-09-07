@@ -6,7 +6,7 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 13:16:12 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/07 13:28:43 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/09/07 14:53:45 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(void)
 		g_cmd = line;
 		indice_start = skipe_space();
 		token_manipulation(indice_start);
+		free(line);
 	}
 	return (0);
 }

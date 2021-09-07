@@ -6,7 +6,7 @@
 /*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 08:51:06 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/07 13:30:04 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/09/07 14:10:52 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	check_character(int i, int indice, char *ele)
 		}
 		g_str[g_rmp] = '\0';
 	}
+	free(g_str);
 	return (indice);
 }
 
@@ -90,6 +91,7 @@ int	check_type_word(char *ptr, int indice)
 		else if (g_cmd[indice] == '>')
 			indice = check_arrow(indice);
 	}
+	free(ptr);
 	return (indice);
 }
 
