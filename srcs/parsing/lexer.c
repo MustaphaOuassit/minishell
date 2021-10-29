@@ -45,13 +45,12 @@ void	token_manipulation(int indice)
 	while (indice <= (int)ft_strlen(g_cmd))
 	{
 		if (g_cmd[indice] == '|')
-		{
 			put_in_parcer("|", 0);
-		}
 		else if (g_cmd[indice] == '>')
 			indice = check_arrow(indice);
 		else
 			indice = check_word(indice);
 		indice++;
 	}
+	free(g_str);
 }

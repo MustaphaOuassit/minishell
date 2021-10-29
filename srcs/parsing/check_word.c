@@ -48,7 +48,6 @@ int	check_character(int i, int indice, char *ele)
 		}
 		g_str[g_rmp] = '\0';
 	}
-	free(g_str);
 	return (indice);
 }
 
