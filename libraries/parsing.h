@@ -33,13 +33,24 @@ char	*g_str;
 int		g_start;
 int		g_rmp;
 
+typedef		struct s_tokens{
+	char	*value;
+	int		type;
+	struct s_tokens *next;
+}		t_tokens;
+typedef		struct s_data{
+	char	**line_cmd;
+	char	**arguments;
+	struct s_data *next;
+}		t_data;
+
 int				skipe_space(void);
 void			token_manipulation(int indice);
-void			put_in_parcer(char *value, int type);
-int				check_arrow(int indice);
+int			put_in_parcer(t_tokens **head, char *value, int type);
+int				check_arrow(t_tokens **head, int indice);
 int				add_to_string(int indice, char *ele);
 int				check_couts(int indice);
 char			*continue_check(int len, int sword);
-int				check_word(int indice);
+int				check_word(t_tokens **head, int indice);
 
 #endif

@@ -26,31 +26,41 @@ int	skipe_space(void)
 	return (i);
 }
 
-int	check_arrow(int indice)
+int	check_arrow(t_tokens **head ,int indice)
 {
 	if (indice + 1 < (int)ft_strlen(g_cmd))
 	{
 		if (g_cmd[indice + 1] == '>')
 		{
-			put_in_parcer(">>", 2);
+			put_in_parcer(head,">>", 2);
 			return (indice + 1);
 		}
 	}
-	put_in_parcer(">", 1);
+	put_in_parcer(head, ">", 1);
 	return (indice);
 }
 
 void	token_manipulation(int indice)
 {
+	t_tokens	*head;
+
+	head = NULL;
 	while (indice <= (int)ft_strlen(g_cmd))
 	{
 		if (g_cmd[indice] == '|')
-			put_in_parcer("|", 0);
+			put_in_parcer(&head,"|", 0);
 		else if (g_cmd[indice] == '>')
-			indice = check_arrow(indice);
+			indice = check_arrow(&head,indice);
 		else
-			indice = check_word(indice);
+			indice = check_word(&head,indice);
 		indice++;
 	}
 	free(g_str);
+	printf("%s\n",(char *)head->value);
+	/*
+	while (head != NULL)
+	{
+		printf("%s : %d\n",head->value,head->type);
+		head = head->next;
+	}*/
 }

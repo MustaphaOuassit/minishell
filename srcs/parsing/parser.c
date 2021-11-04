@@ -11,8 +11,50 @@
 /* ************************************************************************** */
 
 #include "libraries/parsing.h"
-
-void	put_in_parcer(char *value, int type)
+/*
+int	ft_fill(t_tokens **head, t_tokens data)
 {
-	printf("%s : %d\n", value, type);
+	t_tokens *new_node = malloc(sizeof(t_tokens));
+	t_tokens *line;
+
+	 line = *head;
+	new_node->value = data.value;
+	new_node->type = data.type;
+	new_node->next = NULL;
+	if(*head == NULL)
+	{
+		*head = new_node;
+		return(0);
+	}
+
+	while (line->next != NULL)
+	{	
+		line = line->next;
+	}
+	line->next = new_node;
+return(0);
+}*/
+
+int	put_in_parcer(t_tokens **head, char *value, int type)
+{
+	//printf("%s\n",value);
+	t_tokens *new_node = malloc(sizeof(t_tokens));
+	t_tokens *line;
+
+	 line = *head;
+	new_node->value = value;
+	new_node->type = type;
+	new_node->next = NULL;
+	if(*head == NULL)
+	{
+		*head = new_node;
+		return(0);
+	}
+
+	while (line->next != NULL)
+	{	
+		line = line->next;
+	}
+	line->next = new_node;
+return(0);
 }

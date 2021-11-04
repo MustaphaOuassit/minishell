@@ -73,28 +73,26 @@ int	add_to_string(int indice, char *ele)
 	return (indice);
 }
 
-int	check_type_word(char *ptr, int indice)
+int	check_type_word(t_tokens **head, char *ptr, int indice)
 {
 	if (ptr && g_str)
-		put_in_parcer(ft_strjoin(ptr, g_str), 3);
+		put_in_parcer(head, ft_strjoin(ptr, g_str), 3);
 	else if (ptr)
-		put_in_parcer(ptr, 3);
+		put_in_parcer(head, ptr, 3);
 	else if (g_str)
-		put_in_parcer(g_str, 3);
+		put_in_parcer(head, g_str, 3);
 	if (g_cmd[indice] && g_cmd[indice] != ' ' && g_cmd[indice] != '\t')
 	{
 		if (g_cmd[indice] == '|')
-		{
-			put_in_parcer("|", 0);
-		}
+			put_in_parcer(head, "|", 0);
 		else if (g_cmd[indice] == '>')
-			indice = check_arrow(indice);
+			indice = check_arrow(head, indice);
 	}
 	free(ptr);
 	return (indice);
 }
 
-int	check_word(int indice)
+int	check_word(t_tokens **head, int indice)
 {
 	t_initial	initial;
 
@@ -118,7 +116,7 @@ int	check_word(int indice)
 			initial.len = indice;
 		}
 	}
-	indice = check_type_word(continue_check(initial.len,
+	indice = check_type_word(head,continue_check(initial.len,
 				initial.sword), indice);
 	return (indice);
 }
