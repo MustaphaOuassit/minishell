@@ -58,12 +58,8 @@ void    fill_data(t_tokens *data)
 {
 	char	**cmd;
 	int		i;
-	int		allocation;
 	int		j;
-	int tmp;
 
-	allocation = 0;
-	tmp = 0;
 	j = 0;
 	i = 0;
 	cmd = (char **)malloc(sizeof(char *) * g_toll + 1);
