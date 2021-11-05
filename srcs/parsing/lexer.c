@@ -56,11 +56,5 @@ void	token_manipulation(int indice)
 		indice++;
 	}
 	free(g_str);
-	printf("%s\n",(char *)head->value);
-	/*
-	while (head != NULL)
-	{
-		printf("%s : %d\n",head->value,head->type);
-		head = head->next;
-	}*/
+	fill_data(head);
 }

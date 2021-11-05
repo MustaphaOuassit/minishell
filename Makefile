@@ -28,7 +28,7 @@ all : $(NAME)
 
 $(NAME):
 	@make -s -C ./libraries/libft
-	@gcc -Wall -Wextra -Werror -I .  $(SRC) $(LIBFT) -D BUFFER_SIZE=1 -o $(NAME)
+	@gcc -Wall -Wextra -Werror -fsanitize=address -g -I .  $(SRC) $(LIBFT) -D BUFFER_SIZE=1 -o $(NAME)
 
 
 clean:

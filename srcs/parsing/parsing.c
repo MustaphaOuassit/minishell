@@ -24,7 +24,8 @@ int	main(void)
 		g_cmd = line;
 		indice_start = skipe_space();
 		token_manipulation(indice_start);
+		g_toll = 0;
 		free(line);
-	}
+	} 
 	return (0);
 }

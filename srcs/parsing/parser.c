@@ -11,40 +11,19 @@
 /* ************************************************************************** */
 
 #include "libraries/parsing.h"
-/*
-int	ft_fill(t_tokens **head, t_tokens data)
-{
-	t_tokens *new_node = malloc(sizeof(t_tokens));
-	t_tokens *line;
-
-	 line = *head;
-	new_node->value = data.value;
-	new_node->type = data.type;
-	new_node->next = NULL;
-	if(*head == NULL)
-	{
-		*head = new_node;
-		return(0);
-	}
-
-	while (line->next != NULL)
-	{	
-		line = line->next;
-	}
-	line->next = new_node;
-return(0);
-}*/
 
 int	put_in_parcer(t_tokens **head, char *value, int type)
 {
-	//printf("%s\n",value);
+	char *tmp;
+
+	tmp = ft_strdup(value);
 	t_tokens *new_node = malloc(sizeof(t_tokens));
 	t_tokens *line;
-
 	 line = *head;
-	new_node->value = value;
+	new_node->value = tmp;
 	new_node->type = type;
 	new_node->next = NULL;
+	g_toll++;
 	if(*head == NULL)
 	{
 		*head = new_node;
@@ -57,4 +36,47 @@ int	put_in_parcer(t_tokens **head, char *value, int type)
 	}
 	line->next = new_node;
 return(0);
+}
+
+int		nbr_allocation(char **tmp, int start, int len)
+{
+	int	i;
+
+	i = 0;
+	while (start != len)
+	{
+		if(tmp[start][0] == '|')
+			break;
+		start++;
+		i++;
+	}
+	printf("%d\n",i);
+	return(start);
+}
+
+void    fill_data(t_tokens *data)
+{
+	char	**cmd;
+	int		i;
+	int		allocation;
+	int		j;
+	int tmp;
+
+	allocation = 0;
+	tmp = 0;
+	j = 0;
+	i = 0;
+	cmd = (char **)malloc(sizeof(char *) * g_toll + 1);
+	while (data != NULL)
+	{
+		cmd[i] = data->value;
+		data = data->next;
+		i++;
+	}
+	while(j <= i)
+	{
+		j = nbr_allocation(cmd,j,i);
+		j++;
+	}
+	
 }

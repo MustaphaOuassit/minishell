@@ -32,10 +32,12 @@ char	*g_cmd;
 char	*g_str;
 int		g_start;
 int		g_rmp;
+int		g_toll;
 
 typedef		struct s_tokens{
 	char	*value;
 	int		type;
+	int		toll;
 	struct s_tokens *next;
 }		t_tokens;
 typedef		struct s_data{
@@ -52,5 +54,6 @@ int				add_to_string(int indice, char *ele);
 int				check_couts(int indice);
 char			*continue_check(int len, int sword);
 int				check_word(t_tokens **head, int indice);
+void			fill_data(t_tokens *data);
 
 #endif
