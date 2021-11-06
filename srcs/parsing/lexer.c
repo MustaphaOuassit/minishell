@@ -43,8 +43,10 @@ int	check_arrow(t_tokens **head ,int indice)
 void	token_manipulation(int indice)
 {
 	t_tokens	*head;
+	t_tokens	*size;
 
 	head = NULL;
+	size = NULL;
 	while (indice <= (int)ft_strlen(g_cmd))
 	{
 		if (g_cmd[indice] == '|')

@@ -16,7 +16,7 @@ int	main(void)
 {
 	char	*line;
 	int		indice_start;
-
+	
 	while (1)
 	{
 		write(1, "-> minishell ", ft_strlen("-> minishell "));
@@ -26,6 +26,6 @@ int	main(void)
 		token_manipulation(indice_start);
 		g_toll = 0;
 		free(line);
-	} 
+	}
 	return (0);
 }

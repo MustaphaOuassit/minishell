@@ -19,7 +19,8 @@ SRC = ./libraries/get_next_line/get_next_line.c \
 	  ./srcs/parsing/check_word.c \
       ./srcs/parsing/parsing.c \
 	  ./srcs/parsing/lexer.c \
-	  ./srcs/parsing/parser.c
+	  ./srcs/parsing/parser.c \
+	  ./srcs/parsing/linkedlist.c
 
 
 LIBFT = ./libraries/libft/libft.a

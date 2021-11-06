@@ -37,7 +37,6 @@ int		g_toll;
 typedef		struct s_tokens{
 	char	*value;
 	int		type;
-	int		toll;
 	struct s_tokens *next;
 }		t_tokens;
 typedef		struct s_data{
@@ -48,12 +47,12 @@ typedef		struct s_data{
 
 int				skipe_space(void);
 void			token_manipulation(int indice);
-int			put_in_parcer(t_tokens **head, char *value, int type);
+int				put_in_parcer(t_tokens **head, char *value, int type);
 int				check_arrow(t_tokens **head, int indice);
 int				add_to_string(int indice, char *ele);
 int				check_couts(int indice);
 char			*continue_check(int len, int sword);
 int				check_word(t_tokens **head, int indice);
 void			fill_data(t_tokens *data);
-
+int		   		fill_linkdlist(t_data **head, char **data);
 #endif
