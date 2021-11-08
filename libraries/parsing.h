@@ -45,6 +45,11 @@ typedef		struct s_data{
 	struct s_data *next;
 }		t_data;
 
+typedef		struct s_fill{
+	char	*value;
+	int		type;
+}		t_fill;
+
 int				skipe_space(void);
 void			token_manipulation(int indice);
 int				put_in_parcer(t_tokens **head, char *value, int type);

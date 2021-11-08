@@ -100,8 +100,8 @@ int		add_to_linkdlist(char **cmd, int start, int len)
 			r = 0;
 			while (r != (int)ft_strlen(head->line_cmd[j]))
 			{
-				if(head->line_cmd[j][r] == '>')
-					printf("%s\n","yes");
+				// if(head->line_cmd[j][r] == '>')
+				// 	printf("%s\n","yes");
 				r++;
 			}
 			
@@ -114,22 +114,26 @@ int		add_to_linkdlist(char **cmd, int start, int len)
 
 void    fill_data(t_tokens *data)
 {
-	char	**cmd;
+	t_tokens	**cmd;
 	int		nb_list;
 	int		start;
 
 	start = 0;
 	nb_list = 0;
-	cmd = (char **)malloc(sizeof(char *) * g_toll + 1);
+	cmd = (t_tokens **)malloc(sizeof(t_tokens) * (g_toll + 1));
+	cmd[0] = (t_tokens *)malloc(sizeof(t_tokens) * ((int)ft_strlen("test") + 1));
+	cmd[0]->value = ft_strdup("test");
+	printf("%s\n",cmd[0]->value );
+	
 	while (data != NULL)
 	{
-		cmd[nb_list] = data->value;
 		data = data->next;
 		nb_list++;
 	}
+	/*
 	while(start <= nb_list)
 	{
 		start = add_to_linkdlist(cmd,start,nb_list);
 		start++;
-	}	
+	}*/
 }
