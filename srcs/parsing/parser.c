@@ -57,6 +57,29 @@ int	put_in_parcer(t_tokens **head, char *value, int type)
 return(0);
 }
 
+int		ft_check_red(char *str)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if(str[i] == '>')
+		{
+			if(str[i + 1])
+				j = j - 2;
+			else
+				j--;
+		}
+		i++;
+		j++;
+	}
+	return(j);
+}
+
+
 int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 {
 	int	nb_allocation;
@@ -67,7 +90,6 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 	int		j;
 	int		r;
 	//char	**redirection;
-	
 	head = NULL;
 	tmp = start;
 	i = 0;
@@ -82,7 +104,8 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 		nb_allocation++;
 	}
 	cmdata.line_cmd = (t_tokens **)malloc(sizeof(t_tokens) * (nb_allocation + 1));
-	//redirection = (char **)malloc(sizeof(char *) * len);
+	/*-----------------------------------------------------------------------------------*/
+	//cmdata.arguments = (char **)malloc(sizeof(char *) * (len + 1));
 	while (i != nb_allocation)
 	{
 		cmdata.line_cmd[i] = (t_tokens *)malloc(sizeof(t_tokens));
@@ -98,9 +121,12 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 		j = 0;
 		while (head->line_cmd[j])
 		{
+			ft_check_red(head->line_cmd[j]->value);
+			//argument[0] = malloc();
 			if(head->line_cmd[j]->type == 1)
 			{
-				
+				cmdata.redirection.file_name = head->line_cmd[j + 1]->value;
+				cmdata.redirection.type = head->line_cmd[j]->type;
 			}
 			j++;
 		}

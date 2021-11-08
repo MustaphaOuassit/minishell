@@ -40,9 +40,16 @@ typedef		struct s_tokens{
 	struct s_tokens *next;
 }		t_tokens;
 
+typedef		struct s_redirection{
+	char	*file_name;
+	int		type;
+	struct s_redirection *next;
+}			t_redirection;
+
 typedef		struct s_data{
 	t_tokens	**line_cmd;
 	char	**arguments;
+	t_redirection redirection;
 	struct s_data *next;
 }		t_data;
 
