@@ -57,11 +57,11 @@ int	put_in_parcer(t_tokens **head, char *value, int type)
 return(0);
 }
 
-int		add_to_linkdlist(char **cmd, int start, int len)
+int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 {
 	int	nb_allocation;
-	t_data	cmdata;
 	t_data	*head;
+	t_data  cmdata;
 	int		i;
 	int		tmp;
 	int		j;
@@ -76,35 +76,32 @@ int		add_to_linkdlist(char **cmd, int start, int len)
 	nb_allocation = 0;
 	while (start != len)
 	{
-		if(cmd[start][0] == '|')
+		if(cmd[start]->type == 0)
 			break;
 		start++;
 		nb_allocation++;
 	}
-	cmdata.line_cmd = (char **)malloc(sizeof(char *) * (nb_allocation + 1));
+	cmdata.line_cmd = (t_tokens **)malloc(sizeof(t_tokens) * (nb_allocation + 1));
 	//redirection = (char **)malloc(sizeof(char *) * len);
 	while (i != nb_allocation)
 	{
-		cmdata.line_cmd[i] = cmd[tmp];
+		cmdata.line_cmd[i] = (t_tokens *)malloc(sizeof(t_tokens));
+		cmdata.line_cmd[i]->value = ft_strdup(cmd[tmp]->value);
+		cmdata.line_cmd[i]->type = cmd[tmp]->type;
 		i++;
 		tmp++;
 	}
 	cmdata.line_cmd[i] = 0;
-	//printf("%s\n",cmdata.line_cmd[i]);
 	fill_linkdlist(&head,cmdata.line_cmd);
 	while (head != NULL)
 	{
 		j = 0;
 		while (head->line_cmd[j])
 		{
-			r = 0;
-			while (r != (int)ft_strlen(head->line_cmd[j]))
+			if(head->line_cmd[j]->type == 1)
 			{
-				// if(head->line_cmd[j][r] == '>')
-				// 	printf("%s\n","yes");
-				r++;
+				
 			}
-			
 			j++;
 		}
 		head = head->next;
@@ -121,19 +118,17 @@ void    fill_data(t_tokens *data)
 	start = 0;
 	nb_list = 0;
 	cmd = (t_tokens **)malloc(sizeof(t_tokens) * (g_toll + 1));
-	cmd[0] = (t_tokens *)malloc(sizeof(t_tokens) * ((int)ft_strlen("test") + 1));
-	cmd[0]->value = ft_strdup("test");
-	printf("%s\n",cmd[0]->value );
-	
 	while (data != NULL)
 	{
+		cmd[nb_list] = (t_tokens *)malloc(sizeof(t_tokens));
+		cmd[nb_list]->value = ft_strdup(data->value);
+		cmd[nb_list]->type = data->type;
 		data = data->next;
 		nb_list++;
 	}
-	/*
 	while(start <= nb_list)
 	{
 		start = add_to_linkdlist(cmd,start,nb_list);
 		start++;
-	}*/
+	}
 }

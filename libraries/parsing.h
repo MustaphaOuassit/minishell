@@ -39,16 +39,12 @@ typedef		struct s_tokens{
 	int		type;
 	struct s_tokens *next;
 }		t_tokens;
+
 typedef		struct s_data{
-	char	**line_cmd;
+	t_tokens	**line_cmd;
 	char	**arguments;
 	struct s_data *next;
 }		t_data;
-
-typedef		struct s_fill{
-	char	*value;
-	int		type;
-}		t_fill;
 
 int				skipe_space(void);
 void			token_manipulation(int indice);
@@ -59,5 +55,5 @@ int				check_couts(int indice);
 char			*continue_check(int len, int sword);
 int				check_word(t_tokens **head, int indice);
 void			fill_data(t_tokens *data);
-int		   		fill_linkdlist(t_data **head, char **data);
+int		   		fill_linkdlist(t_data **head, t_tokens **data);
 #endif

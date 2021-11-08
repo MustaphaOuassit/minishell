@@ -12,7 +12,7 @@
 
 #include "libraries/parsing.h"
 
-int    fill_linkdlist(t_data **head, char **data)
+int    fill_linkdlist(t_data **head, t_tokens **data)
 {
     t_data *new_node = malloc(sizeof(t_data));
 	t_data *line;
@@ -25,7 +25,6 @@ int    fill_linkdlist(t_data **head, char **data)
 		*head = new_node;
 		return(0);
 	}
-
 	while (line->next != NULL)
 		line = line->next;
 	line->next = new_node;
