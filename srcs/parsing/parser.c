@@ -80,7 +80,7 @@ int		ft_check_red(char *str)
 }
 
 
-int		add_to_linkdlist(t_tokens **cmd, int start, int len)
+int		add_to_linkdlist(t_tokens **cmd, int start, int len, char **arguments)
 {
 	int	nb_allocation;
 	t_data	*head;
@@ -122,60 +122,57 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 		{
 			if(head->line_cmd[j]->type != 1)
 			{
-				
+				arguments[i] = head->line_cmd[j]->value;
 				j++;
 			}
 			else
 			{
+				cmdata.redirection.type = head->line_cmd[j]->type;
 				if(j + 2 <= g_toll)
+				{
+					cmdata.redirection.file_name = head->line_cmd[j + 1]->value;
 					j = j + 2;
+				}
 				else
 					j = j + 1;
 			}
-			// tmp = 0;
-			// r = 0;
-			// ft_check_red(head->line_cmd[j]->value);
-			// if(head->line_cmd[j]->type != 1)
-			// 	arguments[i] = ft_strdup(head->line_cmd[j]->value);
-			// if(head->line_cmd[j]->type == 1)
-			// {
-			// 	if(head->line_cmd[j + 1])
-			// 	{
-			// 		cmdata.redirection.file_name = head->line_cmd[j + 1]->value;
-			// 		tmp = 1;
-			// 		r = 1;
-			// 		if(j + 2 < g_toll)
-			// 			j = j + 2;
-			// 		else
-			// 			j = j + 1;
-			// 		arguments[i + 1] = NULL;
-			// 	}
-			// 	cmdata.redirection.type = head->line_cmd[j]->type;
-			// 	arguments[i] = NULL;
-			// 	if(r == 1)
-			// 	{
-			// 		i = i + 2;
-			// 	}
-			// }
-			// if(tmp != 1)
-			// 	j++;
-			// if(r != 1)
-			// 	i++;
+			i++;
 		}
 		head = head->next;
 	}
 	return(start);
 }
-
+int		check_allocation(t_tokens **cmd)
+{
+	int i;
+	int count;
+	i = 0;
+	count = 0;
+	while (cmd[i])
+	{
+		count++;
+		if(cmd[i]->type == 1)
+		{
+			count = count - 2;
+		}
+		i++;
+	}
+	
+	return(count);
+}
 void    fill_data(t_tokens *data)
 {
 	t_tokens	**cmd;
 	t_data		cmdata;
 	int		nb_list;
 	int		start;
+	int		i;
+	int		l;
 
 	start = 0;
 	nb_list = 0;
+	i = 0;
+	l = 0;
 	cmd = (t_tokens **)malloc(sizeof(t_tokens) * (g_toll + 1));
 	cmdata.arguments = (char **)malloc(sizeof(char *) * (g_toll + 1));
 	while (data != NULL)
@@ -186,16 +183,18 @@ void    fill_data(t_tokens *data)
 		data = data->next;
 		nb_list++;
 	}
-	while(start <= nb_list)
-	{
-		start = add_to_linkdlist(cmd,start,nb_list);
-		start++;
-	}
-	// start = 0;
-	// cmdata.arguments[g_toll] = 0;
-	// while (start != g_toll)
+	cmd[nb_list] = 0;
+	l = check_allocation(cmd);
+	printf("%d\n",l);
+
+	// while(start <= nb_list)
 	// {
-	// 	printf("%s\n",cmdata.arguments[start]);
+	// 	start = add_to_linkdlist(cmd,start,nb_list,cmdata.arguments);
 	// 	start++;
+	// }
+	// while (cmdata.arguments[i])
+	// {
+	// 	printf("%s\n",cmdata.arguments[i]);
+	// 	i++;
 	// }
 }
