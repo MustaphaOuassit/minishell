@@ -102,6 +102,28 @@ int		check_allocation(t_tokens **cmd)
 	return(count);
 }
 
+int	lkd_redirection(t_redirection	**head,int type, char *file_name)
+{
+	t_redirection *new_node = malloc(sizeof(t_redirection));
+	t_redirection *line;
+
+	line = *head;
+	new_node->file_name = file_name;
+	new_node->type = type;
+	new_node->next = NULL;
+	if(*head == NULL)
+	{
+		*head = new_node;
+		return(0);
+	}
+	while (line->next != NULL)
+	{
+		line = line->next;
+	}
+	line->next = new_node;
+return(0);  
+}
+
 int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 {
 	int	nb_allocation;
@@ -112,8 +134,12 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 	int		tmp;
 	int		j;
 	int		l;
+	char	*file_name;
+	int		type;
 
 	head = NULL;
+	file_name = NULL;
+	type = 0;
 	tmp = start;
 	i = 0;
 	j = 0;
@@ -145,6 +171,7 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 		l = check_allocation(headtmp->line_cmd);
 		headtmp->arguments = (char **)malloc(sizeof(char *) * (l + 1));
 		headtmp->arguments[l] = 0;
+		headtmp->redirection = NULL;
 		while (headtmp->line_cmd[j])
 		{
 			if(headtmp->line_cmd[j]->type != 1)
@@ -155,34 +182,32 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 			}
 			else
 			{
-				headtmp->redirection.type = headtmp->line_cmd[j]->type;
+				type = headtmp->line_cmd[j]->type;
 				if(headtmp->line_cmd[j + 1])
 				{
-					headtmp->redirection.file_name = headtmp->line_cmd[j + 1]->value;
+					file_name = headtmp->line_cmd[j + 1]->value;
 					j = j + 2;
 				}
 				else
 					j = j + 1;
-				
-				
-				
+				lkd_redirection(&headtmp->redirection,type,file_name);
 			}
 		}
 		headtmp = headtmp->next;
 	}
 	while (head != NULL)
 	{
-		printf("-------------------------\n");
 		j = 0;
-		while (head->redirection)
+		printf("----------------------------\n");
+		while (head->redirection != NULL)
 		{
-			printf("%s\n",head->arguments[j]);
-			j++;
+			printf("%s\n",head->redirection->file_name);
+			printf("%d\n",head->redirection->type);
+			
+			head->redirection = head->redirection->next;
 		}
-		
 		head = head->next;
 	}
-	
 
 	return(start);
 }

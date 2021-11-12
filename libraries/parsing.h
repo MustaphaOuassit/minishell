@@ -49,7 +49,7 @@ typedef		struct s_redirection{
 typedef		struct s_data{
 	t_tokens	**line_cmd;
 	char	**arguments;
-	t_redirection redirection;
+	t_redirection *redirection;
 	struct s_data *next;
 }		t_data;
 
