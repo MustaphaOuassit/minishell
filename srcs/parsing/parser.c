@@ -79,22 +79,45 @@ int		ft_check_red(char *str)
 	return(j);
 }
 
+int		check_allocation(t_tokens **cmd)
+{
+	int i;
+	int count;
+	i = 0;
+	count = 0;
+	while (cmd[i])
+	{
+		count++;
+		if(cmd[i]->type == 1)
+		{
+			if(cmd[i + 1])
+				count = count - 2;
+			else
+				count--;
+		}
+		i++;
+	}
+	
+	
+	return(count);
+}
 
-int		add_to_linkdlist(t_tokens **cmd, int start, int len, char **arguments)
+int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 {
 	int	nb_allocation;
 	t_data	*head;
+	t_data	*headtmp;
 	t_data  cmdata;
 	int		i;
 	int		tmp;
 	int		j;
-	int		r;
+	int		l;
 
 	head = NULL;
 	tmp = start;
 	i = 0;
 	j = 0;
-	r = 0;
+	l = 0;
 	nb_allocation = 0;
 	while (start != len)
 	{
@@ -114,67 +137,66 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len, char **arguments)
 	}
 	cmdata.line_cmd[i] = 0;
 	fill_linkdlist(&head,cmdata.line_cmd);
-	i = 0;
-	while (head != NULL)
+	headtmp = head;
+	while (headtmp != NULL)
 	{
 		j = 0;
-		while (head->line_cmd[j])
+		i = 0;
+		l = check_allocation(headtmp->line_cmd);
+		headtmp->arguments = (char **)malloc(sizeof(char *) * (l + 1));
+		headtmp->arguments[l] = 0;
+		while (headtmp->line_cmd[j])
 		{
-			if(head->line_cmd[j]->type != 1)
+			if(headtmp->line_cmd[j]->type != 1)
 			{
-				arguments[i] = head->line_cmd[j]->value;
+				headtmp->arguments[i] = headtmp->line_cmd[j]->value;
+				i++;
 				j++;
 			}
 			else
 			{
-				cmdata.redirection.type = head->line_cmd[j]->type;
-				if(j + 2 <= g_toll)
+				headtmp->redirection.type = headtmp->line_cmd[j]->type;
+				if(headtmp->line_cmd[j + 1])
 				{
-					cmdata.redirection.file_name = head->line_cmd[j + 1]->value;
+					headtmp->redirection.file_name = headtmp->line_cmd[j + 1]->value;
 					j = j + 2;
 				}
 				else
 					j = j + 1;
+				
+				
+				
 			}
-			i++;
 		}
+		headtmp = headtmp->next;
+	}
+	while (head != NULL)
+	{
+		printf("-------------------------\n");
+		j = 0;
+		while (head->redirection)
+		{
+			printf("%s\n",head->arguments[j]);
+			j++;
+		}
+		
 		head = head->next;
 	}
-	return(start);
-}
-int		check_allocation(t_tokens **cmd)
-{
-	int i;
-	int count;
-	i = 0;
-	count = 0;
-	while (cmd[i])
-	{
-		count++;
-		if(cmd[i]->type == 1)
-		{
-			count = count - 2;
-		}
-		i++;
-	}
 	
-	return(count);
+
+	return(start);
 }
 void    fill_data(t_tokens *data)
 {
 	t_tokens	**cmd;
-	t_data		cmdata;
 	int		nb_list;
 	int		start;
 	int		i;
-	int		l;
 
 	start = 0;
 	nb_list = 0;
 	i = 0;
-	l = 0;
 	cmd = (t_tokens **)malloc(sizeof(t_tokens) * (g_toll + 1));
-	cmdata.arguments = (char **)malloc(sizeof(char *) * (g_toll + 1));
 	while (data != NULL)
 	{
 		cmd[nb_list] = (t_tokens *)malloc(sizeof(t_tokens));
@@ -184,17 +206,10 @@ void    fill_data(t_tokens *data)
 		nb_list++;
 	}
 	cmd[nb_list] = 0;
-	l = check_allocation(cmd);
-	printf("%d\n",l);
 
-	// while(start <= nb_list)
-	// {
-	// 	start = add_to_linkdlist(cmd,start,nb_list,cmdata.arguments);
-	// 	start++;
-	// }
-	// while (cmdata.arguments[i])
-	// {
-	// 	printf("%s\n",cmdata.arguments[i]);
-	// 	i++;
-	// }
+	while(start <= nb_list)
+	{
+		start = add_to_linkdlist(cmd,start,nb_list);
+		start++;
+	}
 }
