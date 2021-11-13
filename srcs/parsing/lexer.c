@@ -40,23 +40,44 @@ int	check_arrow(t_tokens **head ,int indice)
 	return (indice);
 }
 
+void		check_alloc(int indice,char *str,int *l)
+{
+	*l = 0;
+	while (str[indice])
+	{
+		if(str[indice] == ' ')
+			break;
+		*l = *l + 1;
+		indice++;
+	}
+}
+
 void	token_manipulation(int indice)
 {
 	t_tokens	*head;
 	t_tokens	*size;
+	char		*dollar;
+	int			l;
 
 	head = NULL;
 	size = NULL;
+	l = 0;
 	while (indice <= (int)ft_strlen(g_cmd))
 	{
 		if (g_cmd[indice] == '|')
 			put_in_parcer(&head,"|", 0);
 		else if (g_cmd[indice] == '>')
 			indice = check_arrow(&head,indice);
+		else if(g_cmd[indice] == '$')
+		{
+			check_alloc(indice,g_cmd,&l);
+			printf("%d\n",l);
+			dollar = (char *)malloc(sizeof(char) * (l + 1));
+		}
 		else
 			indice = check_word(&head,indice);
 		indice++;
 	}
 	free(g_str);
-	fill_data(head);
+	//fill_data(head);
 }
