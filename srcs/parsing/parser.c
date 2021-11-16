@@ -79,27 +79,38 @@ int		ft_check_red(char *str)
 	return(j);
 }
 
-int		check_allocation(t_tokens **cmd)
+char	*get_env(char *value)
+{
+	value[0] = 'd';
+	char *str = ft_strdup("ls -la");
+	return(str);
+}
+
+char	*check_allocation(t_tokens **cmd, int *l)
 {
 	int i;
-	int count;
+	char *dollar;
+
+	dollar = " ";
 	i = 0;
-	count = 0;
 	while (cmd[i])
 	{
-		count++;
+		*l= *l + 1;
 		if(cmd[i]->type == 1)
 		{
 			if(cmd[i + 1])
-				count = count - 2;
+				*l = *l - 2;
 			else
-				count--;
+				*l = *l - 1;
+		}
+		if(cmd[i]->type == 5)
+		{
+			*l = *l + (ft_strlen(get_env(cmd[i]->value)) - 1);
+			dollar = ft_strdup("ls - la");
 		}
 		i++;
 	}
-	
-	
-	return(count);
+	return(dollar);
 }
 
 int	lkd_redirection(t_redirection	**head,int type, char *file_name)
@@ -136,15 +147,19 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 	int		l;
 	char	*file_name;
 	int		type;
+	char	*dollar;
+	char	**space;
 
 	head = NULL;
 	file_name = NULL;
+	space = NULL;
 	type = 0;
 	tmp = start;
 	i = 0;
 	j = 0;
 	l = 0;
 	nb_allocation = 0;
+	dollar = NULL;
 	while (start != len)
 	{
 		if(cmd[start]->type == 0)
@@ -168,44 +183,67 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 	{
 		j = 0;
 		i = 0;
-		l = check_allocation(headtmp->line_cmd);
+		dollar = ft_strdup(check_allocation(headtmp->line_cmd,&l));
 		headtmp->arguments = (char **)malloc(sizeof(char *) * (l + 1));
-		headtmp->arguments[l] = 0;
 		headtmp->redirection = NULL;
 		while (headtmp->line_cmd[j])
 		{
-			if(headtmp->line_cmd[j]->type != 1)
+			if(headtmp->line_cmd[j]->type == 5)
 			{
-				headtmp->arguments[i] = headtmp->line_cmd[j]->value;
-				i++;
+				l = 0;
+				space = ft_split(dollar,' ');
+				while(space[l])
+				{
+					headtmp->arguments[i] = space[l];
+					i++;
+					l++;
+				}
 				j++;
 			}
 			else
 			{
-				type = headtmp->line_cmd[j]->type;
-				if(headtmp->line_cmd[j + 1])
+				if(headtmp->line_cmd[j]->type != 1)
 				{
-					file_name = headtmp->line_cmd[j + 1]->value;
-					j = j + 2;
+					headtmp->arguments[i] = headtmp->line_cmd[j]->value;
+					i++;
+					j++;
 				}
 				else
-					j = j + 1;
-				lkd_redirection(&headtmp->redirection,type,file_name);
+				{
+					type = headtmp->line_cmd[j]->type;
+					if(headtmp->line_cmd[j + 1])
+					{
+						file_name = headtmp->line_cmd[j + 1]->value;
+						j = j + 2;
+					}
+					else
+						j = j + 1;
+					lkd_redirection(&headtmp->redirection,type,file_name);
+				}
 			}
 		}
+		headtmp->arguments[i] = 0;
 		headtmp = headtmp->next;
 	}
 	while (head != NULL)
 	{
 		j = 0;
 		printf("----------------------------\n");
-		while (head->redirection != NULL)
-		{
-			printf("%s\n",head->redirection->file_name);
-			printf("%d\n",head->redirection->type);
+		// while (head->redirection != NULL)
+		// {
+		// 	printf("%s\n",head->redirection->file_name);
+		// 	printf("%d\n",head->redirection->type);
 			
-			head->redirection = head->redirection->next;
+		// 	head->redirection = head->redirection->next;
+		// }
+
+		while (head->arguments[j])
+		{
+			printf("%s\n",head->arguments[j]);
+			j++;
 		}
+		
+
 		head = head->next;
 	}
 

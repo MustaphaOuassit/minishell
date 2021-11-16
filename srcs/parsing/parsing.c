@@ -16,7 +16,6 @@ int	main(void)
 {
 	char	*line;
 	int		indice_start;
-	
 	while (1)
 	{
 		write(1, "-> minishell ", ft_strlen("-> minishell "));

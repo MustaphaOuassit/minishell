@@ -71,13 +71,21 @@ void	token_manipulation(int indice)
 		else if(g_cmd[indice] == '$')
 		{
 			check_alloc(indice,g_cmd,&l);
-			printf("%d\n",l);
 			dollar = (char *)malloc(sizeof(char) * (l + 1));
+			dollar[l] = 0;
+			l = 0;
+			while (dollar[l])
+			{
+				dollar[l] = g_cmd[indice];
+				indice++;
+				l++;
+			}
+			put_in_parcer(&head,dollar,5);
 		}
 		else
 			indice = check_word(&head,indice);
 		indice++;
 	}
-	free(g_str);
-	//fill_data(head);
+	//free(g_str);
+	fill_data(head);
 }
