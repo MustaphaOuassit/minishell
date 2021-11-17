@@ -229,21 +229,20 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 	{
 		j = 0;
 		printf("----------------------------\n");
-		// while (head->redirection != NULL)
-		// {
-		// 	printf("%s\n",head->redirection->file_name);
-		// 	printf("%d\n",head->redirection->type);
+		printf("Redirection :\n");
+		while (head->redirection != NULL)
+		{
+			printf("%s\n",head->redirection->file_name);
+			printf("%d\n",head->redirection->type);
 			
-		// 	head->redirection = head->redirection->next;
-		// }
-
+			head->redirection = head->redirection->next;
+		}
+		printf("Arguments :\n");
 		while (head->arguments[j])
 		{
 			printf("%s\n",head->arguments[j]);
 			j++;
 		}
-		
-
 		head = head->next;
 	}
 

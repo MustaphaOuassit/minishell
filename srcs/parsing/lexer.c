@@ -45,7 +45,7 @@ void		check_alloc(int indice,char *str,int *l)
 	*l = 0;
 	while (str[indice])
 	{
-		if(str[indice] == ' ')
+		if((str[indice] == ' ') || (str[indice] == '\"'))
 			break;
 		*l = *l + 1;
 		indice++;

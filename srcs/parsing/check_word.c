@@ -12,6 +12,47 @@
 
 #include "libraries/parsing.h"
 
+void	fill_string_double(t_tokens **head, int indice, int ele)
+{
+	int l;
+	char *dollar;
+
+	l = 0;
+	g_start++;
+	while (g_start <= indice)
+	{
+		if (g_cmd[g_start] == ele)
+			break ;
+		else
+		{
+			if(g_cmd[g_start] == '$')
+			{
+				check_alloc(g_start,g_cmd,&l);
+				dollar = (char *)malloc(sizeof(char) * (l + 1));
+				dollar[l] = 0;
+				l = 0;
+				while (dollar[l])
+				{
+				dollar[l] = g_cmd[g_start];
+				g_start++;
+				l++;
+				}
+				put_in_parcer(head,dollar,5);
+
+				// while (g_cmd[g_start])
+				// {
+				// 	if((g_cmd[g_start] == ' ') || g_cmd[g_start] == ele)
+				// 		break;
+				// 	g_start++;
+				// }
+			}
+			g_str[g_rmp] = g_cmd[g_start];
+			g_rmp++;
+		}
+		g_start++;
+	}
+}
+
 void	fill_string(int indice, int ele)
 {
 	g_start++;
@@ -28,15 +69,16 @@ void	fill_string(int indice, int ele)
 	}
 }
 
-int	check_character(int i, int indice, char *ele)
+
+int	check_character(t_tokens **head, int i, int indice, char *ele)
 {
 	if (i > 0)
 	{
-		g_str = (char *)malloc(((int)ft_strlen(g_cmd)) * sizeof(char));
+		g_str = (char *)malloc(((int)ft_strlen(g_cmd)) * sizeof(char *));
 		while (g_start <= indice)
 		{
 			if (g_cmd[g_start] == ele[0])
-				fill_string(indice, ele[0]);
+				fill_string_double(head,indice, ele[0]);
 			else if (g_cmd[g_start] == ele[1])
 				fill_string(indice, ele[1]);
 			else
@@ -51,7 +93,30 @@ int	check_character(int i, int indice, char *ele)
 	return (indice);
 }
 
-int	add_to_string(int indice, char *ele)
+int	check_character_double(t_tokens **head,int i, int indice, char *ele)
+{
+	if (i > 0)
+	{
+		g_str = (char *)malloc(((int)ft_strlen(g_cmd)) * sizeof(char *));
+		while (g_start <= indice)
+		{
+			if (g_cmd[g_start] == ele[0])
+				fill_string_double(head,indice, ele[0]);
+			else if (g_cmd[g_start] == ele[1])
+				fill_string(indice, ele[1]);
+			else
+			{
+				g_str[g_rmp] = g_cmd[g_start];
+				g_rmp++;
+			}
+			g_start++;
+		}
+		g_str[g_rmp] = '\0';
+	}
+	return (indice);
+}
+
+int	add_to_string(t_tokens **head, int indice, char *ele)
 {
 	t_initial	initial;
 
@@ -69,7 +134,29 @@ int	add_to_string(int indice, char *ele)
 		indice++;
 		initial.i++;
 	}
-	indice = check_character(initial.i, indice, ele);
+	indice = check_character(head,initial.i, indice, ele);
+	return (indice);
+}
+
+int	add_to_string_double(t_tokens **head,int indice, char *ele)
+{
+	t_initial	initial;
+
+	g_start = indice - 1;
+	initial.i = 0;
+	g_rmp = 0;
+	initial.t = 0;
+	while (indice != (int)ft_strlen(g_cmd))
+	{
+		if ((initial.t == 1) && ((g_cmd[indice] == ' ')
+				|| (g_cmd[indice] == '|')))
+			break ;
+		if (g_cmd[indice] == ele[0])
+			initial.t = 1;
+		indice++;
+		initial.i++;
+	}
+	indice = check_character_double(head, initial.i, indice, ele);
 	return (indice);
 }
 
@@ -107,7 +194,7 @@ int	check_word(t_tokens **head, int indice)
 	{
 		if ((g_cmd[indice] == '"') || (g_cmd[indice] == '\''))
 		{
-			indice = check_couts(indice);
+			indice = check_couts(head,indice);
 			break ;
 		}
 		else
