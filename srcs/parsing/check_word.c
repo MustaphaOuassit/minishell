@@ -70,15 +70,24 @@ void	fill_string_double(t_tokens **head, int indice, int ele)
 		r = 0;
 		if(g_cmd[i] != '$')
 		{
-			printf("--- |%c| ---\n",g_cmd[i]);
-		}
-		else
-		{
-			while ((g_cmd[i] != ' '))
+			while ((g_cmd[i] != '\"') && (g_cmd[i] != '$') && (g_cmd[i] != '\0') )
 			{
 				printf("*** |%c| ***\n",g_cmd[i]);
 				i++;
 			}
+			i--;
+		}
+		else
+		{
+			printf("*** |%c| ***\n",g_cmd[i]);
+			printf("+++++++++++++++++++++++++ \n");
+			i++;
+			while ((g_cmd[i] != ' ') && (g_cmd[i] != '\"') && (g_cmd[i] != '$') && (g_cmd[i] != '\0') )
+			{
+				printf("*** |%c| ***\n",g_cmd[i]);
+				i++;
+			}
+			i--;
 		}
 		i++;
 	}
