@@ -56,11 +56,25 @@ void	fill_string_double(t_tokens **head, int indice, int ele)
 				l = l - 1;
 		}
 		if((g_cmd[g_start] == ' ') && (g_cmd[g_start + 1] != ele) && (g_cmd[g_start + 1] != ' ') && (g_cmd[g_start + 1] != '\0'))
+		{
 			l++;
+			tmp = g_start;
+			while (g_cmd[tmp])
+			{
+				if(g_cmd[tmp] == '$')
+				{
+					r = 1;
+					break;
+				}
+				tmp++;
+			}
+			if(r == 0)
+				l--;
+		}
 		g_start++;
 	}
-	printf("%d\n",l);
 	check = (char **)malloc(sizeof(char *) * (l + 1));
+	printf("--- L: %d---\n",l);
 	check[l] = 0;
 	l = 0;
 	while (g_cmd[i])
@@ -72,26 +86,54 @@ void	fill_string_double(t_tokens **head, int indice, int ele)
 		{
 			while ((g_cmd[i] != '\"') && (g_cmd[i] != '$') && (g_cmd[i] != '\0') )
 			{
-				printf("*** |%c| ***\n",g_cmd[i]);
 				i++;
+				r++;
 			}
 			i--;
+			if(check[l])
+			{
+				check[l] = (char *)malloc(sizeof(char) * (r + 1));
+				check[l][r] = '\0';
+				t = 0;
+				while(check[l][t])
+				{
+					check[l][t] = 'd';
+					t++;
+				}
+				l++;
+			}
 		}
 		else
 		{
-			printf("*** |%c| ***\n",g_cmd[i]);
-			printf("+++++++++++++++++++++++++ \n");
+			r++;
 			i++;
 			while ((g_cmd[i] != ' ') && (g_cmd[i] != '\"') && (g_cmd[i] != '$') && (g_cmd[i] != '\0') )
 			{
-				printf("*** |%c| ***\n",g_cmd[i]);
 				i++;
+				r++;
 			}
 			i--;
+			if(check[l])
+			{
+				check[l] = (char *)malloc(sizeof(char) * (r + 1));
+				check[l][r] = '\0';
+				t = 0;
+				while(check[l][t])
+				{
+					check[l][t] = 'd';
+					t++;
+				}
+				l++;
+			}
 		}
 		i++;
 	}
-	
+	l = 0;
+	while (check[l])
+	{
+		printf("---%s---\n",check[l]);
+		l++;
+	}
 	g_str = ft_strdup("hello");
 }
 
