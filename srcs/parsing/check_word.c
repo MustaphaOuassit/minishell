@@ -12,45 +12,78 @@
 
 #include "libraries/parsing.h"
 
+int 	check_nb(char *str, int start)
+{
+	int i;
+
+	i = 0;
+	while (str[start])
+	{
+		if((str[start] == '\"') || (str[start] == '$'))
+			break;
+		start++;
+		i++;
+	}
+	return(i);
+}
+
 void	fill_string_double(t_tokens **head, int indice, int ele)
 {
 	int l;
-	char *dollar;
-
-	l = 0;
+	int i;
+	char **check;
+	int r;
+	int t;
+	int tmp;
+	indice = 0;
+	r = 0;
+	t = 0;
+	tmp = 0;
+	check = NULL;
+	l = 1;
+	i = g_start + 1;
+	printf("%s\n",head[0]->value);
 	g_start++;
-	while (g_start <= indice)
-	{
-		if (g_cmd[g_start] == ele)
-			break ;
-		else
-		{
-			if(g_cmd[g_start] == '$')
-			{
-				check_alloc(g_start,g_cmd,&l);
-				dollar = (char *)malloc(sizeof(char) * (l + 1));
-				dollar[l] = 0;
-				l = 0;
-				while (dollar[l])
-				{
-				dollar[l] = g_cmd[g_start];
-				g_start++;
-				l++;
-				}
-				put_in_parcer(head,dollar,5);
 
-				// while (g_cmd[g_start])
-				// {
-				// 	if((g_cmd[g_start] == ' ') || g_cmd[g_start] == ele)
-				// 		break;
-				// 	g_start++;
-				// }
-			}
-			g_str[g_rmp] = g_cmd[g_start];
-			g_rmp++;
+	while (g_cmd[g_start])
+	{
+		if(g_cmd[g_start] == ele)
+			break ;
+		if(g_cmd[g_start] == '$')
+		{
+			l++;
+			if((g_cmd[g_start - 1] == ' ') || (g_cmd[g_start - 1] == '\"'))
+				l = l - 1;
 		}
+		if((g_cmd[g_start] == ' ') && (g_cmd[g_start + 1] != ele) && (g_cmd[g_start + 1] != ' ') && (g_cmd[g_start + 1] != '\0'))
+			l++;
 		g_start++;
 	}
+	printf("%d\n",l);
+	check = (char **)malloc(sizeof(char *) * (l + 1));
+	check[l] = 0;
+	l = 0;
+	while (g_cmd[i])
+	{
+		if(g_cmd[i] == '\"')
+			break;
+		r = 0;
+		if(g_cmd[i] != '$')
+		{
+			printf("--- |%c| ---\n",g_cmd[i]);
+		}
+		else
+		{
+			while ((g_cmd[i] != ' '))
+			{
+				printf("*** |%c| ***\n",g_cmd[i]);
+				i++;
+			}
+		}
+		i++;
+	}
+	
+	g_str = ft_strdup("hello");
 }
 
 void	fill_string(int indice, int ele)
@@ -70,16 +103,14 @@ void	fill_string(int indice, int ele)
 }
 
 
-int	check_character(t_tokens **head, int i, int indice, char *ele)
+int	check_character(int i, int indice, char *ele)
 {
 	if (i > 0)
 	{
 		g_str = (char *)malloc(((int)ft_strlen(g_cmd)) * sizeof(char *));
 		while (g_start <= indice)
 		{
-			if (g_cmd[g_start] == ele[0])
-				fill_string_double(head,indice, ele[0]);
-			else if (g_cmd[g_start] == ele[1])
+			if (g_cmd[g_start] == ele[1])
 				fill_string(indice, ele[1]);
 			else
 			{
@@ -116,7 +147,7 @@ int	check_character_double(t_tokens **head,int i, int indice, char *ele)
 	return (indice);
 }
 
-int	add_to_string(t_tokens **head, int indice, char *ele)
+int	add_to_string(int indice, char *ele)
 {
 	t_initial	initial;
 
@@ -134,7 +165,7 @@ int	add_to_string(t_tokens **head, int indice, char *ele)
 		indice++;
 		initial.i++;
 	}
-	indice = check_character(head,initial.i, indice, ele);
+	indice = check_character(initial.i, indice, ele);
 	return (indice);
 }
 

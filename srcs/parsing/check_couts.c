@@ -16,8 +16,9 @@ int	check_couts(t_tokens **head, int indice)
 {
 	if (g_cmd[indice] == '"')
 		indice = add_to_string_double(head,indice + 1, "\"'");
+		
 	else if (g_cmd[indice] == '\'')
-		indice = add_to_string(head,indice + 1, "\"'");
+		indice = add_to_string(indice + 1, "\"'");
 	return (indice);
 }
 
