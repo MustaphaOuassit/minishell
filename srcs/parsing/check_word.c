@@ -161,7 +161,6 @@ void	fill_string_double(int indice, int ele)
 		}
 		g_start++;
 	}
-	printf("---%s-----\n",g_str);
 }
 
 void	fill_string(int indice, int ele)

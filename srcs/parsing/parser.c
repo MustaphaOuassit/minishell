@@ -135,10 +135,9 @@ int	lkd_redirection(t_redirection	**head,int type, char *file_name)
 return(0);  
 }
 
-int		add_to_linkdlist(t_tokens **cmd, int start, int len)
+int		add_to_linkdlist(t_data **data, t_tokens **cmd, int start, int len)
 {
 	int	nb_allocation;
-	t_data	*head;
 	t_data	*headtmp;
 	t_data  cmdata;
 	int		i;
@@ -150,7 +149,6 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 	char	*dollar;
 	char	**space;
 
-	head = NULL;
 	file_name = NULL;
 	space = NULL;
 	type = 0;
@@ -177,8 +175,8 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 		tmp++;
 	}
 	cmdata.line_cmd[i] = 0;
-	fill_linkdlist(&head,cmdata.line_cmd);
-	headtmp = head;
+	fill_linkdlist(data,cmdata.line_cmd);
+	headtmp = *data;
 	while (headtmp != NULL)
 	{
 		j = 0;
@@ -225,30 +223,30 @@ int		add_to_linkdlist(t_tokens **cmd, int start, int len)
 		headtmp->arguments[i] = 0;
 		headtmp = headtmp->next;
 	}
-	while (head != NULL)
-	{
-		j = 0;
-		printf("----------------------------\n");
-		printf("Redirection :\n");
-		while (head->redirection != NULL)
-		{
-			printf("%s\n",head->redirection->file_name);
-			printf("%d\n",head->redirection->type);
+	// while (head != NULL)
+	// {
+	// 	j = 0;
+	// 	printf("----------------------------\n");
+	// 	printf("Redirection :\n");
+	// 	while (head->redirection != NULL)
+	// 	{
+	// 		printf("%s\n",head->redirection->file_name);
+	// 		printf("%d\n",head->redirection->type);
 			
-			head->redirection = head->redirection->next;
-		}
-		printf("Arguments :\n");
-		while (head->arguments[j])
-		{
-			printf("%s\n",head->arguments[j]);
-			j++;
-		}
-		head = head->next;
-	}
+	// 		head->redirection = head->redirection->next;
+	// 	}
+	// 	printf("Arguments :\n");
+	// 	while (head->arguments[j])
+	// 	{
+	// 		printf("%s\n",head->arguments[j]);
+	// 		j++;
+	// 	}
+	// 	head = head->next;
+	// }
 
 	return(start);
 }
-void    fill_data(t_tokens *data)
+void    fill_data(t_data **dt ,t_tokens *data)
 {
 	t_tokens	**cmd;
 	int		nb_list;
@@ -271,7 +269,7 @@ void    fill_data(t_tokens *data)
 
 	while(start <= nb_list)
 	{
-		start = add_to_linkdlist(cmd,start,nb_list);
+		start = add_to_linkdlist(dt,cmd,start,nb_list);
 		start++;
 	}
 }

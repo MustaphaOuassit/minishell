@@ -52,7 +52,7 @@ void		check_alloc(int indice,char *str,int *l)
 	}
 }
 
-void	token_manipulation(int indice)
+void	token_manipulation(t_data **data, int indice)
 {
 	t_tokens	*head;
 	t_tokens	*size;
@@ -87,5 +87,5 @@ void	token_manipulation(int indice)
 		indice++;
 	}
 	//free(g_str);
-	fill_data(head);
+	fill_data(data,head);
 }

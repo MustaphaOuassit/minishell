@@ -16,24 +16,50 @@ int main(int argc, char **argv, char **envp)
 {
 	char *str;
 	int i;
-	t_data_ex *data;
+	int		indice_start;
+	t_data *data;
     t_envp *env_list;
+	int j;
 
 	i = 0;
-	data = malloc(sizeof(t_data_ex));
+	j = 0;
+	data = NULL;
 
 	while(envp[i])
 	{
 		add_to_env(&env_list, fill_envp(envp[i])); 
 		i++;
-	}
+	} 
 	if (argc != 1 && !argv[0]) 
         return(-1);
 	while(1)
 	{
 		str = readline("-> minishell ");
 		add_history(str);
-        printf("%s\n",str);
+		g_cmd = str;
+		indice_start = skipe_space();
+		token_manipulation(&data,indice_start);
+	while (data != NULL)
+	{
+		j = 0;
+		printf("----------------------------\n");
+		printf("Redirection :\n");
+		while (data->redirection != NULL)
+		{
+			printf("%s\n",data->redirection->file_name);
+			printf("%d\n",data->redirection->type);
+			
+			data->redirection = data->redirection->next;
+		}
+		printf("Arguments :\n");
+		while (data->arguments[j])
+		{
+			printf("%s\n",data->arguments[j]);
+			j++;
+		}
+		data = data->next;
+	}
+		
 // exec
 		// if (1 && is_builtin(data->arguments[0]))
 		// 	ft_builtins(data, &env_list);
