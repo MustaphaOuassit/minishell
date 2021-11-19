@@ -3,39 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayafdel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 18:22:43 by mouassit          #+#    #+#             */
-/*   Updated: 2019/11/03 21:54:06 by mouassit         ###   ########.fr       */
+/*   Created: 2019/10/13 13:03:54 by ayafdel           #+#    #+#             */
+/*   Updated: 2019/10/29 13:02:17 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "limits.h"
-
 int	ft_atoi(const char *str)
 {
-	unsigned long	nb;
-	int				is_negatif;
+	int		i;
+	int		a;
+	long	somme;
 
-	nb = 0;
-	is_negatif = 1;
-	while ((*str == ' ' || *str == '\t' || *str == '\n' || *str == '\v'
-			|| *str == '\f' || *str == '\r') && (*str != '\0'))
-		str++;
-	if (*str == '+')
-		str++;
-	else if (*str == '-')
+	i = 0;
+	a = 1;
+	somme = 0;
+	while (str[i] <= 32 && str[i] > 0)
+		if (str[i++] == 27)
+			return (0);
+	if (str[i] == '-' || str[i] == '+')
+		if (str[i++] == '-')
+			a = -1;
+	while (str[i] != '\0' && (str[i] <= '9' && str[i] >= '0'))
 	{
-		is_negatif = -1;
-		str++;
+		if ((somme * a) < -2147483648)
+			return (0);
+		if ((somme * a) > 2147483647)
+			return (-1);
+		somme = (str[i++] - '0') + somme * 10;
 	}
-	while (*str != '\0' && *str >= '0' && *str <= '9')
-	{
-		nb = nb * 10 + (*str - 48);
-		if (nb > 9223372036854775807)
-			return ((is_negatif == -1) ? (0) : (-1));
-		str++;
-	}
-	return (nb * is_negatif);
+	return (a * somme);
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libraries/parsing.h"
+#include "parsing.h"
 
 int 	check_nb(char *str, int start)
 {

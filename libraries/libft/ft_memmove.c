@@ -3,26 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/17 12:41:00 by mouassit          #+#    #+#             */
-/*   Updated: 2019/11/03 20:51:34 by mouassit         ###   ########.fr       */
+/*   Created: 2019/10/17 12:08:09 by ayafdel           #+#    #+#             */
+/*   Updated: 2021/10/06 13:03:22 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void	*ft_memmove(void *str1, const void *str2, size_t n)
 {
-	unsigned char	*dest;
-	unsigned char	*str;
+	int	i;
 
-	dest = (unsigned char*)dst;
-	str = (unsigned char*)src;
-	if (dst < src)
-		return (ft_memcpy(dst, src, len));
-	if (dst > src)
-		while (len--)
-			(dest[len] = str[len]);
-	return (dst);
+	i = 0;
+	if (!str2 && !str1)
+		return (0);
+	if (str2 > str1)
+	{
+		while (n--)
+		{
+			((char *)str1)[i] = ((char *)str2)[i];
+			i++;
+		}
+	}
+	if (str1 > str2)
+		while (n--)
+			((char *)str1)[n] = ((char *)str2)[n];
+	return (str1);
 }

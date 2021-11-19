@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libraries/parsing.h"
+#include "parsing.h"
 
 int	skipe_space(void)
 {

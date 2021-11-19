@@ -3,39 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/11 21:56:36 by mouassit          #+#    #+#             */
-/*   Updated: 2019/11/04 21:12:34 by mouassit         ###   ########.fr       */
+/*   Created: 2019/10/12 12:34:52 by ayafdel           #+#    #+#             */
+/*   Updated: 2021/10/06 09:50:32 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t n)
 {
-	size_t		dest;
-	size_t		str;
-	size_t		i;
-	size_t		j;
+	size_t	i;
+	size_t	a;
+	size_t	j;
 
-	if ((dst == NULL || size == 0) && size == 0)
+	j = 0;
+	if (n == 0)
 		return (ft_strlen(src));
-	i = 0;
-	dest = ft_strlen(dst);
-	str = ft_strlen((char*)src);
-	if (size <= dest)
-		i = str + size;
+	a = ft_strlen(src);
+	i = ft_strlen(dst);
+	if (n > i)
+		a = a + i;
 	else
 	{
-		i = str + dest;
-		j = 0;
-		while (src[j] && size > (dest + j + 1))
-		{
-			dst[dest + j] = src[j];
-			j++;
-		}
-		dst[dest + j] = '\0';
+		a = a + n;
+		return (a);
 	}
-	return (i);
+	while (i + 1 < n && src[j])
+	{
+		dst[i] = src[j];
+		i++;
+		j++;
+	}
+	dst[i] = '\0';
+	return (a);
 }

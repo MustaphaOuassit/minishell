@@ -13,14 +13,20 @@
 
 NAME = minishell
 
-SRC = ./libraries/get_next_line/get_next_line.c \
-	  ./libraries/get_next_line/get_next_line_utils.c \
-	  ./srcs/parsing/check_couts.c \
+SRC =./srcs/main.c \
+	 ./srcs/parsing/check_couts.c \
 	  ./srcs/parsing/check_word.c \
-      ./srcs/parsing/parsing.c \
 	  ./srcs/parsing/lexer.c \
 	  ./srcs/parsing/parser.c \
-	  ./srcs/parsing/linkedlist.c
+	  ./srcs/parsing/linkedlist.c \
+	  ./srcs/execution/ft_exit_bi.c \
+	  ./srcs/execution/free_struct.c \
+	  ./srcs/execution/ft_unset.c \
+	  ./srcs/execution/ft_echo.c \
+	  ./srcs/execution/ft_pwd.c \
+	  ./srcs/execution/ft_cd.c \
+	  ./srcs/execution/ft_export.c \
+	  ./srcs/execution/ft_env.c \
 
 
 LIBFT = ./libraries/libft/libft.a
@@ -29,7 +35,7 @@ all : $(NAME)
 
 $(NAME):
 	@make -s -C ./libraries/libft
-	@gcc -Wall -Wextra -Werror -fsanitize=address -g -I .  $(SRC) $(LIBFT) -D BUFFER_SIZE=1 -o $(NAME)
+	@gcc -Wall -Wextra -Werror -lreadline -fsanitize=address -g -I .  $(SRC) $(LIBFT) -D BUFFER_SIZE=1 -o $(NAME)
 
 
 clean:

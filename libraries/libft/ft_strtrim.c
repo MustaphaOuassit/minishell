@@ -3,79 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/01 17:54:16 by mouassit          #+#    #+#             */
-/*   Updated: 2019/11/02 13:58:50 by mouassit         ###   ########.fr       */
+/*   Created: 2019/10/13 21:39:47 by ayafdel           #+#    #+#             */
+/*   Updated: 2021/10/06 09:48:34 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_anv(char *s1, char *set)
+static int	firstpos(char const *s1, char const *set)
 {
-	int		j;
-	int		i;
+	int	pos;
+	int	i;
 
-	j = 0;
-	while (s1[j] != '\0')
-		j++;
-	j--;
 	i = 0;
-	while (set[i] != '\0')
+	pos = 0;
+	while (*s1)
 	{
-		if (set[i] == s1[j])
+		while (*s1 != set[i])
 		{
-			j--;
-			i = 0;
-		}
-		else
+			if (!set[i])
+				return (pos);
 			i++;
+		}
+		i = 0;
+		s1++;
+		pos++;
 	}
-	return (j);
+	return (pos);
 }
 
-char	*setdata(char *s1, int j, int start)
+static int	lastpos(char const *s1, char const *set)
 {
-	int		index;
-	char	*res;
+	int	pos;
+	int	i;
 
-	index = 0;
-	if (j < 0)
-		return (ft_strdup("\0"));
-	if (NULL == (res = (char*)malloc(sizeof(char) * (j - start + 2))))
-		return (0);
-	while (index < j - start + 1)
+	i = 0;
+	pos = ft_strlen(s1);
+	while (pos--)
 	{
-		res[index] = *(s1 + start + index);
-		index++;
+		while (s1[pos] != set[i])
+		{
+			if (!set[i])
+				return (pos);
+			i++;
+		}
+		i = 0;
 	}
-	res[index] = '\0';
-	return (res);
+	return (pos);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	int		i;
-	int		start;
+	unsigned int		i;
+	unsigned int		n;
+	unsigned int		j;
+	char				*str;
 
-	if (s1 == NULL)
-		return (NULL);
-	if (set == NULL)
-		return (ft_strdup((char*)s1));
 	i = 0;
-	start = 0;
-	while (*(set + i) != '\0')
+	if (!s1)
+		return (0);
+	j = firstpos(s1, set);
+	n = lastpos(s1, set);
+	str = (char *) malloc(n - j + 2);
+	if (str == NULL)
+		return (NULL);
+	while (j < n + 1)
 	{
-		if (set[i] == s1[start])
-		{
-			start++;
-			i = 0;
-		}
-		else
-			i++;
+		str[i] = s1[j];
+		i++;
+		j++;
 	}
-	if (start == (int)ft_strlen((char*)s1))
-		return (ft_strdup("\0"));
-	return (setdata((char*)s1, ft_anv((char*)s1, (char*)set), start));
+	str[i] = '\0';
+	return (str);
 }

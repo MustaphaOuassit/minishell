@@ -10,21 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libraries/parsing.h"
+// #include "parsing.h"
 
-int	main(void)
-{
-	char	*line;
-	int		indice_start;
-	while (1)
-	{
-		write(1, "-> minishell ", ft_strlen("-> minishell "));
-		get_next_line(0, &line);
-		g_cmd = line;
-		indice_start = skipe_space();
-		token_manipulation(indice_start);
-		g_toll = 0;
-		free(line);
-	}
-	return (0);
-}
+// int	main(void)
+// {
+// 	char	*line;
+// 	int		indice_start;
+// 	while (1)
+// 	{
+// 		write(1, "-> minishell ", ft_strlen("-> minishell "));
+// 		get_next_line(0, &line);
+// 		g_cmd = line;
+// 		indice_start = skipe_space();
+// 		token_manipulation(indice_start);
+// 		g_toll = 0;
+// 		free(line);
+// 	}
+// 	return (0);
+// }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libraries/parsing.h"
+#include "parsing.h"
 
 int    fill_linkdlist(t_data **head, t_tokens **data)
 {

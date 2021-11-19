@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libraries/parsing.h"
+#include "parsing.h"
 
 int		ft_strlen_two(char	**str)
 {

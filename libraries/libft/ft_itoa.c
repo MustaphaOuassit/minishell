@@ -3,77 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/01 15:11:23 by mouassit          #+#    #+#             */
-/*   Updated: 2019/11/02 13:46:14 by mouassit         ###   ########.fr       */
+/*   Created: 2019/10/14 12:09:05 by ayafdel           #+#    #+#             */
+/*   Updated: 2021/10/06 13:11:47 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*set_number(long n, int sighn, int i, int base)
+static int	intlen(int n)
 {
-	char	*rtn;
-	int		index;
-
-	index = 0;
-	if (sighn == 1)
-	{
-		if (NULL == (rtn = malloc(sizeof(char) * (i + 2))))
-			return (0);
-		rtn[0] = '-';
-	}
-	if (sighn == 0)
-		if (NULL == (rtn = malloc(sizeof(char) * (i + 1))))
-			return (0);
-	while (base > 0)
-	{
-		if (sighn == 1)
-			rtn[index + 1] = (n / base) + '0';
-		else
-			rtn[index] = (n / base) + '0';
-		n = n - ((n / base) * base);
-		base /= 10;
-		index++;
-	}
-	rtn[index + sighn] = '\0';
-	return (rtn);
+	if (n)
+		return (1 + intlen(n / 10));
+	return (1);
 }
 
-char	*error(void)
+static char	*zero(void)
 {
-	char	*error;
+	char	*str;
 
-	if (NULL == (error = malloc(sizeof(char) * 2)))
-		return (0);
-	error[0] = '0';
-	error[1] = '\0';
-	return (error);
+	str = malloc(2);
+	if (str == NULL)
+		return (NULL);
+	str[0] = '0';
+	str[1] = '\0';
+	return (str);
 }
 
 char	*ft_itoa(int n)
 {
-	int		i;
-	double	base;
-	int		sighn;
-	long	nbr;
+	char				*str;
+	unsigned int		m;
+	int					len;
 
-	sighn = 0;
-	nbr = n;
-	if (nbr == 0 || nbr < (int)-2147483648)
-		return (error());
-	if (nbr < 0)
+	if (n == 0)
+		return (zero());
+	len = intlen(n);
+	if (n < 0)
 	{
-		nbr *= -1;
-		sighn = 1;
+		n = n * -1;
+		len = len + 1;
 	}
-	i = 0;
-	base = 1;
-	while (nbr >= base)
+	str = (char *)malloc(len);
+	m = n;
+	if (str == NULL)
+		return (NULL);
+	str[0] = '-';
+	str[len - 1] = '\0';
+	while (m)
 	{
-		base *= 10;
-		i++;
+		str[len - 2] = m % 10 + 48;
+		m = m / 10;
+		len--;
 	}
-	return (set_number(nbr, sighn, i, base / 10));
+	return (str);
 }
