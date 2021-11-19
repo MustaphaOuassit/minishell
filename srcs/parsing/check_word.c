@@ -27,63 +27,52 @@ int 	check_nb(char *str, int start)
 	return(i);
 }
 
-void	fill_string_double(t_tokens **head, int indice, int ele)
+void	fill_string_double(int indice, int ele)
 {
 	int l;
 	int i;
 	char **check;
 	int r;
 	int t;
+	int a;
+	int j;
 	int tmp;
-	indice = 0;
+	int m;
 	r = 0;
 	t = 0;
 	tmp = 0;
+	a = 0;
 	check = NULL;
 	l = 1;
 	i = g_start + 1;
-	printf("%s\n",head[0]->value);
-	g_start++;
+	m = g_start + 1;
 
-	while (g_cmd[g_start])
+	while (g_cmd[m])
 	{
-		if(g_cmd[g_start] == ele)
+		if(g_cmd[m] == ele)
 			break ;
-		if(g_cmd[g_start] == '$')
+		if(g_cmd[m] == '$')
 		{
 			l++;
-			if((g_cmd[g_start - 1] == ' ') || (g_cmd[g_start - 1] == '\"'))
+			if((g_cmd[m - 1] == ' ') || (g_cmd[m - 1] == '\"'))
 				l = l - 1;
 		}
-		if((g_cmd[g_start] == ' ') && (g_cmd[g_start + 1] != ele) && (g_cmd[g_start + 1] != ' ') && (g_cmd[g_start + 1] != '\0'))
-		{
+		if((g_cmd[m] == ' ') && (g_cmd[m + 1] != ele) && (g_cmd[m + 1] != ' ') && (g_cmd[m + 1] != '\0'))
 			l++;
-			tmp = g_start;
-			while (g_cmd[tmp])
-			{
-				if(g_cmd[tmp] == '$')
-				{
-					r = 1;
-					break;
-				}
-				tmp++;
-			}
-			if(r == 0)
-				l--;
-		}
-		g_start++;
+		m++;
 	}
+	l++;
 	check = (char **)malloc(sizeof(char *) * (l + 1));
-	printf("--- L: %d---\n",l);
 	check[l] = 0;
 	l = 0;
-	while (g_cmd[i])
+	while (i < (int)ft_strlen(g_cmd))
 	{
 		if(g_cmd[i] == '\"')
 			break;
 		r = 0;
 		if(g_cmd[i] != '$')
 		{
+			tmp = i;
 			while ((g_cmd[i] != '\"') && (g_cmd[i] != '$') && (g_cmd[i] != '\0') )
 			{
 				i++;
@@ -95,9 +84,10 @@ void	fill_string_double(t_tokens **head, int indice, int ele)
 				check[l] = (char *)malloc(sizeof(char) * (r + 1));
 				check[l][r] = '\0';
 				t = 0;
-				while(check[l][t])
+				while((check[l][t]) && (g_cmd[tmp]))
 				{
-					check[l][t] = 'd';
+					check[l][t] = g_cmd[tmp];
+					tmp++;
 					t++;
 				}
 				l++;
@@ -105,6 +95,8 @@ void	fill_string_double(t_tokens **head, int indice, int ele)
 		}
 		else
 		{
+			a = g_cmd[i];
+			tmp = i;
 			r++;
 			i++;
 			while ((g_cmd[i] != ' ') && (g_cmd[i] != '\"') && (g_cmd[i] != '$') && (g_cmd[i] != '\0') )
@@ -118,9 +110,13 @@ void	fill_string_double(t_tokens **head, int indice, int ele)
 				check[l] = (char *)malloc(sizeof(char) * (r + 1));
 				check[l][r] = '\0';
 				t = 0;
-				while(check[l][t])
+				while((check[l][t]) && (g_cmd[tmp]))
 				{
-					check[l][t] = 'd';
+					if(t == 0)
+						check[l][t] = a;
+					else
+						check[l][t] = g_cmd[tmp];
+					tmp++;
 					t++;
 				}
 				l++;
@@ -128,13 +124,44 @@ void	fill_string_double(t_tokens **head, int indice, int ele)
 		}
 		i++;
 	}
+	check[l] = 0;
 	l = 0;
+	j = 0;
+	i = 0;
 	while (check[l])
 	{
-		printf("---%s---\n",check[l]);
+		if (check[l][0] == '$')
+			check[l] = ft_strdup("ls - la");
+		i = 0;
+		while (check[l][i])
+		{
+			j++;
+			i++;
+		}
 		l++;
 	}
-	g_str = ft_strdup("hello");
+
+	g_str = (char *)malloc(sizeof(char) * (j + 1));
+	g_str[j] = '\0';
+	g_start++;
+	i = 0;
+	l = 0;
+	while (g_start <= indice)
+	{
+		while (check[l])
+		{
+			r = 0;
+			while (check[l][r])
+			{
+				g_str[i] = check[l][r];
+				i++;
+				r++;
+			}
+			l++;
+		}
+		g_start++;
+	}
+	printf("---%s-----\n",g_str);
 }
 
 void	fill_string(int indice, int ele)
@@ -151,6 +178,7 @@ void	fill_string(int indice, int ele)
 		}
 		g_start++;
 	}
+	g_str[g_rmp] = '\0';
 }
 
 
@@ -163,19 +191,13 @@ int	check_character(int i, int indice, char *ele)
 		{
 			if (g_cmd[g_start] == ele[1])
 				fill_string(indice, ele[1]);
-			else
-			{
-				g_str[g_rmp] = g_cmd[g_start];
-				g_rmp++;
-			}
 			g_start++;
 		}
-		g_str[g_rmp] = '\0';
 	}
 	return (indice);
 }
 
-int	check_character_double(t_tokens **head,int i, int indice, char *ele)
+int	check_character_double(int i, int indice, char *ele)
 {
 	if (i > 0)
 	{
@@ -183,17 +205,11 @@ int	check_character_double(t_tokens **head,int i, int indice, char *ele)
 		while (g_start <= indice)
 		{
 			if (g_cmd[g_start] == ele[0])
-				fill_string_double(head,indice, ele[0]);
-			else if (g_cmd[g_start] == ele[1])
-				fill_string(indice, ele[1]);
-			else
 			{
-				g_str[g_rmp] = g_cmd[g_start];
-				g_rmp++;
+				fill_string_double(indice, ele[0]);
 			}
 			g_start++;
 		}
-		g_str[g_rmp] = '\0';
 	}
 	return (indice);
 }
@@ -220,7 +236,7 @@ int	add_to_string(int indice, char *ele)
 	return (indice);
 }
 
-int	add_to_string_double(t_tokens **head,int indice, char *ele)
+int	add_to_string_double(int indice, char *ele)
 {
 	t_initial	initial;
 
@@ -238,7 +254,7 @@ int	add_to_string_double(t_tokens **head,int indice, char *ele)
 		indice++;
 		initial.i++;
 	}
-	indice = check_character_double(head, initial.i, indice, ele);
+	indice = check_character_double(initial.i, indice, ele);
 	return (indice);
 }
 
@@ -276,7 +292,7 @@ int	check_word(t_tokens **head, int indice)
 	{
 		if ((g_cmd[indice] == '"') || (g_cmd[indice] == '\''))
 		{
-			indice = check_couts(head,indice);
+			indice = check_couts(indice);
 			break ;
 		}
 		else
