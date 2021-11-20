@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 13:16:12 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/07 14:53:45 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/11/20 10:52:35 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "parsing.h"
+// "../includes/minishell.h"
 
 // int	main(void)
 // {

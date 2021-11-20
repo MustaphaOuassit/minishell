@@ -1,6 +1,6 @@
-# include "execution.h"
+# include "../includes/minishell.h"
 
-void	ft_cd(t_data_ex *data)
+void	ft_cd(t_data *data)
 {
 	//char buf[100];
 	if (data->arguments[1] == NULL)

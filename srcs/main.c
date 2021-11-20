@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/19 16:09:16 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/11/20 11:01:15 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libraries/minishell.h"
+#include "includes/minishell.h"
 
 int main(int argc, char **argv, char **envp)
 {
@@ -39,32 +39,36 @@ int main(int argc, char **argv, char **envp)
 		g_cmd = str;
 		indice_start = skipe_space();
 		token_manipulation(&data,indice_start);
-	while (data != NULL)
-	{
-		j = 0;
-		printf("----------------------------\n");
-		printf("Redirection :\n");
-		while (data->redirection != NULL)
-		{
-			printf("%s\n",data->redirection->file_name);
-			printf("%d\n",data->redirection->type);
+	
+	// while (data != NULL)
+	// {
+	// 	j = 0;
+	// 	printf("----------------------------\n");
+	// 	printf("Redirection :\n");
+	// 	while (data->redirection != NULL)
+	// 	{
+	// 		printf("%s\n",data->redirection->file_name);
+	// 		printf("%d\n",data->redirection->type);
 			
-			data->redirection = data->redirection->next;
-		}
-		printf("Arguments :\n");
-		while (data->arguments[j])
-		{
-			printf("%s\n",data->arguments[j]);
-			j++;
-		}
-		data = data->next;
-	}
+	// 		data->redirection = data->redirection->next;
+	// 	}
+	// 	printf("Arguments :\n");
+	// 	while (data->arguments[j])
+	// 	{
+	// 		printf("%s\n",data->arguments[j]);
+	// 		j++;
+	// 	}
+	// 	data = data->next;
+	// }
 		
 // exec
-		// if (1 && is_builtin(data->arguments[0]))
-		// 	ft_builtins(data, &env_list);
-		// else
-		// 	exec_cmd(data, envp);
+	if (1 && is_builtin(data->arguments[0]))
+	{
+		printf("%s\n", data->arguments[0]);
+		ft_builtins(data, &env_list);
+	}
+	else
+		exec_cmd(data, envp);
 
 		//ft_free_split(str);
 	}

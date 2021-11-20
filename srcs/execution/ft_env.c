@@ -1,4 +1,4 @@
-# include "execution.h"
+# include "../includes/minishell.h"
 
 void print_env(t_envp **head)
 {
@@ -18,15 +18,15 @@ void print_env(t_envp **head)
     }
 }
 
-void    ft_env(t_data_ex *data, t_envp **env_list)
+void    ft_env(t_data *data, t_envp **env_list)
 {
     (void) data;
     print_env(env_list);
 }
 
-int		fetch_fd(t_redirection_x *red, int **fd)
+int		fetch_fd(t_redirection *red, int **fd)
 {
-	t_redirection_x *tmp;
+	t_redirection *tmp;
 
 	*fd = malloc(2 * sizeof(int));
 	if (*fd == NULL)
@@ -38,23 +38,23 @@ int		fetch_fd(t_redirection_x *red, int **fd)
 	{
 		if (tmp->type == 0)
 		{
-			(*fd)[0] = open(tmp->filename, O_RDONLY);
+			(*fd)[0] = open(tmp->file_name, O_RDONLY);
 			if ((*fd)[0] == -1)
 				return (1);
 		}
 		if (tmp->type == 1)
 		{
-			(*fd)[1] = open(tmp->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
+			(*fd)[1] = open(tmp->file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
 			if ((*fd)[1] == -1)
 				return (1);
 		}
-		printf("%s\n", tmp->filename);
+		printf("%s\n", tmp->file_name);
 		tmp = tmp->next;
 	}
 	return (0);
 }
 
-void	ft_builtins(t_data_ex *data, t_envp **env_list)
+void	ft_builtins(t_data *data, t_envp **env_list)
 {
 
 		if (ft_strcmp(data->arguments[0],"echo") == 0)
@@ -165,7 +165,7 @@ void	ft_execute(char **args, int *fd, char **envp)
 	exit(127);
 }
 
-int		exec_cmd(t_data_ex *data, char **envp)
+int		exec_cmd(t_data *data, char **envp)
 {
 
 	//int pipe_fd[2];
@@ -174,7 +174,7 @@ int		exec_cmd(t_data_ex *data, char **envp)
 	fork_id[0] = fork();
 	if (fork_id[0] == 0)
 	{
-		fetch_fd(data->red, &fd);
+		fetch_fd(data->redirection, &fd);
 		if (fd == NULL)
 			return (-1);
 		ft_execute(data->arguments, fd, envp);
@@ -183,14 +183,14 @@ int		exec_cmd(t_data_ex *data, char **envp)
 		wait(NULL);
 	return (0);
 }
-void	new_node_redirect(t_redirection_x **head, char *file, int type)
+void	new_node_redirect(t_redirection **head, char *file, int type)
 {
-	t_redirection_x *new;
-	t_redirection_x *tmp;
+	t_redirection *new;
+	t_redirection *tmp;
 
 	tmp = *head;
-	new = malloc(sizeof(t_redirection_x));
-	new->filename = ft_strdup(file);
+	new = malloc(sizeof(t_redirection));
+	new->file_name = ft_strdup(file);
 	new->type = type;
 	new->next = NULL;
 	if (*head == NULL)
@@ -206,16 +206,16 @@ void	new_node_redirect(t_redirection_x **head, char *file, int type)
 	tmp->next = new;
 }
 
-t_redirection_x * fill_redirect()
+t_redirection * fill_redirect()
 {
-	t_redirection_x *head;
+	t_redirection *head;
 	head = NULL;
 	new_node_redirect(&head, "file1", 1);
 	new_node_redirect(&head, "file2", 1);
 	new_node_redirect(&head, "file3", 1);
 	new_node_redirect(&head, "file4", 1);
 	//new_node_redirect(&head, "file2", 1);
-	printf("%s\n", head->filename);
+	printf("%s\n", head->file_name);
 	//printf("%s\n", head->filename);
 
 	return (head);

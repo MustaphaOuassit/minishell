@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_couts.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 13:18:45 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/07 14:09:27 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/11/20 10:53:39 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "../includes/minishell.h"
 
 int	check_couts(int indice)
 {

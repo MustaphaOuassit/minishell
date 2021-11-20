@@ -1,5 +1,5 @@
 //#include<stdio.h>
-# include "execution.h"
+# include "../includes/minishell.h"
 
 int		is_n(char *str)
 {
@@ -21,7 +21,7 @@ int		is_n(char *str)
 	}
 	return (0);
 }
-int		ft_echo(t_data_ex *data)
+int		ft_echo(t_data *data)
 {
 	int i;
 	int	n_flag;
@@ -35,7 +35,7 @@ int		ft_echo(t_data_ex *data)
 		i++;
 	if (i > 1)
 		n_flag = 1;
-	fetch_fd(data->red, &fd);
+	fetch_fd(data->redirection, &fd);
 	if (fd[1] != 1)
 	{
 		//printf("fd[1]=%d\n", fd[1]);

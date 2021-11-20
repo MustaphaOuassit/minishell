@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   linkedlist.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:41:44 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/05 13:41:47 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/11/20 10:53:54 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "../includes/minishell.h"
 
 int    fill_linkdlist(t_data **head, t_tokens **data)
 {

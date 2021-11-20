@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 13:39:35 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/07 13:28:58 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/11/20 10:53:55 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "../includes/minishell.h"
 
 int		ft_strlen_two(char	**str)
 {

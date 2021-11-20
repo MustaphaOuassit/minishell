@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_word.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 08:51:06 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/07 14:10:52 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/11/20 10:53:49 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "../includes/minishell.h"
 
 int 	check_nb(char *str, int start)
 {

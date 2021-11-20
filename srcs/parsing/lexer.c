@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 16:25:28 by mouassit          #+#    #+#             */
-/*   Updated: 2021/09/07 13:26:50 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/11/20 10:53:51 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "../includes/minishell.h"
 
 int	skipe_space(void)
 {
