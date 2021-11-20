@@ -14,13 +14,23 @@
 
 int	check_couts(int indice)
 {
+	char *double_couts;
+	char *singal_couts;
+
+	double_couts = NULL;
+	singal_couts = NULL;
 	if (g_cmd[indice] == '\"')
 	{
-		indice = add_to_string_double(indice + 1, "\"'");
+		indice = add_to_string_double(indice + 1, "\"'",&double_couts);
 	}
 		
 	else if (g_cmd[indice] == '\'')
-		indice = add_to_string(indice + 1, "\"'");
+		indice = add_to_string(indice + 1, "\"'",&singal_couts);
+
+		
+	printf("s : %s\n",singal_couts);
+	printf("d : %s\n",double_couts);
+	g_str = ft_strdup("hello");
 	return (indice);
 }
 

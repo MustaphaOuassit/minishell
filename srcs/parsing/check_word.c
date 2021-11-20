@@ -27,7 +27,7 @@ int 	check_nb(char *str, int start)
 	return(i);
 }
 
-void	fill_string_double(int indice, int ele)
+void	fill_string_double(int indice, int ele, char **dbcouts)
 {
 	int l;
 	int i;
@@ -39,6 +39,9 @@ void	fill_string_double(int indice, int ele)
 	int tmp;
 	int m;
 	char *couts;
+	char *double_couts;
+
+	double_couts = NULL;
 	r = 0;
 	t = 0;
 	tmp = 0;
@@ -57,12 +60,11 @@ void	fill_string_double(int indice, int ele)
 			r = 1;
 			t--;
 		}
-		if(g_cmd[a] == '\'' && r == 1)
+		if(g_cmd[a] == '\'')
 			t--;
 		a++;
 	}
 	t = t + 2;
-	printf("%d\n",t);
 	couts = (char *)malloc(sizeof(char) * (t + 1));
 	a = g_start + 1;
 	couts[t] = '\0';
@@ -71,10 +73,6 @@ void	fill_string_double(int indice, int ele)
 	r = 0;
 	while (couts[t])
 	{
-		if(g_cmd[a] == '\"')
-			r = 1;
-		else
-			r = 0;
 		if(t == 0)
 		{
 			couts[t] = '\"';
@@ -90,8 +88,14 @@ void	fill_string_double(int indice, int ele)
 			else
 			{
 				if(g_cmd[a] != '\"')
-				{	couts[t] = g_cmd[a];
-					t++;
+				{
+					if(g_cmd[a] == '\'')
+						a++;
+					if(g_cmd[a] != '\"')
+					{
+						couts[t] = g_cmd[a];
+						t++;
+					}
 				}
 				a++;
 			}
@@ -101,8 +105,6 @@ void	fill_string_double(int indice, int ele)
 	r = 0;
 	m++;
 	i++;
-	printf("%s\n",couts);
-	couts = ft_strdup("\"hello\"");
 	while (couts[m])
 	{
 		if(couts[m] == ele)
@@ -175,6 +177,7 @@ void	fill_string_double(int indice, int ele)
 					tmp++;
 					t++;
 				}
+				i--;
 				l++;
 			}
 		}
@@ -197,8 +200,8 @@ void	fill_string_double(int indice, int ele)
 		l++;
 	}
 
-	g_str = (char *)malloc(sizeof(char) * (j + 1));
-	g_str[j] = '\0';
+	double_couts = (char *)malloc(sizeof(char) * (j + 1));
+	double_couts[j] = '\0';
 	g_start++;
 	i = 0;
 	l = 0;
@@ -209,7 +212,7 @@ void	fill_string_double(int indice, int ele)
 			r = 0;
 			while (check[l][r])
 			{
-				g_str[i] = check[l][r];
+				double_couts[i] = check[l][r];
 				i++;
 				r++;
 			}
@@ -217,10 +220,12 @@ void	fill_string_double(int indice, int ele)
 		}
 		g_start++;
 	}
+	*dbcouts = ft_strdup(double_couts);
 }
 
-void	fill_string(int indice, int ele)
+void	fill_string(int indice, int ele,char **couts)
 {
+	
 	g_start++;
 	while (g_start <= indice)
 	{
@@ -234,10 +239,11 @@ void	fill_string(int indice, int ele)
 		g_start++;
 	}
 	g_str[g_rmp] = '\0';
+	*couts = ft_strdup(g_str);
 }
 
 
-int	check_character(int i, int indice, char *ele)
+int	check_character(int i, int indice, char *ele, char **couts)
 {
 	if (i > 0)
 	{
@@ -245,14 +251,14 @@ int	check_character(int i, int indice, char *ele)
 		while (g_start <= indice)
 		{
 			if (g_cmd[g_start] == ele[1])
-				fill_string(indice, ele[1]);
+				fill_string(indice, ele[1],couts);
 			g_start++;
 		}
 	}
 	return (indice);
 }
 
-int	check_character_double(int i, int indice, char *ele)
+int	check_character_double(int i, int indice, char *ele,char **couts)
 {
 	if (i > 0)
 	{
@@ -261,7 +267,7 @@ int	check_character_double(int i, int indice, char *ele)
 		{
 			if (g_cmd[g_start] == ele[0])
 			{
-				fill_string_double(indice, ele[0]);
+				fill_string_double(indice, ele[0],couts);
 			}
 			g_start++;
 		}
@@ -269,7 +275,7 @@ int	check_character_double(int i, int indice, char *ele)
 	return (indice);
 }
 
-int	add_to_string(int indice, char *ele)
+int	add_to_string(int indice, char *ele, char **couts)
 {
 	t_initial	initial;
 
@@ -287,11 +293,11 @@ int	add_to_string(int indice, char *ele)
 		indice++;
 		initial.i++;
 	}
-	indice = check_character(initial.i, indice, ele);
+	indice = check_character(initial.i, indice, ele,couts);
 	return (indice);
 }
 
-int	add_to_string_double(int indice, char *ele)
+int	add_to_string_double(int indice, char *ele, char **couts)
 {
 	t_initial	initial;
 
@@ -309,7 +315,7 @@ int	add_to_string_double(int indice, char *ele)
 		indice++;
 		initial.i++;
 	}
-	indice = check_character_double(initial.i, indice, ele);
+	indice = check_character_double(initial.i, indice, ele,couts);
 	return (indice);
 }
 
