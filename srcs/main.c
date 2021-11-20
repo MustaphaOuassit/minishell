@@ -40,35 +40,35 @@ int main(int argc, char **argv, char **envp)
 		indice_start = skipe_space();
 		token_manipulation(&data,indice_start);
 	
-	// while (data != NULL)
-	// {
-	// 	j = 0;
-	// 	printf("----------------------------\n");
-	// 	printf("Redirection :\n");
-	// 	while (data->redirection != NULL)
-	// 	{
-	// 		printf("%s\n",data->redirection->file_name);
-	// 		printf("%d\n",data->redirection->type);
+	while (data != NULL)
+	{
+		j = 0;
+		printf("----------------------------\n");
+		printf("Redirection :\n");
+		while (data->redirection != NULL)
+		{
+			printf("%s\n",data->redirection->file_name);
+			printf("%d\n",data->redirection->type);
 			
-	// 		data->redirection = data->redirection->next;
-	// 	}
-	// 	printf("Arguments :\n");
-	// 	while (data->arguments[j])
-	// 	{
-	// 		printf("%s\n",data->arguments[j]);
-	// 		j++;
-	// 	}
-	// 	data = data->next;
-	// }
+			data->redirection = data->redirection->next;
+		}
+		printf("Arguments :\n");
+		while (data->arguments[j])
+		{
+			printf("%s\n",data->arguments[j]);
+			j++;
+		}
+		data = data->next;
+	}
 		
 // exec
-	if (1 && is_builtin(data->arguments[0]))
-	{
-		printf("%s\n", data->arguments[0]);
-		ft_builtins(data, &env_list);
-	}
-	else
-		exec_cmd(data, envp);
+	// if (1 && is_builtin(data->arguments[0]))
+	// {
+	// 	printf("%s\n", data->arguments[0]);
+	// 	ft_builtins(data, &env_list);
+	// }
+	// else
+	// 	exec_cmd(data, envp);
 
 		//ft_free_split(str);
 	}

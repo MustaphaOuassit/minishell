@@ -38,26 +38,82 @@ void	fill_string_double(int indice, int ele)
 	int j;
 	int tmp;
 	int m;
+	char *couts;
 	r = 0;
 	t = 0;
 	tmp = 0;
-	a = 0;
+	a = g_start + 1;
 	check = NULL;
 	l = 1;
-	i = g_start + 1;
-	m = g_start + 1;
+	i = 0;
+	m = 0;
+	couts = NULL;
 
-	while (g_cmd[m])
+	while (g_cmd[a])
 	{
-		if(g_cmd[m] == ele)
+		t++;
+		if(g_cmd[a] == '\"')
+		{
+			r = 1;
+			t--;
+		}
+		if(g_cmd[a] == '\'' && r == 1)
+			t--;
+		a++;
+	}
+	t = t + 2;
+	printf("%d\n",t);
+	couts = (char *)malloc(sizeof(char) * (t + 1));
+	a = g_start + 1;
+	couts[t] = '\0';
+	tmp = t;
+	t = 0;
+	r = 0;
+	while (couts[t])
+	{
+		if(g_cmd[a] == '\"')
+			r = 1;
+		else
+			r = 0;
+		if(t == 0)
+		{
+			couts[t] = '\"';
+			t++;
+		}
+		else
+		{
+			if(t == tmp - 1)
+			{
+				couts[t] = '\"';
+				t++;
+			}
+			else
+			{
+				if(g_cmd[a] != '\"')
+				{	couts[t] = g_cmd[a];
+					t++;
+				}
+				a++;
+			}
+		}
+	}
+	tmp = 0;
+	r = 0;
+	m++;
+	i++;
+	printf("%s\n",couts);
+	couts = ft_strdup("\"hello\"");
+	while (couts[m])
+	{
+		if(couts[m] == ele)
 			break ;
-		if(g_cmd[m] == '$')
+		if(couts[m] == '$')
 		{
 			l++;
-			if((g_cmd[m - 1] == ' ') || (g_cmd[m - 1] == '\"'))
+			if((couts[m - 1] == ' ') || (couts[m - 1] == '\"'))
 				l = l - 1;
 		}
-		if((g_cmd[m] == ' ') && (g_cmd[m + 1] != ele) && (g_cmd[m + 1] != ' ') && (g_cmd[m + 1] != '\0'))
+		if((couts[m] == ' ') && (couts[m + 1] != ele) && (couts[m + 1] != ' ') && (couts[m + 1] != '\0'))
 			l++;
 		m++;
 	}
@@ -67,13 +123,13 @@ void	fill_string_double(int indice, int ele)
 	l = 0;
 	while (i < (int)ft_strlen(g_cmd))
 	{
-		if(g_cmd[i] == '\"')
+		if(couts[i] == '\"')
 			break;
 		r = 0;
-		if(g_cmd[i] != '$')
+		if(couts[i] != '$')
 		{
 			tmp = i;
-			while ((g_cmd[i] != '\"') && (g_cmd[i] != '$') && (g_cmd[i] != '\0') )
+			while ((couts[i] != '\"') && (couts[i] != '$') && (couts[i] != '\0') )
 			{
 				i++;
 				r++;
@@ -84,9 +140,9 @@ void	fill_string_double(int indice, int ele)
 				check[l] = (char *)malloc(sizeof(char) * (r + 1));
 				check[l][r] = '\0';
 				t = 0;
-				while((check[l][t]) && (g_cmd[tmp]))
+				while((check[l][t]) && (couts[tmp]))
 				{
-					check[l][t] = g_cmd[tmp];
+					check[l][t] = couts[tmp];
 					tmp++;
 					t++;
 				}
@@ -95,11 +151,11 @@ void	fill_string_double(int indice, int ele)
 		}
 		else
 		{
-			a = g_cmd[i];
+			a = couts[i];
 			tmp = i;
 			r++;
 			i++;
-			while ((g_cmd[i] != ' ') && (g_cmd[i] != '\"') && (g_cmd[i] != '$') && (g_cmd[i] != '\0') )
+			while ((couts[i] != ' ') && (couts[i] != '\"') && (couts[i] != '$') && (couts[i] != '\0') )
 			{
 				i++;
 				r++;
