@@ -362,6 +362,7 @@ int	check_word(t_tokens **head, int indice)
 			initial.len = indice;
 		}
 	}
+	printf("world\n");
 	indice = check_type_word(head,continue_check(initial.len,
 				initial.sword), indice);
 	return (indice);
