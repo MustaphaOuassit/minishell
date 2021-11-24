@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 13:39:35 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/20 10:53:55 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/23 11:17:20 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	free_two(char **table)
 
 int	put_in_parcer(t_tokens **head, char *value, int type)
 {
+	printf("value : %s\n", value);
+	printf("type : %d\n", type);
 	char *tmp;
 
 	tmp = ft_strdup(value);
@@ -96,7 +98,7 @@ char	*check_allocation(t_tokens **cmd, int *l)
 	while (cmd[i])
 	{
 		*l= *l + 1;
-		if(cmd[i]->type == 1)
+		if(cmd[i]->type == 1 || cmd[i]->type == 2)
 		{
 			if(cmd[i + 1])
 				*l = *l - 2;

@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   builtin_only.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/29 13:16:12 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/23 11:10:44 by ayafdel          ###   ########.fr       */
+/*   Created: 2021/11/23 13:05:12 by ayafdel           #+#    #+#             */
+/*   Updated: 2021/11/23 17:04:28 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// "../includes/minishell.h"
+# include "../includes/minishell.h"
+int	builtin_only(t_data *data, t_envp **env_list)
+{
+	int *fd;
+	int tmp_fd;
 
-// int	main(void)
-// {
-// 	char	*line;
-// 	int		indice_start;
-// 	while (1)
-// 	{
-// 		write(1, "-> minishell ", ft_strlen("-> minishell "));
-// 		get_next_line(0, &line);
-// 		g_cmd = line;
-// 		indice_start = skipe_space();
-	//	token_manipulation(indice_start);
-// 		g_toll = 0;
-// 		free(line);
-// 	}
-// 	return (0);
-// }
+	tmp_fd = 1;
+	//if (data->redirection)
+	fetch_fd(data->redirection, &fd);
+	//exit(0);
+	if (fd[1] != 1)
+	{
+		tmp_fd = dup(1);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+	}
+	
+	ft_builtins(data, env_list);
+	dup2(tmp_fd, 1);
+	return (0);
+}

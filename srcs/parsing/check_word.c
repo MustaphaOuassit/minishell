@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 08:51:06 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/20 10:53:49 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/23 11:14:48 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,20 @@ int	add_to_string_double(int indice, char *ele)
 	return (indice);
 }
 
+int	check_double(t_tokens **head ,int indice)
+{
+	if (indice + 1 < (int)ft_strlen(g_cmd))
+	{
+		if (g_cmd[indice + 1] == '<')
+		{
+			put_in_parcer(head,"<<", 22);
+			return (indice + 1);
+		}
+	}
+	put_in_parcer(head, "<", 15);
+	return (indice);
+}
+
 int	check_type_word(t_tokens **head, char *ptr, int indice)
 {
 	if (ptr && g_str)
@@ -271,6 +285,8 @@ int	check_type_word(t_tokens **head, char *ptr, int indice)
 			put_in_parcer(head, "|", 0);
 		else if (g_cmd[indice] == '>')
 			indice = check_arrow(head, indice);
+		else if (g_cmd[indice] == '<')
+			indice = check_double(head, indice);
 	}
 	free(ptr);
 	return (indice);

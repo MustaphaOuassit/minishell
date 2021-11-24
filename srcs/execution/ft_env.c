@@ -38,59 +38,25 @@ int		fetch_fd(t_redirection *red, int **fd)
 	{
 		if (tmp->type == 0)
 		{
+			exit(0);
+			//if (tmp->file_name)
 			(*fd)[0] = open(tmp->file_name, O_RDONLY);
 			if ((*fd)[0] == -1)
 				return (1);
 		}
 		if (tmp->type == 1)
 		{
+			//if (tmp->file_name)
 			(*fd)[1] = open(tmp->file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
 			if ((*fd)[1] == -1)
 				return (1);
 		}
-		printf("%s\n", tmp->file_name);
+
 		tmp = tmp->next;
 	}
 	return (0);
 }
 
-void	ft_builtins(t_data *data, t_envp **env_list)
-{
-
-		if (ft_strcmp(data->arguments[0],"echo") == 0)
-			ft_echo(data); 
-		if (ft_strcmp(data->arguments[0], "pwd") == 0)
-			ft_pwd();
-		if (ft_strcmp(data->arguments[0], "env") == 0)
-			ft_env(data, env_list);
-		if (ft_strcmp(data->arguments[0], "export") == 0)
-			ft_export(data, env_list);
-		if (ft_strcmp(data->arguments[0], "unset") == 0)
-			ft_unset(data->arguments, env_list);
-		if (ft_strcmp(data->arguments[0], "exit") == 0)
-			ft_exit();
-		if (ft_strcmp(data->arguments[0], "cd") == 0)
-			ft_cd(data);
-}
-
-int		is_builtin(char *cmd)
-{
-		if (ft_strcmp(cmd,"echo") == 0)
-			return (1);
-		if (ft_strcmp(cmd, "env") == 0)
-			return (1);
-		if (ft_strcmp(cmd, "export") == 0)
-			return (1);
-		if (ft_strcmp(cmd, "unset") == 0)
-			return (1);
-		if (ft_strcmp(cmd, "exit") == 0)
-			return (1);
-		if (ft_strcmp(cmd, "pwd") == 0)
-			return (1);
-		if (ft_strcmp(cmd, "cd") == 0)
-			return (1);
-		return (0);
-}
 
 char	*fetch_env_path(char **envp)
 {
@@ -156,8 +122,6 @@ void	ft_execute(char **args, int *fd, char **envp)
 		dup2(fd[0], STDIN_FILENO);
 	if (fd[1] != 1)
 	{
-		//printf("fd[1]=%d\n", fd[1]);
-		//printf("%d\n", fd[1]);
 		dup2(fd[1], STDOUT_FILENO);
 	}
 	execve(path, args, envp);
@@ -182,41 +146,4 @@ int		exec_cmd(t_data *data, char **envp)
 	else
 		wait(NULL);
 	return (0);
-}
-void	new_node_redirect(t_redirection **head, char *file, int type)
-{
-	t_redirection *new;
-	t_redirection *tmp;
-
-	tmp = *head;
-	new = malloc(sizeof(t_redirection));
-	new->file_name = ft_strdup(file);
-	new->type = type;
-	new->next = NULL;
-	if (*head == NULL)
-	{
-		(*head) = new;
-		return ;
-	}
-	while (tmp->next != NULL)
-	{
-		tmp = tmp->next;
-		printf("TEST\n");
-	}
-	tmp->next = new;
-}
-
-t_redirection * fill_redirect()
-{
-	t_redirection *head;
-	head = NULL;
-	new_node_redirect(&head, "file1", 1);
-	new_node_redirect(&head, "file2", 1);
-	new_node_redirect(&head, "file3", 1);
-	new_node_redirect(&head, "file4", 1);
-	//new_node_redirect(&head, "file2", 1);
-	printf("%s\n", head->file_name);
-	//printf("%s\n", head->filename);
-
-	return (head);
 }

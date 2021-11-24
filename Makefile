@@ -6,7 +6,7 @@
 #    By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/29 13:06:02 by mouassit          #+#    #+#              #
-#    Updated: 2021/11/20 10:07:49 by ayafdel          ###   ########.fr        #
+#    Updated: 2021/11/24 10:22:49 by ayafdel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,9 @@ SRC =./srcs/main.c \
 	  ./srcs/execution/ft_cd.c \
 	  ./srcs/execution/ft_export.c \
 	  ./srcs/execution/ft_env.c \
+	   ./srcs/execution/ft_builtins.c \
+	   ./srcs/execution/builtin_only.c \
+	   ./srcs/execution/fetch_envp.c \
 
 
 LIBFT = ./libraries/libft/libft.a
