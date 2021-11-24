@@ -14,13 +14,51 @@
 
 int	check_couts(int indice)
 {
+	char *double_couts;
+	char *singal_couts;
+	int i;
+	int tmp;
+
+	i = 0;
+	double_couts = NULL;
+	singal_couts = NULL;
 	if (g_cmd[indice] == '\"')
 	{
-		indice = add_to_string_double(indice + 1, "\"'");
+		indice = add_to_string_double(indice + 1, "\"'",&double_couts);
 	}
 		
 	else if (g_cmd[indice] == '\'')
-		indice = add_to_string(indice + 1, "\"'");
+	{
+		indice++;
+		tmp = indice;
+		while (g_cmd[indice])
+		{
+			if(g_cmd[indice] == '\'' && g_cmd[indice + 1] && g_cmd[indice + 1] == '\"')
+				break;
+			if(g_cmd[indice] == '\'')
+				i--;
+			i++;
+			indice++;
+		}
+		singal_couts = (char *)malloc(sizeof(char) * (i + 1));
+		singal_couts[i] = '\0';
+		i = 0;
+		while (singal_couts[i])
+		{
+			if(g_cmd[tmp] != '\'')
+			{
+				singal_couts[i] = g_cmd[tmp];
+				i++;
+			}
+			tmp++;
+		}
+		//indice = add_to_string(indice + 1, "\"'",&singal_couts);
+		
+	}
+	// printf("S : %s\n",singal_couts);
+	// printf("D : %s\n",double_couts);
+	printf("hellodafadsf\n");
+	g_str = ft_strdup("hello");
 	return (indice);
 }
 
