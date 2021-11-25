@@ -6,28 +6,29 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:12:46 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/11/23 13:25:57 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/25 11:21:17 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/minishell.h"
-void	ft_builtins(t_data *data, t_envp **env_list)
+int		ft_builtins(t_data *data, t_envp **env_list)
 {
 
 		if (ft_strcmp(data->arguments[0],"echo") == 0)
-			ft_echo(data); 
+			return (ft_echo(data)); 
 		if (ft_strcmp(data->arguments[0], "pwd") == 0)
-			ft_pwd();
+			return (ft_pwd());
 		if (ft_strcmp(data->arguments[0], "env") == 0)
-			ft_env(data, env_list);
+			return (ft_env(data, env_list));
 		if (ft_strcmp(data->arguments[0], "export") == 0)
-			ft_export(data, env_list);
+			return (ft_export(data, env_list));
 		if (ft_strcmp(data->arguments[0], "unset") == 0)
-			ft_unset(data->arguments, env_list);
+			return (ft_unset(data->arguments, env_list));
 		if (ft_strcmp(data->arguments[0], "exit") == 0)
-			ft_exit();
+			return (ft_exit());
 		if (ft_strcmp(data->arguments[0], "cd") == 0)
-			ft_cd(data);
+			return (ft_cd(data));
+		return (0);
 }
 
 int		is_builtin(char *cmd)

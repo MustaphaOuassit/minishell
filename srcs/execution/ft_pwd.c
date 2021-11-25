@@ -1,9 +1,9 @@
 # include "../includes/minishell.h"
 
-void	ft_pwd()
+int		ft_pwd()
 {
 	char buf[100];
 
 	printf("%s\n",getcwd(buf, sizeof(buf)));
-
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/24 10:22:26 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/25 11:48:09 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,22 @@ typedef		struct s_data{
 }		t_data;
 
 //exec
-void	ft_builtins(t_data *data, t_envp **env_list);
+int		ft_builtins(t_data *data, t_envp **env_list);
 int		is_builtin(char *cmd);
 int		exec_cmd(t_data *data, char **envp);
-void	ft_cd(t_data *data);
-void	ft_pwd();
-void    ft_env(t_data *data, t_envp **var);
+int		ft_cd(t_data *data);
+int		ft_pwd();
+int		ft_env(t_data *data, t_envp **var);
 int		ft_echo(t_data *data);
-void	ft_export(t_data *data, t_envp **env_list);
+int		ft_export(t_data *data, t_envp **env_list);
 void	add_str_to_node(t_envp **head, char *str);
 void	add_to_env(t_envp **head, t_envp *node);
 t_envp* fill_envp(char *str);
 int     env_key_error(char *var);
-void ft_unset(char **args, t_envp **env_list);
+int		ft_unset(char **args, t_envp **env_list);
 void    free_envp(t_envp *env);
-int		fetch_fd(t_redirection *red, int **fd);
-void	ft_exit();
+int		fetch_fd(t_redirection *red, int *fd);
+int		ft_exit();
 int		builtin_only(t_data *data, t_envp **env_list);
 int     fetch_envp(t_envp **env_list, char **envp);
 

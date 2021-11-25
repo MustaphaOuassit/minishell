@@ -1,6 +1,6 @@
 # include "../includes/minishell.h"
 
-void	ft_cd(t_data *data)
+int		ft_cd(t_data *data)
 {
 	//char buf[100];
 	if (data->arguments[1] == NULL)
@@ -16,4 +16,5 @@ void	ft_cd(t_data *data)
 		}
 		//printf("%s\n",getcwd(buf, sizeof(buf)));
 	}
+	return (0);
 }

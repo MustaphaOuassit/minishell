@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/24 10:33:29 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/25 11:40:43 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,9 @@ t_redirection * fill_redirect()
 int main(int argc, char **argv, char **envp)
 {
 	char *str;
-	int i;
 	t_data *data;
     t_envp *env_list;
-	int j;
-
-	i = 0;
-	j = 0;
+	int ret;
 	data = malloc(sizeof(t_data));
 	data->redirection = NULL;
 	fetch_envp(&env_list, envp);
@@ -69,9 +65,11 @@ int main(int argc, char **argv, char **envp)
 		str = readline("-> minishell ");
 		add_history(str);
 		data->arguments = ft_split(str, ' ');
-		//data->redirection = fill_redirect();
-	//t_data *tmp = data;
-	
+		data->redirection = fill_redirect();
+		
+	//print node
+	//int i,j=0;
+	//t_data *tmp = data;	
 	// while (tmp != NULL)
 	// {
 	// 	j = 0;
@@ -79,8 +77,7 @@ int main(int argc, char **argv, char **envp)
 	// 	while (tmp->redirection != NULL)
 	// 	{
 	// 		//printf("%s\n",tmp->redirection->file_name);
-	// 		//printf("%d\n",tmp->redirection->type);
-			
+	// 		//printf("%d\n",tmp->redirection->type);		
 	// 		tmp->redirection = tmp->redirection->next;
 	// 	}
 	// 	printf("Arguments : ");
@@ -92,15 +89,14 @@ int main(int argc, char **argv, char **envp)
 	// 	tmp = tmp->next;
 	// 	printf("----------------------------\n");
 	// }
-		
-// exec
-	if (1 && is_builtin(data->arguments[0]))
-	{
-		//printf("%s\n", data->arguments[0]);
-		builtin_only(data, &env_list);
-	}
-	else
-		exec_cmd(data, envp);
-		//ft_free_split(str);
-	}
+		if (1 && is_builtin(data->arguments[0]))
+		{
+			//printf("%s\n", data->arguments[0]);
+			ret = builtin_only(data, &env_list);
+		}
+		else
+			exec_cmd(data, envp);
+			//ft_free_split(str);
+		}
+		return (0);
 }

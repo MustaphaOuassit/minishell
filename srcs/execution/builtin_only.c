@@ -6,28 +6,43 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:05:12 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/11/23 17:04:28 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/25 11:41:54 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/minishell.h"
-int	builtin_only(t_data *data, t_envp **env_list)
+int		redirect(int *fd, int *tmp_fd)
 {
-	int *fd;
-	int tmp_fd;
-
-	tmp_fd = 1;
-	//if (data->redirection)
-	fetch_fd(data->redirection, &fd);
-	//exit(0);
 	if (fd[1] != 1)
 	{
-		tmp_fd = dup(1);
+		tmp_fd[1] = dup(1);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
-	
+	if (fd[0] != 0)
+	{
+		tmp_fd[0] = dup(0);
+		dup2(fd[0], STDOUT_FILENO);
+		close(fd[0]);
+	}	
+	return (0);
+}
+
+int	builtin_only(t_data *data, t_envp **env_list)
+{
+	int fd[2];
+	int tmp_fd[2];
+
+	tmp_fd[0] = 0;
+	tmp_fd[1] = 1;
+	//if (data->redirection)
+	if (fetch_fd(data->redirection, fd) == 1)
+		return (1);
+	//exit(0);
+	redirect(fd, tmp_fd);
 	ft_builtins(data, env_list);
-	dup2(tmp_fd, 1);
+	dup2(tmp_fd[1], 1);
+	dup2(tmp_fd[0], 0);
+	
 	return (0);
 }

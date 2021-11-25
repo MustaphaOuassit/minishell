@@ -1,5 +1,6 @@
 # include "../includes/minishell.h"
-void    ft_exit()
+int     ft_exit()
 {
     exit(1);
+    return (0);
 }

@@ -26,7 +26,7 @@ void	remove_from_env(t_envp **head, char *key)
     free_envp(tmp);
 }
 
-void ft_unset(char **args, t_envp **env_list)
+int     ft_unset(char **args, t_envp **env_list)
 {
     int i;
 
@@ -39,4 +39,5 @@ void ft_unset(char **args, t_envp **env_list)
             remove_from_env(env_list, args[i]);
         i++;
     }
+    return (0);
 }

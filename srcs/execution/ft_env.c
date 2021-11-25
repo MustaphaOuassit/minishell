@@ -18,21 +18,20 @@ void print_env(t_envp **head)
     }
 }
 
-void    ft_env(t_data *data, t_envp **env_list)
+int		ft_env(t_data *data, t_envp **env_list)
 {
     (void) data;
     print_env(env_list);
+	return (0);
 }
 
-int		fetch_fd(t_redirection *red, int **fd)
+int		fetch_fd(t_redirection *red, int *fd)
 {
 	t_redirection *tmp;
 
-	*fd = malloc(2 * sizeof(int));
-	if (*fd == NULL)
-		return (1);
-	(*fd)[0] = 0;
-	(*fd)[1] = 1;
+
+	fd[0] = 0;
+	fd[1] = 1;
 	tmp = red;
 	while (tmp != NULL)
 	{
@@ -40,15 +39,15 @@ int		fetch_fd(t_redirection *red, int **fd)
 		{
 			exit(0);
 			//if (tmp->file_name)
-			(*fd)[0] = open(tmp->file_name, O_RDONLY);
-			if ((*fd)[0] == -1)
+			fd[0] = open(tmp->file_name, O_RDONLY);
+			if (fd[0] == -1)
 				return (1);
 		}
 		if (tmp->type == 1)
 		{
 			//if (tmp->file_name)
-			(*fd)[1] = open(tmp->file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
-			if ((*fd)[1] == -1)
+			fd[1] = open(tmp->file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
+			if (fd[1] == -1)
 				return (1);
 		}
 
@@ -134,13 +133,11 @@ int		exec_cmd(t_data *data, char **envp)
 
 	//int pipe_fd[2];
 	int fork_id[2];
-	int *fd;
+	int fd[2];
 	fork_id[0] = fork();
 	if (fork_id[0] == 0)
 	{
-		fetch_fd(data->redirection, &fd);
-		if (fd == NULL)
-			return (-1);
+		fetch_fd(data->redirection, fd);
 		ft_execute(data->arguments, fd, envp);
 	}
 	else
