@@ -137,7 +137,8 @@ int		exec_cmd(t_data *data, char **envp)
 	fork_id[0] = fork();
 	if (fork_id[0] == 0)
 	{
-		fetch_fd(data->redirection, fd);
+		if (fetch_fd(data->redirection, fd) == 1)
+			return (1);
 		ft_execute(data->arguments, fd, envp);
 	}
 	else
