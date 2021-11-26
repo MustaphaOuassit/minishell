@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 10:15:21 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/11/26 10:51:22 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/26 15:28:46 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,55 @@ int		change_pwd(t_envp **env_list)
 	}	
 	return (0);
 }
+
+int		fetch_home(t_envp **env_list, char **home)
+{
+	t_envp *tmp;
+
+	tmp = *env_list;
+	while (tmp != NULL)
+	{
+		if (!ft_strcmp(tmp->key, "HOME"))
+		{
+			if (tmp->equal == 0)
+				return (1);
+			*home = ft_strdup_null(tmp->value);
+			return (0);			
+		}
+		tmp = tmp->next;
+	}		
+	return (1);	
+}
+int		change_directory(char *str)
+{
+	if (chdir(str) == -1)
+	{
+		ft_putstr_fd("bash: cd: ", 1);
+		ft_putstr_fd(str, 1);
+		perror(" ");
+		return (1);
+	}
+	return (0);
+}
+
 int		ft_cd(t_data *data, t_envp **env_list)
 {
-	//char buf[100];
-	
+	char *home;
+
 	if (data->arguments[1] == NULL)
-		chdir("/Users/ayafdel");
-	else
 	{
-		if (chdir(data->arguments[1]) == -1)
+		if (fetch_home(env_list, &home) == 1)
 		{
-			ft_putstr_fd("bash: cd: ", 1);
-			ft_putstr_fd(data->arguments[1], 1);
-			//ft_putstr_fd(" ", 1);
-			perror(" ");
+			ft_putstr_fd("bash: cd: HOME not set\n", 2);
 			return (1);
 		}
-		//printf("%s\n",getcwd(buf, sizeof(buf)));
+		if (home == NULL)
+			return (0);
+		change_directory(home);
+		free(home);
 	}
+	else
+		change_directory(data->arguments[1]);
 	change_old_pwd(env_list);
 	change_pwd(env_list);
 	return (0);

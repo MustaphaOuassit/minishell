@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/26 11:08:10 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/26 16:53:22 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int main(int argc, char **argv, char **envp)
 		add_history(str);
 		data->arguments = ft_split(str, ' ');
 		//data->redirection = fill_redirect();
-		
 	//print node
 	//int i,j=0;
 	//t_data *tmp = data;	
