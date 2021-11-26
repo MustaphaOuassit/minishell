@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/26 16:53:22 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/26 20:33:38 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int main(int argc, char **argv, char **envp)
 			ret = exec_cmd(data, envp);
 		ft_free_split(data->arguments);
 		free(str);
+		printf("$? = %d \n", ret);
 	}
 		return (0);
 }

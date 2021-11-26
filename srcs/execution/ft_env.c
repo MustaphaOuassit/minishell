@@ -134,6 +134,7 @@ int		exec_cmd(t_data *data, char **envp)
 	//int pipe_fd[2];
 	int fork_id[2];
 	int fd[2];
+	int status;
 	fork_id[0] = fork();
 	if (fork_id[0] == 0)
 	{
@@ -141,7 +142,8 @@ int		exec_cmd(t_data *data, char **envp)
 			return (1);
 		ft_execute(data->arguments, fd, envp);
 	}
-	else
-		wait(NULL);
-	return (0);
+	waitpid(0, &status, WUNTRACED | WCONTINUED);		/* Collect childs */
+	if (WIFEXITED(status)) 
+		printf("exited, status=%d\n", WEXITSTATUS(status));
+	return (WEXITSTATUS(status));
 }

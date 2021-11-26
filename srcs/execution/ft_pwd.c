@@ -2,8 +2,8 @@
 
 int		ft_pwd()
 {
-	char buf[100];
+	char cwd[PATH_MAX];
 
-	printf("%s\n",getcwd(buf, sizeof(buf)));
+	printf("%s\n",getcwd(cwd, sizeof(cwd)));
 	return (0);
 }

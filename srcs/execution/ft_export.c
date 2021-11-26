@@ -95,8 +95,9 @@ int		ft_export(t_data *data, t_envp **env_list)
 {
     int i;
 	t_envp *node;
+	int		ret;
 
-
+	ret = 0;
     i = 1;
     if (data->arguments[1] == NULL)
         print_exp(*env_list);
@@ -106,11 +107,14 @@ int		ft_export(t_data *data, t_envp **env_list)
         {
             node = fill_envp(data->arguments[i]);
             if (env_key_error(node->key))
+			{
                 printf("bash: export: `%s`: not a valid identifier\n", data->arguments[i]);
+				ret = 1;
+			}
             else
                 add_to_env(env_list, node);
             i++;
         }
     }
-	return (0);
+	return (ret);
 }
