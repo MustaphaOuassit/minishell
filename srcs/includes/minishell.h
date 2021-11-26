@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/25 11:48:09 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/26 10:29:45 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/history.h>
 # include "../../libraries/libft/libft.h"
 # include <fcntl.h>
+# include <limits.h>
 
 
 typedef struct s_envp{
@@ -69,7 +70,7 @@ typedef		struct s_data{
 int		ft_builtins(t_data *data, t_envp **env_list);
 int		is_builtin(char *cmd);
 int		exec_cmd(t_data *data, char **envp);
-int		ft_cd(t_data *data);
+int		ft_cd(t_data *data, t_envp **env_list);
 int		ft_pwd();
 int		ft_env(t_data *data, t_envp **var);
 int		ft_echo(t_data *data);

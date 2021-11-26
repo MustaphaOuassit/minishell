@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:05:12 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/11/25 11:41:54 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/26 11:09:14 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	builtin_only(t_data *data, t_envp **env_list)
 	tmp_fd[0] = 0;
 	tmp_fd[1] = 1;
 	//if (data->redirection)
+	//return (0);
 	if (fetch_fd(data->redirection, fd) == 1)
 		return (1);
 	//exit(0);

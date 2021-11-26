@@ -6,7 +6,7 @@
 #    By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/29 13:06:02 by mouassit          #+#    #+#              #
-#    Updated: 2021/11/24 10:22:49 by ayafdel          ###   ########.fr        #
+#    Updated: 2021/11/26 10:08:18 by ayafdel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC =./srcs/main.c \
 	  ./srcs/parsing/lexer.c \
 	  ./srcs/parsing/parser.c \
 	  ./srcs/parsing/linkedlist.c \
-	  ./srcs/execution/ft_exit_bi.c \
+	  ./srcs/execution/ft_exit.c \
 	  ./srcs/execution/free_struct.c \
 	  ./srcs/execution/ft_unset.c \
 	  ./srcs/execution/ft_echo.c \
@@ -38,7 +38,7 @@ all : $(NAME)
 
 $(NAME):
 	@make -s -C ./libraries/libft
-	@gcc -Wall -Wextra -Werror -lreadline -fsanitize=address -g -I .  $(SRC) $(LIBFT) -D BUFFER_SIZE=1 -o $(NAME)
+	@gcc -Wall -Wextra -Werror -lreadline -g -I .  $(SRC) $(LIBFT) -D BUFFER_SIZE=1 -o $(NAME)
 
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/25 12:08:53 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/26 11:08:10 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int main(int argc, char **argv, char **envp)
 		str = readline("-> minishell ");
 		add_history(str);
 		data->arguments = ft_split(str, ' ');
-		data->redirection = fill_redirect();
+		//data->redirection = fill_redirect();
 		
 	//print node
 	//int i,j=0;
@@ -96,7 +96,8 @@ int main(int argc, char **argv, char **envp)
 		}
 		else
 			ret = exec_cmd(data, envp);
-			//ft_free_split(str);
-		}
+		ft_free_split(data->arguments);
+		free(str);
+	}
 		return (0);
 }
