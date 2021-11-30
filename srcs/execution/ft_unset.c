@@ -29,15 +29,20 @@ void	remove_from_env(t_envp **head, char *key)
 int     ft_unset(char **args, t_envp **env_list)
 {
     int i;
+    int ret;
 
+    ret = 0;
     i = 1;
     while (args[i])
     {
         if (env_key_error(args[i]))
-            printf("bash: export: `%s`: not a valid identifier\n", args[i]);
+        {
+            printf("bash: unset: `%s`: not a valid identifier\n", args[i]);
+            ret = 1;
+        }
         else
             remove_from_env(env_list, args[i]);
         i++;
     }
-    return (0);
+    return (ret);
 }

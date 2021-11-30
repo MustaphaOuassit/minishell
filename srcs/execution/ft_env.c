@@ -35,15 +35,15 @@ int		fetch_fd(t_redirection *red, int *fd)
 	tmp = red;
 	while (tmp != NULL)
 	{
-		if (tmp->type == 0)
+		printf("TEST\n");
+		if (tmp->type == REDIRECT_IN)
 		{
-			exit(0);
 			//if (tmp->file_name)
 			fd[0] = open(tmp->file_name, O_RDONLY);
 			if (fd[0] == -1)
 				return (1);
 		}
-		if (tmp->type == 1)
+		if (tmp->type == REDIRECT_OUT)
 		{
 			//if (tmp->file_name)
 			fd[1] = open(tmp->file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
@@ -116,7 +116,7 @@ void	ft_execute(char **args, int *fd, char **envp)
 		path = ft_strdup(args[0]);
 	else
 		path = fetch_pathname(args[0], envp);
-	printf("fd[1]=%d\n", fd[1]);
+	//printf("fd[1]=%d\n", fd[1]);
 	if (fd[0] != 0)
 		dup2(fd[0], STDIN_FILENO);
 	if (fd[1] != 1)
@@ -143,7 +143,7 @@ int		exec_cmd(t_data *data, char **envp)
 		ft_execute(data->arguments, fd, envp);
 	}
 	waitpid(0, &status, WUNTRACED | WCONTINUED);		/* Collect childs */
-	if (WIFEXITED(status)) 
-		printf("exited, status=%d\n", WEXITSTATUS(status));
+	// if (WIFEXITED(status)) 
+	// 	printf("exited, status=%d\n", WEXITSTATUS(status));
 	return (WEXITSTATUS(status));
 }

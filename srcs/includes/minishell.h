@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/26 10:29:45 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/30 11:40:22 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ typedef struct s_envp{
 	struct s_envp *next;
 }   t_envp;
 
-
-
 typedef struct s_initialisation
 {
 	int	i;
@@ -41,17 +39,31 @@ typedef struct s_initialisation
 	int	len;
 	int	sword;
 }				t_initial;
-char	*g_cmd;
-char	*g_str;
-int		g_start;
-int		g_rmp;
-int		g_toll;
 
 typedef		struct s_tokens{
 	char	*value;
 	int		type;
 	struct s_tokens *next;
 }		t_tokens;
+
+
+
+typedef		struct s_list{
+	char	*value;
+	struct s_list *next;
+}		t_list;
+
+typedef		struct s_init{
+	int type;
+	char *token_word;
+	char *value;
+	int len;
+	int close;
+	int i;
+	int len_dollar;
+	char *dollar;
+	char *token;
+}		t_init;
 
 typedef		struct s_redirection{
 	char	*file_name;
@@ -60,11 +72,22 @@ typedef		struct s_redirection{
 }			t_redirection;
 
 typedef		struct s_data{
-	t_tokens	**line_cmd;
 	char	**arguments;
+	int		nb_heredoc;
 	t_redirection *redirection;
 	struct s_data *next;
 }		t_data;
+
+typedef		struct s_args{
+	char	*arguments;
+	struct	s_args *next;
+}			t_args;
+
+
+
+
+
+
 
 //exec
 int		ft_builtins(t_data *data, t_envp **env_list);
@@ -89,20 +112,24 @@ int     fetch_envp(t_envp **env_list, char **envp);
 
 
 //parsing
-int				skipe_space(void);
-void			token_manipulation(t_data **data, int indice);
-int				put_in_parcer(t_tokens **head, char *value, int type);
-int				check_arrow(t_tokens **head, int indice);
-int				add_to_string(int indice, char *ele, char **couts);
-int				add_to_string_double(int indice, char *ele, char **couts);
-void			fill_string_double(int indice, int ele, char **dbcouts);
-int				check_couts(int indice);
-void			check_alloc(int indice,char *str,int *l);
-char			*continue_check(int len, int sword);
-int				check_word(t_tokens **head, int indice);
-void			fill_data(t_data **dt ,t_tokens *data);
-char			*get_env(char *value);
-int		   		fill_linkdlist(t_data **head, t_tokens **data);
 
+/*
+	| : 1;
+	> : 2;
+	>> : 3;
+	< : 4;
+	<< : 5;
+	word : 6;
+*/
+#define REDIRECT_OUT 2
+#define APPEND_OUT 3
+#define REDIRECT_IN 4
+#define HEREDOC 5
+
+void    parsing(char *cmd, int *error,t_envp *env_list, t_data **data);
+int    list_tokens(t_list **head, char *data);
+int    check_tokens(t_list *head, int error,t_envp *env_list, t_data **dt);
+int     fill_data(t_tokens *tokens, t_data **data);
+int		delimiter(char *value, int *start);
 
 #endif

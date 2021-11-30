@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/26 20:33:38 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/11/30 11:33:38 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ int main(int argc, char **argv, char **envp)
 	t_data *data;
     t_envp *env_list;
 	int ret;
-	data = malloc(sizeof(t_data));
-	data->redirection = NULL;
+	data = NULL;
+	//data = malloc(sizeof(t_data));
+	//data->redirection = NULL;
 	fetch_envp(&env_list, envp);
 	if (argc != 1 && !argv[0]) 
         return(-1);
@@ -64,7 +65,35 @@ int main(int argc, char **argv, char **envp)
 	{
 		str = readline("-> minishell ");
 		add_history(str);
-		data->arguments = ft_split(str, ' ');
+		parsing(str,&ret,env_list,&data);
+		// 		if(!error)
+		// {
+		// 	while (data != NULL)
+		// 	{
+		// 		j = 0;
+		// 		printf("-------------------\n");
+		// 		printf("\n");
+		// 		printf("Arguments :\n");
+		// 		while (data->arguments[j])
+		// 		{
+		// 		printf("%s\n",data->arguments[j]);
+		// 		j++;
+		// 	}
+		// 		printf("\n");
+		// 		printf("Redirections :\n");
+		// 	while (data->redirection != NULL)
+		// 	{
+		// 		printf("%s %d\n",data->redirection->file_name,data->redirection->type);
+		// 		data->redirection = data->redirection->next;
+		// 	}
+		// 		printf("\n");
+		// 		printf("Heredoc :\n");
+		// 		printf("%d\n",data->nb_heredoc);
+		// 		data = data->next;
+		// 	}
+		// }
+		
+		//data->arguments = ft_split(str, ' ');
 		//data->redirection = fill_redirect();
 	//print node
 	//int i,j=0;
@@ -95,9 +124,10 @@ int main(int argc, char **argv, char **envp)
 		}
 		else
 			ret = exec_cmd(data, envp);
-		ft_free_split(data->arguments);
+		data = NULL;
+		//ft_free_split(data->arguments);
 		free(str);
-		printf("$? = %d \n", ret);
+		//printf("$? = %d \n", ret);
 	}
 		return (0);
 }
