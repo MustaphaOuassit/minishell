@@ -29,9 +29,6 @@ int		fetch_fd(t_redirection *red, int *fd)
 {
 	t_redirection *tmp;
 
-
-	fd[0] = 0;
-	fd[1] = 1;
 	tmp = red;
 	while (tmp != NULL)
 	{
@@ -118,10 +115,14 @@ void	ft_execute(char **args, int *fd, char **envp)
 		path = fetch_pathname(args[0], envp);
 	//printf("fd[1]=%d\n", fd[1]);
 	if (fd[0] != 0)
+	{
 		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+	}
 	if (fd[1] != 1)
 	{
 		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
 	}
 	execve(path, args, envp);
 	perror("");
@@ -131,18 +132,40 @@ void	ft_execute(char **args, int *fd, char **envp)
 int		exec_cmd(t_data *data, char **envp)
 {
 
-	//int pipe_fd[2];
-	int fork_id[2];
+	int pipe_fd[2];
+	int pid;
 	int fd[2];
+	int tmp_fd;
 	int status;
-	fork_id[0] = fork();
-	if (fork_id[0] == 0)
+
+	tmp_fd = 0;
+	while (data)
 	{
-		if (fetch_fd(data->redirection, fd) == 1)
-			return (1);
-		ft_execute(data->arguments, fd, envp);
+		fd[0] = 0;
+		fd[1] = 1;
+		pipe(pipe_fd);
+		pid = fork();
+		if (pid == 0)
+		{
+			fd[0] = tmp_fd;
+			if (data->next != NULL)
+			{	
+				fd[1] = pipe_fd[1];
+			}
+			if (fetch_fd(data->redirection, fd) == 1)
+				return (1);
+			ft_execute(data->arguments, fd, envp);
+		}
+		else
+		{
+			close(pipe_fd[1]);
+			tmp_fd = pipe_fd[0];
+		}
+		data = data->next;
 	}
-	waitpid(0, &status, WUNTRACED | WCONTINUED);		/* Collect childs */
+	//waitpid(0, &status, WUNTRACED | WCONTINUED);
+	while(wait(NULL) != -1)
+	;
 	// if (WIFEXITED(status)) 
 	// 	printf("exited, status=%d\n", WEXITSTATUS(status));
 	return (WEXITSTATUS(status));
