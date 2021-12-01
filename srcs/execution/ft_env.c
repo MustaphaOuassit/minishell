@@ -54,18 +54,24 @@ int		fetch_fd(t_redirection *red, int *fd)
 }
 
 
-char	*fetch_env_path(char **envp)
+int		fetch_env_path(char **path, t_envp **env_list)
 {
-	int	i;
+	t_envp *tmp;
 
-	i = 0;
-	while (envp[i])
+	tmp = *env_list;
+
+	while (tmp != NULL)
 	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-			break ;
-		i++;
+		if (ft_strcmp(tmp->key, "PATH") == 0)
+		{
+			if (tmp->value == 0)
+				return (1);
+			*path = ft_strdup_null(tmp->value);
+			return (0);
+		}
+		tmp = tmp->next;
 	}
-	return (envp[i]);
+	return (1);
 }
 
 void	error_command(char	*str)
@@ -76,43 +82,55 @@ void	error_command(char	*str)
 	exit(127);
 }
 
-char	*fetch_pathname(char	*cmd,	char	**envp)
+int		fetch_pathname(char **pathname, char	*cmd, t_envp **env_list)
 {
-	char	**path;
-	char	*pathname;
+	char	*path;
+	char **path_tab;
 	int		i;
 
 	i = 0;
 
-	if (!cmd)
-		error_command(NULL);
-	if (access(cmd, F_OK) == 0 && cmd[0] == '/')
-		return (ft_strdup(cmd));
-	path = ft_split(fetch_env_path(envp), ':');
-	path[0] = ft_free_first(path[0], ft_strdup(ft_strrchr(path[0], '=') + 1));
-	while (path[i])
+	// if (!cmd)
+	// 	error_command(NULL);
+	// if (access(cmd, F_OK) == 0 && cmd[0] == '/')
+	// 	return (ft_strdup(cmd));
+	if (fetch_env_path(&path, env_list) == 1)
 	{
-		pathname = ft_strjoin_char(path[i], cmd, '/');
-		if (access(pathname, F_OK) == 0)
+		ft_putstr_fd("bash: ",2);
+		ft_putstr_fd(cmd,2);
+		ft_putstr_fd(" No such fle or directory\n",2);
+		return (127);
+	}// no path
+	path_tab = ft_split(path, ':');
+	//path[0] = ft_free_first(path[0], ft_strdup(ft_strrchr(path[0], '=') + 1));
+	while (path_tab[i])
+	{
+		*pathname = ft_strjoin_char(path_tab[i], cmd, '/');
+		if (access(*pathname, F_OK) == 0)
 			break ;
 		i++;
-		free(pathname);
+		free(*pathname);
 		if (path[i] == 0)
 			error_command(cmd);
 	}
-	ft_free_split(path);
-	return (pathname);
+	ft_free_split(path_tab);
+	return (0);
 }
 
-void	ft_execute(char **args, int *fd, char **envp)
+int		ft_execute(char **args, int *fd, t_envp **env_list, char **envp)
 {
-	char *path;
+	char *pathname;
+	int ret;
 
-
+	ret = 127;
 	if (args[0][0] == '/' || !ft_strncmp(args[0], "./", 2))
-		path = ft_strdup(args[0]);
+		pathname = ft_strdup(args[0]);
 	else
-		path = fetch_pathname(args[0], envp);
+	{
+		ret = fetch_pathname(&pathname, args[0], env_list);
+		if (ret != 0)
+			return (ret);
+	}
 	//printf("fd[1]=%d\n", fd[1]);
 	if (fd[0] != 0)
 	{
@@ -124,12 +142,17 @@ void	ft_execute(char **args, int *fd, char **envp)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
-	execve(path, args, envp);
-	perror("");
-	exit(127);
+
+	execve(pathname, args, envp);
+	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd(args[0], 2);
+	perror(" ");
+	return (127);
+	//exit(123);
+
 }
 
-int		exec_cmd(t_data *data, char **envp)
+int		exec_cmd(t_data *data, t_envp **env_list, char **envp)
 {
 
 	int pipe_fd[2];
@@ -154,7 +177,7 @@ int		exec_cmd(t_data *data, char **envp)
 			}
 			if (fetch_fd(data->redirection, fd) == 1)
 				return (1);
-			ft_execute(data->arguments, fd, envp);
+			exit(ft_execute(data->arguments, fd, env_list, envp));		
 		}
 		else
 		{
@@ -163,9 +186,9 @@ int		exec_cmd(t_data *data, char **envp)
 		}
 		data = data->next;
 	}
-	//waitpid(0, &status, WUNTRACED | WCONTINUED);
-	while(wait(NULL) != -1)
-	;
+	waitpid(pid, &status, WUNTRACED | WCONTINUED);
+	//while(waitpid(pid, &status, WUNTRACED | WCONTINUED) != -1)
+	//;
 	// if (WIFEXITED(status)) 
 	// 	printf("exited, status=%d\n", WEXITSTATUS(status));
 	return (WEXITSTATUS(status));
