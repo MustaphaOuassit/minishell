@@ -146,14 +146,12 @@ char ** convert_list_to_envp(t_envp **env_list)
 			envp[i] = ft_strdup(tmp->key);
 		else
 		{
-			if ((tmp->key && !tmp->value))
-				envp[i] = ft_strjoin(tmp->key, "=\"\"");
+			envp[i] = ft_strjoin(tmp->key, "=");
 			if (tmp->value)
 			{
-				envp[i] = ft_strjoin(tmp->key, "=\"");
 				envp[i] = ft_free_first(envp[i], ft_strjoin(envp[i], tmp->value));
-				envp[i] = ft_free_first(envp[i], ft_strjoin(envp[i], "\""));
 			}
+			//printf("%s\n", envp[i]);
 		}
 		i++;
 		tmp = tmp->next;
