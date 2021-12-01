@@ -116,8 +116,53 @@ int		fetch_pathname(char **pathname, char	*cmd, t_envp **env_list)
 	ft_free_split(path_tab);
 	return (0);
 }
+size_t	env_list_len(t_envp **env_list)
+{
+	size_t i;
+	t_envp *tmp;
 
-int		ft_execute(char **args, int *fd, t_envp **env_list, char **envp)
+	i = 0;
+	tmp = *env_list;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
+char ** convert_list_to_envp(t_envp **env_list)
+{
+	t_envp *tmp;
+	int i;
+	char **envp;
+
+	tmp = *env_list;
+	i = 0;
+	envp = malloc(sizeof(t_envp*) * (env_list_len(env_list) + 1));
+	while (tmp)
+	{
+		if (tmp->equal == 0)
+			envp[i] = ft_strdup(tmp->key);
+		else
+		{
+			if ((tmp->key && !tmp->value))
+				envp[i] = ft_strjoin(tmp->key, "=\"\"");
+			if (tmp->value)
+			{
+				envp[i] = ft_strjoin(tmp->key, "=\"");
+				envp[i] = ft_free_first(envp[i], ft_strjoin(envp[i], tmp->value));
+				envp[i] = ft_free_first(envp[i], ft_strjoin(envp[i], "\""));
+			}
+		}
+		i++;
+		tmp = tmp->next;
+	}
+	envp[i] = 0;
+	return (envp);
+}
+
+int		ft_execute(char **args, int *fd, t_envp **env_list)
 {
 	char *pathname;
 	int ret;
@@ -142,8 +187,8 @@ int		ft_execute(char **args, int *fd, t_envp **env_list, char **envp)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
-
-	execve(pathname, args, envp);
+	
+	execve(pathname, args, convert_list_to_envp(env_list));
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(args[0], 2);
 	perror(" ");
@@ -152,7 +197,7 @@ int		ft_execute(char **args, int *fd, t_envp **env_list, char **envp)
 
 }
 
-int		exec_cmd(t_data *data, t_envp **env_list, char **envp)
+int		ft_pipeline(t_data *data, t_envp **env_list)
 {
 
 	int pipe_fd[2];
@@ -177,7 +222,7 @@ int		exec_cmd(t_data *data, t_envp **env_list, char **envp)
 			}
 			if (fetch_fd(data->redirection, fd) == 1)
 				return (1);
-			exit(ft_execute(data->arguments, fd, env_list, envp));		
+			exit(ft_execute(data->arguments, fd, env_list));		
 		}
 		else
 		{

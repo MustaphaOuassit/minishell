@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/01 10:45:32 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/01 15:43:32 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int main(int argc, char **argv, char **envp)
 	{
 		str = readline("-> minishell ");
 		add_history(str);
+		if(!*str)
+			continue;
 		parsing(str,&ret,env_list,&data);
 		// 		if(!error)
 		// {
@@ -123,7 +125,7 @@ int main(int argc, char **argv, char **envp)
 			ret = builtin_only(data, &env_list);
 		}
 		else
-			ret = exec_cmd(data, &env_list, envp);
+			ret = ft_pipeline(data, &env_list);
 		data = NULL;
 		//ft_free_split(data->arguments);
 		free(str);

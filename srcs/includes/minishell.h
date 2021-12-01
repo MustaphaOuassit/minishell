@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/01 09:33:05 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/01 15:43:10 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef		struct s_args{
 //exec
 int		ft_builtins(t_data *data, t_envp **env_list);
 int		is_builtin(char *cmd);
-int		exec_cmd(t_data *data, t_envp **env_list, char **envp);
+int		ft_pipeline(t_data *data, t_envp **env_list);
 int		ft_cd(t_data *data, t_envp **env_list);
 int		ft_pwd();
 int		ft_env(t_data *data, t_envp **var);
