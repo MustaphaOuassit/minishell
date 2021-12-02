@@ -32,7 +32,7 @@ int		fetch_fd(t_redirection *red, int *fd)
 	tmp = red;
 	while (tmp != NULL)
 	{
-		printf("TEST\n");
+		//printf("TEST\n");
 		if (tmp->type == REDIRECT_IN)
 		{
 			//if (tmp->file_name)
@@ -160,21 +160,8 @@ char ** convert_list_to_envp(t_envp **env_list)
 	return (envp);
 }
 
-int		ft_execute(char **args, int *fd, t_envp **env_list)
+void ft_dup(int *fd)
 {
-	char *pathname;
-	int ret;
-
-	ret = 127;
-	if (args[0][0] == '/' || !ft_strncmp(args[0], "./", 2))
-		pathname = ft_strdup(args[0]);
-	else
-	{
-		ret = fetch_pathname(&pathname, args[0], env_list);
-		if (ret != 0)
-			return (ret);
-	}
-	//printf("fd[1]=%d\n", fd[1]);
 	if (fd[0] != 0)
 	{
 		dup2(fd[0], STDIN_FILENO);
@@ -184,7 +171,24 @@ int		ft_execute(char **args, int *fd, t_envp **env_list)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
+	}	
+}
+int		ft_execute(char **args, int *fd, t_envp **env_list)
+{
+	char *pathname;
+	int ret;
+
+	ret = 127;
+	ft_dup(fd);
+	if (args[0][0] == '/' || !ft_strncmp(args[0], "./", 2))
+		pathname = ft_strdup(args[0]);
+	else
+	{
+		ret = fetch_pathname(&pathname, args[0], env_list);
+		if (ret != 0)
+			return (ret);
 	}
+	//printf("fd[1]=%d\n", fd[1]);
 	
 	execve(pathname, args, convert_list_to_envp(env_list));
 	ft_putstr_fd("bash: ", 2);
@@ -192,9 +196,7 @@ int		ft_execute(char **args, int *fd, t_envp **env_list)
 	perror(" ");
 	return (127);
 	//exit(123);
-
 }
-
 int		ft_pipeline(t_data *data, t_envp **env_list)
 {
 
@@ -203,7 +205,7 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 	int fd[2];
 	int tmp_fd;
 	int status;
-
+	
 	tmp_fd = 0;
 	while (data)
 	{
@@ -213,13 +215,18 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 		pid = fork();
 		if (pid == 0)
 		{
+			//child_process function : declare fd inside it
 			fd[0] = tmp_fd;
 			if (data->next != NULL)
-			{	
 				fd[1] = pipe_fd[1];
-			}
 			if (fetch_fd(data->redirection, fd) == 1)
 				return (1);
+			//printf("TEST\n");
+			if (is_builtin(data->arguments[0]))
+			{
+				ft_dup(fd);
+				exit(ft_builtins(data, env_list));
+			}
 			exit(ft_execute(data->arguments, fd, env_list));		
 		}
 		else

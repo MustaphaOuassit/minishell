@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/01 15:43:32 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/02 15:40:01 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int main(int argc, char **argv, char **envp)
 	// 	tmp = tmp->next;
 	// 	printf("----------------------------\n");
 	// }
-		if (1 && is_builtin(data->arguments[0]))
+		if (data->next == NULL && is_builtin(data->arguments[0]))
 		{
 			//printf("%s\n", data->arguments[0]);
 			ret = builtin_only(data, &env_list);
