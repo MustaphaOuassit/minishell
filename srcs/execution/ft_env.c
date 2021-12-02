@@ -47,7 +47,14 @@ int		fetch_fd(t_redirection *red, int *fd)
 			if (fd[1] == -1)
 				return (1);
 		}
-
+		if (tmp->type == APPEND_OUT)
+		{
+			//if (tmp->file_name)
+			fd[1] = open(tmp->file_name, O_RDWR | O_CREAT | O_APPEND, 0777);
+			if (fd[1] == -1)
+				return (1);
+		}
+	
 		tmp = tmp->next;
 	}
 	return (0);
