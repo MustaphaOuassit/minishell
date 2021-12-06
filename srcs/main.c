@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/05 15:16:23 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/06 17:08:33 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int main(int argc, char **argv, char **envp)
 	while(1)
 	{
 		str = readline("-> minishell ");
-		printf("%s\n", str);
+		// printf("%s\n", str);
 		//rl_line_buffer = NULL;
 		//printf("|%s|\n", rl_line_buffer);
 		add_history(str);

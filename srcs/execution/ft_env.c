@@ -54,7 +54,8 @@ int		fetch_fd(t_redirection *red, int *fd)
 			if (fd[1] == -1)
 				return (1);
 		}
-	
+		printf("filename = %s\n", tmp->file_name);
+		printf("type = %d\n", tmp->type);
 		tmp = tmp->next;
 	}
 	return (0);

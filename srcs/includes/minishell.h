@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/01 15:43:10 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/06 17:00:37 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,20 @@
 # include <limits.h>
 
 
+typedef		struct s_ambiguous{
+	char	*value;
+	struct s_ambiguous *next;
+}		t_ambiguous;
 typedef struct s_envp{
 	char    *key;
 	char    *value;
 	int     equal;
+	int		type;
+	char	*file_name;
+	int		exit_status;
+	t_ambiguous *ambiguous;
 	struct s_envp *next;
 }   t_envp;
-
 typedef struct s_initialisation
 {
 	int	i;
@@ -60,9 +67,12 @@ typedef		struct s_init{
 	int len;
 	int close;
 	int i;
+	int	tmp;
 	int len_dollar;
+	int	redirection;
 	char *dollar;
 	char *token;
+	char *file_name;
 }		t_init;
 
 typedef		struct s_redirection{
@@ -120,16 +130,20 @@ int     fetch_envp(t_envp **env_list, char **envp);
 	< : 4;
 	<< : 5;
 	word : 6;
+	ambiguous : 7
 */
 #define REDIRECT_OUT 2
 #define APPEND_OUT 3
 #define REDIRECT_IN 4
 #define HEREDOC 5
+#define AMBIGUOUS 7
 
-void    parsing(char *cmd, int *error,t_envp *env_list, t_data **data);
+int    parsing(char *cmd, int *error,t_envp *env_list, t_data **data);
 int    list_tokens(t_list **head, char *data);
 int    check_tokens(t_list *head, int error,t_envp *env_list, t_data **dt);
-int     fill_data(t_tokens *tokens, t_data **data);
+int     fill_data(t_tokens *tokens, t_data **data, t_envp *env_list);
 int		delimiter(char *value, int *start);
+int		delimiter_skip(char *value, int *start);
+int		is_space(char *value);
 
 #endif
