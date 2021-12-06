@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 10:26:07 by mouassit          #+#    #+#             */
-/*   Updated: 2021/11/21 10:26:09 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/12/05 18:36:58 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,8 @@ void    parsing(char *cmd, int *error,t_envp *env_list, t_data **data)
     head = NULL;
     start = skip_spaces(cmd);
     token = NULL;
-    while (cmd[start])
+    // printf("start %d\n",start);
+    while (start <= (int)ft_strlen(cmd))
     {
         if(cmd[start] != ' ')
         {
@@ -155,6 +156,7 @@ void    parsing(char *cmd, int *error,t_envp *env_list, t_data **data)
         }
         start++;
     }
+
     if(*error != -1)
         *error = check_tokens(head,*error,env_list,data);
     *error = 1;

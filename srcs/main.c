@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/02 15:40:01 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/05 15:16:23 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,19 @@ t_redirection * fill_redirect()
 
 	return (head);
 }
-
+void handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		//rl_redisplay();
+		// rl_replace_line();
+		//rl_line_buffer = "ayoub";
+		 //rl_redisplay();
+		 //rl_replace_line("-> minishell",0);
+		//ft_putstr_fd("\n-> minishell ", 1);		
+	}
+	
+}
 int main(int argc, char **argv, char **envp)
 {
 	char *str;
@@ -56,6 +68,7 @@ int main(int argc, char **argv, char **envp)
     t_envp *env_list;
 	int ret;
 	data = NULL;
+	signal(SIGINT, handler);
 	//data = malloc(sizeof(t_data));
 	//data->redirection = NULL;
 	fetch_envp(&env_list, envp);
@@ -64,7 +77,12 @@ int main(int argc, char **argv, char **envp)
 	while(1)
 	{
 		str = readline("-> minishell ");
+		printf("%s\n", str);
+		//rl_line_buffer = NULL;
+		//printf("|%s|\n", rl_line_buffer);
 		add_history(str);
+		if (!str)
+			exit(1);
 		if(!*str)
 			continue;
 		parsing(str,&ret,env_list,&data);

@@ -238,6 +238,7 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 		}
 		else
 		{
+
 			close(pipe_fd[1]);
 			tmp_fd = pipe_fd[0];
 		}
