@@ -172,14 +172,16 @@ void ft_dup(int *fd)
 {
 	if (fd[0] != 0)
 	{
+		//printf("TEST\n");
 		dup2(fd[0], STDIN_FILENO);
+		printf("fd[0] =%d  \n", fd[0]);	
 		close(fd[0]);
 	}
 	if (fd[1] != 1)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
-	}	
+	}
 }
 int		ft_execute(char **args, int *fd, t_envp **env_list)
 {
@@ -188,6 +190,7 @@ int		ft_execute(char **args, int *fd, t_envp **env_list)
 
 	ret = 127;
 	ft_dup(fd);
+
 	if (args[0][0] == '/' || !ft_strncmp(args[0], "./", 2))
 		pathname = ft_strdup(args[0]);
 	else
@@ -197,13 +200,26 @@ int		ft_execute(char **args, int *fd, t_envp **env_list)
 			return (ret);
 	}
 	//printf("fd[1]=%d\n", fd[1]);
-	
+	//printf("%d", fd[0]);
 	execve(pathname, args, convert_list_to_envp(env_list));
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(args[0], 2);
 	perror(" ");
 	return (127);
 	//exit(123);
+}
+void handler_child(int sig)
+{
+	if (sig == SIGINT)
+	{
+		//rl_redisplay();
+		// rl_replace_line();
+		//rl_line_buffer = "ayoub";
+		 //rl_redisplay();
+		 //rl_replace_line("-> minishell",0);
+		//ft_putstr_fd("\n-> minishell ", 1);		
+		printf("Handler child\n");
+	}
 }
 int		ft_pipeline(t_data *data, t_envp **env_list)
 {
@@ -215,6 +231,9 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 	int status;
 	
 	tmp_fd = 0;
+	t_data *tmp;
+
+	tmp = data;
 	while (data)
 	{
 		fd[0] = 0;
@@ -223,29 +242,54 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 		pid = fork();
 		if (pid == 0)
 		{
-			//child_process function : declare fd inside it
+			signal(SIGINT, handler_child);		
+			//while(1);	//child_process function : declare fd inside it
+			// if (data == tmp)
+			//	close(pipe_fd[0]);
 			fd[0] = tmp_fd;
 			if (data->next != NULL)
+			{
 				fd[1] = pipe_fd[1];
+			}
+			// else
+			// {
+			// 	close(pipe_fd[0]);
+			// 	close(pipe_fd[1]);
+			// }
 			if (fetch_fd(data->redirection, fd) == 1)
 				return (1);
 			//printf("TEST\n");
 			if (is_builtin(data->arguments[0]))
 			{
 				ft_dup(fd);
+				//close(pipe_fd[1]);
 				exit(ft_builtins(data, env_list));
 			}
+			close(pipe_fd[0]);
+			printf("pipe_fd[0] = %d\n", pipe_fd[0]);
 			exit(ft_execute(data->arguments, fd, env_list));		
 		}
 		else
 		{
-
-			close(pipe_fd[1]);
+			if (tmp_fd != 0)
+				close(tmp_fd);
+			// if (pipe_fd[1] != 1)
+				close(pipe_fd[1]);
+			//wait
+			//close(0);
+			//wait(0);
 			tmp_fd = pipe_fd[0];
 		}
+		//close(pipe_fd[1]);
 		data = data->next;
 	}
 	waitpid(pid, &status, WUNTRACED | WCONTINUED);
+	// while(waitpid(0, &status, 0)> -1)
+	// {}
+	while(wait(0) != -1);
+	//close(tmp_fd);
+	// close(pipe_fd[1]);
+	// close(pipe_fd[0]);
 	//while(waitpid(pid, &status, WUNTRACED | WCONTINUED) != -1)
 	//;
 	// if (WIFEXITED(status)) 
