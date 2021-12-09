@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/07 15:43:06 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/09 10:39:58 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_redirection * fill_redirect()
 }
 void handler(int sig)
 {
-	printf("Handler Parent\n");
+	//printf("Handler Parent\n");
 	if (sig == SIGINT)
 	{
 		//rl_redisplay();
@@ -61,6 +61,41 @@ void handler(int sig)
 		//ft_putstr_fd("\n-> minishell ", 1);		
 	}
 	
+}
+
+void	here_document(t_data *data)
+{
+	t_data *tmp;
+	t_redirection *tmp1;
+	int fd_heredoc;
+	int i_node;
+	char *str;
+
+	i_node = 0;
+	tmp = data;
+	while (tmp)
+	{
+		tmp1 = tmp->redirection;
+		while (tmp1)
+		{
+			if (tmp1->type == HEREDOC)
+			{
+				
+				fd_heredoc = open(ft_strjoin("/tmp/heredoc",ft_itoa(i_node)), O_TRUNC | O_CREAT| O_WRONLY, 0777);
+				while (1)
+				{
+					str = readline(">");
+					if (ft_strcmp(tmp1->file_name, str) == 0)
+						break;
+					write(fd_heredoc,str,ft_strlen(str));
+					write(fd_heredoc,"\n",1);
+				}
+			}
+			tmp1 = tmp1->next;
+		}
+		i_node++;
+		tmp = tmp->next;
+	}
 }
 int main(int argc, char **argv, char **envp)
 {
@@ -75,10 +110,12 @@ int main(int argc, char **argv, char **envp)
 	fetch_envp(&env_list, envp);
 	if (argc != 1 && !argv[0]) 
         return(-1);
+	
 	while(1)
 	{
 		signal(SIGINT,handler);
 		str = readline("-> minishell ");
+		//printf("str = %s\n", str);
 		// printf("%s\n", str);
 		//rl_line_buffer = NULL;
 		//printf("|%s|\n", rl_line_buffer);
@@ -88,6 +125,8 @@ int main(int argc, char **argv, char **envp)
 		if(!*str)
 			continue;
 		parsing(str,&ret,env_list,&data);
+		if (ret != 0)
+			continue;
 		// 		if(!error)
 		// {
 		// 	while (data != NULL)
@@ -114,7 +153,7 @@ int main(int argc, char **argv, char **envp)
 		// 		data = data->next;
 		// 	}
 		// }
-		
+		here_document(data);
 		//data->arguments = ft_split(str, ' ');
 		//data->redirection = fill_redirect();
 	//print node
@@ -149,7 +188,7 @@ int main(int argc, char **argv, char **envp)
 		data = NULL;
 		//ft_free_split(data->arguments);
 		free(str);
-		printf("$? = %d \n", ret);
+		//printf("$? = %d \n", ret);
 	}
 		return (0);
 }

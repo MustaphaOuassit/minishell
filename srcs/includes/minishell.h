@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/06 17:00:37 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/09 10:36:13 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_envp* fill_envp(char *str);
 int     env_key_error(char *var);
 int		ft_unset(char **args, t_envp **env_list);
 void    free_envp(t_envp *env);
-int		fetch_fd(t_redirection *red, int *fd);
+int		fetch_fd(t_redirection *red, int *fd, int i_node);
 int		ft_exit();
 int		builtin_only(t_data *data, t_envp **env_list);
 int     fetch_envp(t_envp **env_list, char **envp);

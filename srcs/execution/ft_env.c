@@ -25,7 +25,7 @@ int		ft_env(t_data *data, t_envp **env_list)
 	return (0);
 }
 
-int		fetch_fd(t_redirection *red, int *fd)
+int		fetch_fd(t_redirection *red, int *fd, int i_node)
 {
 	t_redirection *tmp;
 
@@ -37,6 +37,13 @@ int		fetch_fd(t_redirection *red, int *fd)
 		{
 			//if (tmp->file_name)
 			fd[0] = open(tmp->file_name, O_RDONLY);
+			if (fd[0] == -1)
+				return (1);
+		}
+		if (tmp->type == HEREDOC)
+		{
+			//if (tmp->file_name)
+			fd[0] = open(ft_strjoin("/tmp/heredoc",ft_itoa(i_node)), O_RDONLY);
 			if (fd[0] == -1)
 				return (1);
 		}
@@ -54,8 +61,9 @@ int		fetch_fd(t_redirection *red, int *fd)
 			if (fd[1] == -1)
 				return (1);
 		}
-		printf("filename = %s\n", tmp->file_name);
-		printf("type = %d\n", tmp->type);
+
+		// printf("filename = %s\n", tmp->file_name);
+		// printf("type = %d\n", tmp->type);
 		tmp = tmp->next;
 	}
 	return (0);
@@ -174,7 +182,7 @@ void ft_dup(int *fd)
 	{
 		//printf("TEST\n");
 		dup2(fd[0], STDIN_FILENO);
-		printf("fd[0] =%d  \n", fd[0]);	
+		// printf("fd[0] =%d  \n", fd[0]);	
 		close(fd[0]);
 	}
 	if (fd[1] != 1)
@@ -218,7 +226,7 @@ void handler_child(int sig)
 		 //rl_redisplay();
 		 //rl_replace_line("-> minishell",0);
 		//ft_putstr_fd("\n-> minishell ", 1);		
-		printf("Handler child\n");
+		// printf("Handler child\n");
 	}
 }
 int		ft_pipeline(t_data *data, t_envp **env_list)
@@ -229,7 +237,9 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 	int fd[2];
 	int tmp_fd;
 	int status;
-	
+	int i_node;
+
+	i_node = 0;
 	tmp_fd = 0;
 	t_data *tmp;
 
@@ -256,7 +266,7 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 			// 	close(pipe_fd[0]);
 			// 	close(pipe_fd[1]);
 			// }
-			if (fetch_fd(data->redirection, fd) == 1)
+			if (fetch_fd(data->redirection, fd, i_node) == 1)
 				return (1);
 			//printf("TEST\n");
 			if (is_builtin(data->arguments[0]))
@@ -266,7 +276,7 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 				exit(ft_builtins(data, env_list));
 			}
 			close(pipe_fd[0]);
-			printf("pipe_fd[0] = %d\n", pipe_fd[0]);
+			// printf("pipe_fd[0] = %d\n", pipe_fd[0]);
 			exit(ft_execute(data->arguments, fd, env_list));		
 		}
 		else
@@ -280,6 +290,7 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 			//wait(0);
 			tmp_fd = pipe_fd[0];
 		}
+		i_node++;
 		//close(pipe_fd[1]);
 		data = data->next;
 	}
