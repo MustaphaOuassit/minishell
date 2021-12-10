@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/09 10:39:58 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/10 11:57:18 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,7 @@ t_redirection * fill_redirect()
 
 	return (head);
 }
-void handler(int sig)
-{
-	//printf("Handler Parent\n");
-	if (sig == SIGINT)
-	{
-		//rl_redisplay();
-		// rl_replace_line();
-		//rl_line_buffer = "ayoub";
-		 //rl_redisplay();
-		 //rl_replace_line("-> minishell",0);
-		//ft_putstr_fd("\n-> minishell ", 1);		
-	}
-	
-}
+
 
 void	here_document(t_data *data)
 {
@@ -70,33 +57,71 @@ void	here_document(t_data *data)
 	int fd_heredoc;
 	int i_node;
 	char *str;
+	char *buf = ft_calloc(1,1);
 
 	i_node = 0;
+	
 	tmp = data;
-	while (tmp)
+	if (fork() == 0)
 	{
-		tmp1 = tmp->redirection;
-		while (tmp1)
+		signal(SIGINT, SIG_DFL);
+		while (tmp)
 		{
-			if (tmp1->type == HEREDOC)
+			tmp1 = tmp->redirection;
+			while (tmp1)
 			{
-				
-				fd_heredoc = open(ft_strjoin("/tmp/heredoc",ft_itoa(i_node)), O_TRUNC | O_CREAT| O_WRONLY, 0777);
-				while (1)
+				if (tmp1->type == HEREDOC)
 				{
-					str = readline(">");
-					if (ft_strcmp(tmp1->file_name, str) == 0)
-						break;
-					write(fd_heredoc,str,ft_strlen(str));
-					write(fd_heredoc,"\n",1);
+					
+					fd_heredoc = open(ft_strjoin("/tmp/heredoc",ft_itoa(i_node)), O_TRUNC | O_CREAT| O_WRONLY, 0777);
+					while (1)
+					{
+						str = readline(">");
+						if (ft_strcmp(tmp1->file_name, str) == 0)
+						{
+							write(fd_heredoc,buf,ft_strlen(buf));
+							write(fd_heredoc,"\n",1);
+							break;
+						}
+						if (*buf)
+							buf = ft_strjoin(buf,"\n");
+						buf = ft_strjoin(buf,str);
+						// write(fd_heredoc,str,ft_strlen(str));
+						// write(fd_heredoc,"\n",1);
+						
+					}
 				}
+				tmp1 = tmp1->next;
 			}
-			tmp1 = tmp1->next;
+			i_node++;
+			tmp = tmp->next;
 		}
-		i_node++;
-		tmp = tmp->next;
+		exit(0);
 	}
+	else
+		wait(0);
 }
+
+void handler(int sig)
+{
+	//printf("Handler Parent\n");
+	if (sig == SIGINT)
+	{
+		//rl_redisplay();
+		// rl_replace_line();
+		//rl_line_buffer = "ayoub";
+		//rl_line_buffer = "ayoub";
+		 //rl_redisplay();
+		 //rl_replace_line("-> minishell",0);
+		//ft_putstr_fd("\n-> minishell ", 1);
+		printf("\n");
+		// rl_on_new_line();
+		rl_replace_line("", 0);
+		// rl_redisplay();
+	}
+	
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	char *str;
@@ -104,7 +129,7 @@ int main(int argc, char **argv, char **envp)
     t_envp *env_list;
 	int ret;
 	data = NULL;
-	//signal(SIGINT, handler);
+	signal(SIGINT, handler);
 	//data = malloc(sizeof(t_data));
 	//data->redirection = NULL;
 	fetch_envp(&env_list, envp);
@@ -113,7 +138,7 @@ int main(int argc, char **argv, char **envp)
 	
 	while(1)
 	{
-		signal(SIGINT,handler);
+		//signal(SIGINT,handler);
 		str = readline("-> minishell ");
 		//printf("str = %s\n", str);
 		// printf("%s\n", str);

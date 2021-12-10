@@ -227,6 +227,7 @@ void handler_child(int sig)
 		 //rl_replace_line("-> minishell",0);
 		//ft_putstr_fd("\n-> minishell ", 1);		
 		// printf("Handler child\n");
+		printf("\n");
 	}
 }
 int		ft_pipeline(t_data *data, t_envp **env_list)
@@ -252,7 +253,7 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 		pid = fork();
 		if (pid == 0)
 		{
-			signal(SIGINT, handler_child);		
+			//signal(SIGINT, SIG_DFL);		
 			//while(1);	//child_process function : declare fd inside it
 			// if (data == tmp)
 			//	close(pipe_fd[0]);
@@ -298,6 +299,8 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 	// while(waitpid(0, &status, 0)> -1)
 	// {}
 	while(wait(0) != -1);
+	// if(WIFSIGNALED(status))
+	// 	printf("ayoub\n");
 	//close(tmp_fd);
 	// close(pipe_fd[1]);
 	// close(pipe_fd[0]);

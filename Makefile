@@ -6,7 +6,7 @@
 #    By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/29 13:06:02 by mouassit          #+#    #+#              #
-#    Updated: 2021/12/08 11:01:19 by ayafdel          ###   ########.fr        #
+#    Updated: 2021/12/10 10:35:41 by ayafdel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ all : $(NAME)
 
 $(NAME):
 	@make -s -C ./libraries/libft
-	@gcc -Wall -Wextra -Werror -lreadline  -fsanitize=address  -g -I .  $(SRC) $(LIBFT)  -o $(NAME)
+	@gcc -Wall -Wextra -Werror -lreadline -L /goinfre/ayafdel/ayafdel/.brew/opt/readline/lib \
+	-I /goinfre/ayafdel/ayafdel/.brew/opt/readline/include  -fsanitize=address  -g -I .  $(SRC) $(LIBFT)  -o $(NAME)
 
 
 clean:
