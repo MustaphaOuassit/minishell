@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/10 11:57:18 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/11 11:47:07 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,21 @@ void handler(int sig)
 		 //rl_redisplay();
 		 //rl_replace_line("-> minishell",0);
 		//ft_putstr_fd("\n-> minishell ", 1);
+		//printf("readline in main\n");
 		printf("\n");
-		// rl_on_new_line();
+		rl_on_new_line();
 		rl_replace_line("", 0);
-		// rl_redisplay();
+		rl_redisplay();
 	}
 	
 }
-
+void	ignore(int sig)
+{
+	if (sig)
+	{
+		//printf("\n");
+	}
+}
 int main(int argc, char **argv, char **envp)
 {
 	char *str;
@@ -129,7 +136,6 @@ int main(int argc, char **argv, char **envp)
     t_envp *env_list;
 	int ret;
 	data = NULL;
-	signal(SIGINT, handler);
 	//data = malloc(sizeof(t_data));
 	//data->redirection = NULL;
 	fetch_envp(&env_list, envp);
@@ -138,6 +144,7 @@ int main(int argc, char **argv, char **envp)
 	
 	while(1)
 	{
+		signal(SIGINT, handler);
 		//signal(SIGINT,handler);
 		str = readline("-> minishell ");
 		//printf("str = %s\n", str);
@@ -152,6 +159,7 @@ int main(int argc, char **argv, char **envp)
 		parsing(str,&ret,env_list,&data);
 		if (ret != 0)
 			continue;
+			signal(SIGINT, ignore);		
 		// 		if(!error)
 		// {
 		// 	while (data != NULL)
