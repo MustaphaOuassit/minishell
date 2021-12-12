@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/12 10:35:20 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/12 11:59:42 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,57 +50,6 @@ t_redirection * fill_redirect()
 }
 
 
-void	here_document(t_data *data)
-{
-	t_data *tmp;
-	t_redirection *tmp1;
-	int fd_heredoc;
-	int i_node;
-	char *str;
-	char *buf = ft_calloc(1,1);
-
-	i_node = 0;
-	
-	tmp = data;
-	if (fork() == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		while (tmp)
-		{
-			tmp1 = tmp->redirection;
-			while (tmp1)
-			{
-				if (tmp1->type == HEREDOC)
-				{
-					
-					fd_heredoc = open(ft_strjoin("/tmp/heredoc",ft_itoa(i_node)), O_TRUNC | O_CREAT| O_WRONLY, 0777);
-					while (1)
-					{
-						str = readline(">");
-						if (ft_strcmp(tmp1->file_name, str) == 0)
-						{
-							write(fd_heredoc,buf,ft_strlen(buf));
-							write(fd_heredoc,"\n",1);
-							break;
-						}
-						if (*buf)
-							buf = ft_strjoin(buf,"\n");
-						buf = ft_strjoin(buf,str);
-						// write(fd_heredoc,str,ft_strlen(str));
-						// write(fd_heredoc,"\n",1);
-						
-					}
-				}
-				tmp1 = tmp1->next;
-			}
-			i_node++;
-			tmp = tmp->next;
-		}
-		exit(0);
-	}
-	else
-		wait(0);
-}
 
 void handler(int sig)
 {
@@ -144,9 +93,15 @@ void handler(int sig)
 		//ft_putstr_fd("\n-> minishell ", 1);
 		//printf("readline in main\n");
 		//printf("\n");
-		rl_on_new_line();
+		// rl_on_new_line();
+		// //rl_replace_line("", 0);
+		// rl_redisplay();
+		ft_putstr_fd("-> minishell ", 1);
+		ft_putstr_fd(rl_line_buffer, 1);
+		ft_putstr_fd("  \b\b", 1);
+		//rl_on_new_line();
 		//rl_replace_line("", 0);
-		rl_redisplay();
+		//rl_redisplay();
 	}
 	
 }
@@ -181,7 +136,10 @@ int main(int argc, char **argv, char **envp)
 		//printf("|%s|\n", rl_line_buffer);
 		add_history(str);
 		if (!str)
+		{
+			ft_putstr_fd("bash-3.2$ exit", 2);
 			exit(1);
+		}
 		if(!*str)
 			continue;
 		parsing(str,&ret,env_list,&data);

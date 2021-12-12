@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/09 10:36:13 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/12 12:00:11 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,9 @@ int		ft_exit();
 int		builtin_only(t_data *data, t_envp **env_list);
 int     fetch_envp(t_envp **env_list, char **envp);
 
+
+
+void	here_document(t_data *data);
 
 
 //parsing
