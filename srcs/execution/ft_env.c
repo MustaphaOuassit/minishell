@@ -124,6 +124,7 @@ int		fetch_pathname(char **pathname, char	*cmd, t_envp **env_list)
 		*pathname = ft_strjoin_char(path_tab[i], cmd, '/');
 		if (access(*pathname, F_OK) == 0)
 			break ;
+			//printf("%s\n", *pathname);
 		i++;
 		free(*pathname);
 		if (path[i] == 0)
@@ -245,6 +246,7 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 	int fd[2];
 	int tmp_fd;
 	int status;
+	//int status_signal;
 	int i_node;
 
 	i_node = 0;
@@ -302,11 +304,33 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 		data = data->next;
 	}
 	waitpid(pid, &status, WUNTRACED | WCONTINUED);
-	// while(waitpid(0, &status, 0)> -1)
-	// {}
-	while(wait(0) != -1);
-	if(WIFSIGNALED(status))
-		printf("\n");
+	if (WIFSIGNALED(status)) 
+	{
+		if (WTERMSIG(status) == 2)
+		{
+			return(WTERMSIG(status) + 128);
+    		//printf("signal CTRL+C \n");
+		}
+		if (WTERMSIG(status) == 3)
+		{
+			write(2, "Quit: 3", 7);
+			return(WTERMSIG(status) + 128);
+		}
+	//return(WEXITSTATUS(status));
+  	}
+  	while(wait(0) > 0);
+	//int flag = 0;
+	// while(waitpid(0, &status_signal, 0)> -1)
+	// {
+	// 	if(WIFSIGNALED(status_signal))
+	// 	{
+	// 		flag = 1;
+	// 		printf("\n");
+	// 	}
+	// }
+	// if (flag == 1)
+	// 	return(WEXITSTATUS(status_signal));
+			//while(wait(0) != -1);
 	//close(tmp_fd);
 	// close(pipe_fd[1]);
 	// close(pipe_fd[0]);
@@ -314,5 +338,6 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 	//;
 	// if (WIFEXITED(status)) 
 	// 	printf("exited, status=%d\n", WEXITSTATUS(status));
+	//printf("%d\n",WEXITSTATUS(status) );
 	return (WEXITSTATUS(status));
 }

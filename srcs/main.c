@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/11 11:47:07 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/12 10:35:20 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,37 @@ void handler(int sig)
 		 //rl_replace_line("-> minishell",0);
 		//ft_putstr_fd("\n-> minishell ", 1);
 		//printf("readline in main\n");
-		printf("\n");
+		//ft_putstr_fd("-> minishell ", 1);
+		ft_putstr_fd("-> minishell ", 1);
+		ft_putstr_fd(rl_line_buffer, 1);
+		ft_putstr_fd("  \b\b\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
+		rl_redisplay();
+		
+		
+		// // printf("-> minishell   \n");
+		// printf("\n");
+		// printf("printf%s\n",rl_line_buffer);
+		// rl_redisplay();
+		// printf("printf%s\n",rl_line_buffer);
+		// rl_redisplay();
+		//rl_redisplay();
+		//printf("\n");
+	}
+	if (sig == SIGQUIT)
+	{
+		//rl_redisplay();
+		// rl_replace_line();
+		//rl_line_buffer = "ayoub";
+		//rl_line_buffer = "ayoub";
+		 //rl_redisplay();
+		 //rl_replace_line("-> minishell",0);
+		//ft_putstr_fd("\n-> minishell ", 1);
+		//printf("readline in main\n");
+		//printf("\n");
+		rl_on_new_line();
+		//rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	
@@ -145,7 +173,7 @@ int main(int argc, char **argv, char **envp)
 	while(1)
 	{
 		signal(SIGINT, handler);
-		//signal(SIGINT,handler);
+		signal(SIGQUIT, handler);		
 		str = readline("-> minishell ");
 		//printf("str = %s\n", str);
 		// printf("%s\n", str);
@@ -159,7 +187,8 @@ int main(int argc, char **argv, char **envp)
 		parsing(str,&ret,env_list,&data);
 		if (ret != 0)
 			continue;
-			signal(SIGINT, ignore);		
+		signal(SIGINT, ignore);		
+		signal(SIGQUIT, ignore);		
 		// 		if(!error)
 		// {
 		// 	while (data != NULL)
@@ -221,7 +250,7 @@ int main(int argc, char **argv, char **envp)
 		data = NULL;
 		//ft_free_split(data->arguments);
 		free(str);
-		//printf("$? = %d \n", ret);
+		printf("$? = %d \n", ret);
 	}
 		return (0);
 }
