@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 11:59:25 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/12 12:12:37 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/12 15:17:33 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ void    fill_heredoc_file(int i_node, t_redirection *tmp1)
         {
             write(fd_heredoc,buf,ft_strlen(buf));
             write(fd_heredoc,"\n",1);
+            free(buf);
             break;
         }
         if (*buf)
-            buf = ft_strjoin(buf,"\n");
-        buf = ft_strjoin(buf,str);
+            buf = ft_free_first(buf,ft_strjoin(buf,"\n"));
+        buf = ft_free_first(buf, ft_strjoin(buf,str));
         // write(fd_heredoc,str,ft_strlen(str));
             // write(fd_heredoc,"\n",1);  
     }

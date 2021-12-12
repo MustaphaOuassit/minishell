@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/12 12:00:11 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/12 18:36:18 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ typedef		struct s_args{
 
 
 
-
+typedef		struct s_pipe{
+	int fd[2];
+	int tmp;
+}			t_pipe;
 
 
 
@@ -122,8 +125,10 @@ int     fetch_envp(t_envp **env_list, char **envp);
 
 
 void	here_document(t_data *data);
-
-
+int		ft_pipeline(t_data *data, t_envp **env_list);
+void	ft_dup(int *fd);
+int		ft_execute(char **args, int *fd, t_envp **env_list);
+void	error_command(char	*str);
 //parsing
 
 /*
