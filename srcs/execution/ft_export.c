@@ -30,7 +30,13 @@ t_envp*	fill_envp(char *str)
 	if (ft_strchr(str, '='))
 	{
 		node->equal = 1;
-		node->key = ft_substr(str, 0, ft_indexof(str, '='));
+		if (ft_strchr(str, '=') != str && *(ft_strchr(str, '=') - 1) == '+')
+		{
+			node->key = ft_substr(str, 0, ft_indexof(str, '+'));
+			node->plus = 1;
+		}
+		else
+			node->key = ft_substr(str, 0, ft_indexof(str, '='));
 		if (*(ft_strchr(str,'=') + 1))
 			node->value = ft_strdup(ft_strchr(str,'=') + 1);
 		else
@@ -56,7 +62,10 @@ int     env_key_error(char *var)
     while (var[i])
     {
         if (!ft_isalnum(var[i]) && var[i] != '_')
+		{
+
             return (1);
+		}
         i++;
     }
     return(0);
@@ -76,7 +85,16 @@ void	add_to_env(t_envp **head, t_envp *node)
 	{
 		if (!ft_strcmp(node->key, tmp->key))
 		{
-			if (node->equal)
+			if (node->equal && node->plus)
+			{
+				printf("WORKING\n");
+				tmp->equal = 1;
+				if (node->value)
+					tmp->value = ft_free_first(tmp->value, ft_strjoin(tmp->value, node->value));
+				else
+					tmp->value = ft_free_first(tmp->value, ft_strdup(node->value));
+			}
+			else if (node->equal)
 			{
 				tmp->equal = 1;
 				tmp->value = ft_free_first(tmp->value, ft_strdup_null(node->value));
@@ -106,9 +124,11 @@ int		ft_export(t_data *data, t_envp **env_list)
         while (data->arguments[i])
         {
             node = fill_envp(data->arguments[i]);
-            if (env_key_error(node->key))
+            if (env_key_error(node->key) || (node->equal == 0 && node->plus == 1))
 			{
+				// printf("%s\n", node->key);
                 printf("bash: export: `%s`: not a valid identifier\n", data->arguments[i]);
+
 				ret = 1;
 			}
             else

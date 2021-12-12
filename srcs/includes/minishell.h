@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/12 18:36:18 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/12 20:22:07 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_envp{
 	char    *value;
 	int     equal;
 	int		type;
+	int		plus; // added
 	char	*file_name;
 	int		exit_status;
 	t_ambiguous *ambiguous;
