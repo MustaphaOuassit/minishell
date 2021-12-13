@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 11:59:25 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/12 15:17:33 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:12:32 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void    heredoc_child(t_data *data)
     i_node = 0;
 
     tmp = data;
-    signal(SIGINT, SIG_DFL);
+    ft_signal(HEREDOC_SIG);
     while (tmp)
     {
         tmp1 = tmp->redirection;

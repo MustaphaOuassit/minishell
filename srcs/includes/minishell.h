@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/12 20:22:07 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:19:24 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int		ft_pipeline(t_data *data, t_envp **env_list);
 void	ft_dup(int *fd);
 int		ft_execute(char **args, int *fd, t_envp **env_list);
 void	error_command(char	*str);
+void    ft_signal(int sig_place);
 //parsing
 
 /*
@@ -146,6 +147,11 @@ void	error_command(char	*str);
 #define REDIRECT_IN 4
 #define HEREDOC 5
 #define AMBIGUOUS 7
+
+#define FIRST_SIG 1
+#define HEREDOC_SIG 2 
+#define PRECHILD_SIG 3
+
 
 int    parsing(char *cmd, int *error,t_envp *env_list, t_data **data);
 int    list_tokens(t_list **head, char *data);
