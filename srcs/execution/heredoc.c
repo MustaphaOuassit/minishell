@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 11:59:25 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/13 18:12:32 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:29:12 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void    heredoc_child(t_data *data)
     }
 }
 
-void	here_document(t_data *data)
+int     here_document(t_data *data)
 {	
 	if (fork() == 0)
 	{
@@ -74,4 +74,6 @@ void	here_document(t_data *data)
 	}
 	else
 		wait(0);
+    
+    return (0);
 }

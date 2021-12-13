@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/13 18:19:24 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:41:35 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int     fetch_envp(t_envp **env_list, char **envp);
 
 
 
-void	here_document(t_data *data);
+int		here_document(t_data *data);
 int		ft_pipeline(t_data *data, t_envp **env_list);
 void	ft_dup(int *fd);
 int		ft_execute(char **args, int *fd, t_envp **env_list);

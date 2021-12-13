@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/13 18:18:46 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:52:06 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,14 @@
 
 
 
-
+void	ctrl_d_main(char *str)
+{
+	if (!str)
+	{
+		ft_putstr_fd("bash-3.2$ exit", 2);
+		exit(1);
+	}
+}
 int main(int argc, char **argv, char **envp)
 {
 	char *str;
@@ -33,22 +40,15 @@ int main(int argc, char **argv, char **envp)
 		ft_signal(FIRST_SIG);		
 		str = readline("-> minishell ");
 		add_history(str);
-		if (!str)
-		{
-			ft_putstr_fd("bash-3.2$ exit", 2);
-			exit(1);
-		}
-		if(!*str)
+		ctrl_d_main(str);
+		if (!*str)
 			continue;
 		parsing(str,&ret,env_list,&data);
-		if (ret != 0)
-			continue;
 		ft_signal(PRECHILD_SIG);
-		here_document(data);
+		if (ret != 0 || here_document(data))
+			continue;
 		if (data->next == NULL && is_builtin(data->arguments[0]))
-		{
 			ret = builtin_only(data, &env_list);
-		}
 		else
 			ret = ft_pipeline(data, &env_list);
 		data = NULL;
