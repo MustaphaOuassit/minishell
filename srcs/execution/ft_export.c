@@ -121,14 +121,14 @@ int		ft_export(t_data *data, t_envp **env_list)
             node = fill_envp(data->arguments[i]);
             if (env_key_error(node->key) || (node->equal == 0 && node->plus == 1))
 			{
-				// printf("%s\n", node->key);
 				free_envp(&node);	
-                printf("bash: export: `%s`: not a valid identifier\n", data->arguments[i]);
+                printf("bash: export: `%s`: not a valid \
+				identifier\n", data->arguments[i]);
 				ret = 1;
 			}
             else
                 add_to_env(env_list, node);
-            i++;
+    		i++;
         }
     }
 	return (ret);
