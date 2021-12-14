@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:02 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/12 18:28:36 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/14 11:35:02 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		fetch_pathname(char **pathname, char	*cmd, t_envp **env_list)
 	{
 		ft_putstr_fd("bash: ",2);
 		ft_putstr_fd(cmd,2);
-		ft_putstr_fd(" No such fle or directory\n",2);
+		ft_putstr_fd(" No such file or directory\n",2);
 		return (127);
 	}// no path
 	path_tab = ft_split(path, ':');

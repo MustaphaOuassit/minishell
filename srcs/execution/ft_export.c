@@ -40,7 +40,6 @@ t_envp*	fill_envp(char *str)
 		node->equal = 1;
 		if (ft_strchr(str, '=') != str && *(ft_strchr(str, '=') - 1) == '+')
 		{
-			printf("HNAYA\n");
 			node->key = ft_substr(str, 0, ft_indexof(str, '+'));
 			node->plus = 1;
 		}
@@ -52,34 +51,11 @@ t_envp*	fill_envp(char *str)
 			node->value = 0;
 	}
 	else
-	{
-		node->equal = 0;
 		node->key = ft_strdup(str);
-		node->value = 0;
-		node->plus = 0;
-	}
 	node->next=NULL;
 	return node;
 }
 
-int     env_key_error(char *var)
-{
-    int i;
-
-    i = 1;
-    if (!ft_isalpha(var[0]) && var[0] != '_')
-        return (1);
-    while (var[i])
-    {
-        if (!ft_isalnum(var[i]) && var[i] != '_')
-		{
-
-            return (1);
-		}
-        i++;
-    }
-    return(0);
-}
 
 void	env_replace(t_envp **tmp1, t_envp **node1)
 {
@@ -90,7 +66,6 @@ void	env_replace(t_envp **tmp1, t_envp **node1)
 	node = *node1;
 	if (node->equal && node->plus)
 	{
-		printf("HAHOWA\n");
 		tmp->equal = 1;
 		if (node->value)
 		{
@@ -102,7 +77,7 @@ void	env_replace(t_envp **tmp1, t_envp **node1)
 		tmp->equal = 1;
 		tmp->value = ft_free_first(tmp->value, ft_strdup_null(node->value));
 	}
-	free_envp(node);	
+	free_envp(&node);	
 }
 
 void	add_to_env(t_envp **head, t_envp *node)
@@ -120,7 +95,6 @@ void	add_to_env(t_envp **head, t_envp *node)
 		if (!ft_strcmp(node->key, tmp->key))
 		{
 			env_replace(&tmp, &node);
-			//free_envp(node);
 			return ;
 		}
 		if (tmp->next == NULL)
@@ -132,8 +106,8 @@ void	add_to_env(t_envp **head, t_envp *node)
 
 int		ft_export(t_data *data, t_envp **env_list)
 {
-    int i;
-	t_envp *node;
+    int		i;
+	t_envp	*node;
 	int		ret;
 
 	ret = 0;
@@ -148,8 +122,8 @@ int		ft_export(t_data *data, t_envp **env_list)
             if (env_key_error(node->key) || (node->equal == 0 && node->plus == 1))
 			{
 				// printf("%s\n", node->key);
+				free_envp(&node);	
                 printf("bash: export: `%s`: not a valid identifier\n", data->arguments[i]);
-
 				ret = 1;
 			}
             else

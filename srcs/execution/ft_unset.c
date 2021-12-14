@@ -12,7 +12,7 @@ void	remove_from_env(t_envp **head, char *key)
     {
         (*head) = tmp->next;
         return ;
-        free_envp(tmp);
+        free_envp(&tmp);
     }
 
     while (tmp != NULL && ft_strcmp(key, tmp->key))
@@ -23,7 +23,23 @@ void	remove_from_env(t_envp **head, char *key)
     if (tmp == NULL)
         return;
     prev->next = tmp->next;
-    free_envp(tmp);
+    free_envp(&tmp);
+}
+
+int     env_key_error(char *var)
+{
+    int i;
+
+    i = 1;
+    if (!ft_isalpha(var[0]) && var[0] != '_')
+        return (1);
+    while (var[i])
+    {
+        if (!ft_isalnum(var[i]) && var[i] != '_')
+            return (1);
+        i++;
+    }
+    return(0);
 }
 
 int     ft_unset(char **args, t_envp **env_list)

@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:11 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/12 19:11:22 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/14 10:40:55 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,14 @@ int		ft_env(t_data *data, t_envp **env_list)
 
 int fetch_heredoc(t_redirection *tmp, int *fd, int i_node)
 {
+	char *heredoc_file;
+
 	if (tmp->type == HEREDOC)
 	{
 		//if (tmp->file_name)
-		fd[0] = open(ft_strjoin("/tmp/heredoc",ft_itoa(i_node)), O_RDONLY);
+		heredoc_file = ft_strjoin("/tmp/heredoc", ft_itoa(i_node));
+		fd[0] = open(heredoc_file, O_RDONLY);
+		free(heredoc_file);
 		if (fd[0] == -1)
 			return (1);
 	}

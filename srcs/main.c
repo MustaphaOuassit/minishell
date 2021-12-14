@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/13 18:52:06 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/14 11:36:08 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int main(int argc, char **argv, char **envp)
 		if (!*str)
 			continue;
 		parsing(str,&ret,env_list,&data);
+		free(str);
 		ft_signal(PRECHILD_SIG);
 		if (ret != 0 || here_document(data))
 			continue;
@@ -53,7 +54,6 @@ int main(int argc, char **argv, char **envp)
 			ret = ft_pipeline(data, &env_list);
 		data = NULL;
 		//ft_free_split(data->arguments);
-		free(str);
 		printf("$? = %d \n", ret);
 	}
 		return (0);
