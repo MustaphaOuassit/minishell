@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:12:46 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/14 11:15:41 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/14 15:31:16 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		ft_builtins(t_data *data, t_envp **env_list)
 			return (ft_exit(data->arguments));
 		if (ft_strcmp(data->arguments[0], "cd") == 0)
 			return (ft_cd(data, env_list));
+
 		return (0);
 }
 

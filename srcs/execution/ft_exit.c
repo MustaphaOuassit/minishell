@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit_bi.c                                       :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 12:11:25 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/11/25 12:11:27 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/14 16:02:59 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ int     is_int(char *str)
     int i;
 
     i = 0;
-    if (str[0] == '-' && ft_strlen(str) > 2)
+    if (ft_strcmp(str, "9223372036854775807") > 0 && ft_strlen(str) > 18)
+        return (0);
+    if (*str == '-' && ft_strcmp(str, "-9223372036854775808") > 0 && ft_strlen(str) > 19)
+        return (0);
+    if (str[0] == '-' && ft_strlen(str) >= 2)
         i++;
     while (str[i])
     {
@@ -37,7 +41,7 @@ int    ft_exit(char **args)
     if (!args[1])
         exit(0);
     if (!is_int(args[1]))
-    {
+    {	
         ft_putstr_fd("bash: ", 2);
         ft_putstr_fd(args[1], 2);
         ft_putstr_fd(": numeric argument required\n ", 2);
