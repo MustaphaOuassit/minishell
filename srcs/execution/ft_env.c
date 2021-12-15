@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:11 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/14 10:40:55 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/15 12:17:23 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int fetch_heredoc(t_redirection *tmp, int *fd, int i_node)
 {
 	char *heredoc_file;
 
-	if (tmp->type == HEREDOC)
+	if (tmp->type == HEREDOC || tmp->type == HEREDOC_WO_EXPANSION)
 	{
 		//if (tmp->file_name)
 		heredoc_file = ft_strjoin("/tmp/heredoc", ft_itoa(i_node));

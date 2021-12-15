@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/15 11:38:05 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/15 12:32:22 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int		ft_exit();
 int     fetch_envp(t_envp **env_list, char **envp);
 int		builtin_only(t_data *data, t_envp **env_list);
 
-int		here_document(t_data *data);
+int		here_document(t_data *data, t_envp *list);
 int		ft_pipeline(t_data *data, t_envp **env_list);
 void	ft_dup(int *fd);
 int		ft_execute(char **args, int *fd, t_envp **env_list);
@@ -163,8 +163,9 @@ int     env_key_error(char *var);
 #define REDIRECT_OUT 2
 #define APPEND_OUT 3
 #define REDIRECT_IN 4
-#define HEREDOC 5
+#define HEREDOC 8
 #define AMBIGUOUS 7
+#define HEREDOC_WO_EXPANSION 5
 
 #define FIRST_SIG 1
 #define HEREDOC_SIG 2 

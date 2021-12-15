@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/14 17:57:25 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/15 12:29:24 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int main(int argc, char **argv, char **envp)
 	int ret;
 	data = NULL;
 
-	fetch_envp(&env_list, envp);
 	if (argc != 1 && !argv[0]) 
         return(-1);
+	fetch_envp(&env_list, envp);
 	
 	while(1)
 	{
@@ -60,7 +60,7 @@ int main(int argc, char **argv, char **envp)
 		parsing(str,&ret,env_list,&data);
 		free(str);
 		ft_signal(PRECHILD_SIG);
-		if (ret != 0 || here_document(data))
+		if (ret != 0 || here_document(data, env_list))
 			continue;
 		if (data->next == NULL && is_builtin(data->arguments[0]))
 		{

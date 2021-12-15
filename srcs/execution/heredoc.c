@@ -6,13 +6,13 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 11:59:25 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/13 18:29:12 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/15 12:30:21 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void    fill_heredoc_file(int i_node, t_redirection *tmp1)
+void    fill_heredoc_file(int i_node, t_redirection *tmp1, t_envp *list)
 {
     int fd_heredoc;   
     char *str;
@@ -31,6 +31,8 @@ void    fill_heredoc_file(int i_node, t_redirection *tmp1)
             free(buf);
             break;
         }
+        if (tmp1->type == HEREDOC)
+            str = expand_value(str, list);
         if (*buf)
             buf = ft_free_first(buf,ft_strjoin(buf,"\n"));
         buf = ft_free_first(buf, ft_strjoin(buf,str));
@@ -39,7 +41,7 @@ void    fill_heredoc_file(int i_node, t_redirection *tmp1)
     }
 }
 
-void    heredoc_child(t_data *data)
+void    heredoc_child(t_data *data, t_envp *list)
 {
     t_data *tmp;
     t_redirection *tmp1;
@@ -54,9 +56,10 @@ void    heredoc_child(t_data *data)
         
         while (tmp1)
         {
-            if (tmp1->type == HEREDOC)
+            if (tmp1->type == HEREDOC || tmp1->type == HEREDOC_WO_EXPANSION)
             {
-                fill_heredoc_file(i_node, tmp1);
+                printf("HELLO\n");
+                fill_heredoc_file(i_node, tmp1, list);
             }
             tmp1 = tmp1->next;
         }
@@ -65,11 +68,11 @@ void    heredoc_child(t_data *data)
     }
 }
 
-int     here_document(t_data *data)
+int     here_document(t_data *data, t_envp *list)
 {	
 	if (fork() == 0)
 	{
-		heredoc_child(data);
+		heredoc_child(data, list);
 		exit(0);
 	}
 	else
