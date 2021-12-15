@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:14:29 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/14 11:39:16 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/14 18:09:34 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int     child_status(int pid)
 	{
 		if (WTERMSIG(status) == 2)
 		{
+			printf("\n");
 			return(WTERMSIG(status) + 128);
     		//printf("signal CTRL+C \n");
 		}

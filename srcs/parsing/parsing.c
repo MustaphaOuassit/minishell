@@ -3,177 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 10:26:07 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/06 17:06:06 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/14 06:28:52 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/minishell.h"
 
-# include "../includes/minishell.h"
-
-int     skip_spaces(char *cmd)
+int	end_pipe(char *cmd, int end)
 {
-    int i;
+	char	*str;
 
-    i = 0;
-    while (cmd[i])
-    {
-        if (cmd[i] != ' ')
-            break;
-        i++;
-    }
-    return(i);
+	str = "minishell: syntax error near unexpected token `|'\n";
+	if (cmd[end] == '|')
+	{
+		write(1, str, 51);
+		return (1);
+	}
+	return (0);
 }
 
-int check_close(char *value, int i, int ele)
+int	check_pipe(char *cmd, int start)
 {
-    while (value[i])
-    {
-        if(value[i] == ele)
-            return(1);
-        i++;
-    }
-    return(0);
+	t_init	var;
+
+	var.end = end_str(cmd);
+	var.i = start;
+	if (first_pipe(cmd, start))
+		return (258);
+	while (cmd[var.i])
+	{
+		if (cmd[var.i] == '\"')
+		{
+			if (multi_couts(&var.i, cmd, '\"'))
+				return (1);
+		}
+		if (cmd[var.i] == '\'')
+		{
+			if (multi_couts(&var.i, cmd, '\''))
+				return (1);
+		}
+		if (middle_pipe(cmd, &var.i))
+			return (258);
+		var.i++;
+	}
+	if (end_pipe(cmd, var.end))
+		return (258);
+	return (0);
 }
 
-int   check_double_couts(char *value, int *i, int *len, int *close)
+int	continue_error(t_list *head, int error, t_envp *env_list, t_data **data)
 {
-    *i = *i + 1;
-    *close = check_close(value, *i,'\"');
-	if(!*close)
-    {
-        *len = -1;
-        return(*len);
-    }
-    *len = *len + 1;
-    while (value[*i])
-    {
-        if(value[*i] == '\"')
-            break;
-        *len = *len + 1;
-        *i = *i + 1;
-    }
-    return(*len);
+	if (error != -1)
+		error = check_tokens(head, error, env_list, data);
+	return (error);
 }
 
-int check_single_couts(char *value, int *i, int *len, int *close)
+int	parsing(char *cmd, int *error, t_envp *env_list, t_data **data)
 {
-    *i = *i + 1;
-    *close = check_close(value, *i,'\'');
-	if(!*close)
-    {
-        *len = -1;
-        return(*len);
-    }
-    *len = *len + 1;
-    while (value[*i])
-    {
-        if(value[*i] == '\'')
-            break;
-        *len = *len + 1;
-        *i = *i + 1;
-    }
-    return(*len);
-}
+	t_init	var;
 
-int len_token(char *cmd, int start)
-{
-    t_init var;
-
-    var.i = start;
-    var.len = 0;
-    var.close = 0;
-    while (cmd[var.i])
-    {
-        if(cmd[var.i] == '\"')
-        {
-            var.len = check_double_couts(cmd, &var.i, &var.len, &var.close);
-            if(var.len == -1)
-                return(var.len);
-        }
-        else if(cmd[var.i] == '\'')
-        {
-            var.len = check_single_couts(cmd, &var.i,&var.len,&var.close);
-            if(var.len == -1)
-                return(var.len);
-        }
-        var.i++;
-        var.len++;
-        if(cmd[var.i] == ' ')
-            break;
-    }
-   return(var.len); 
-}
-
-char     *get_token(char *cmd, int *start)
-{
-    int len;
-    int i;
-    char *token;
-
-    i = 0;
-    token = NULL;
-    len = len_token(cmd,*start);
-    if(len == -1)
-    {
-        *start = -1;
-        return(NULL);
-    }
-    token = (char *)malloc(sizeof(char) * (len + 1));
-    token[len] = '\0';
-    while (token[i])
-    {
-        token[i] = cmd[*start];
-        *start = *start + 1;
-        i++;
-    }
-    return(token);
-}
-
-int    parsing(char *cmd, int *error,t_envp *env_list, t_data **data)
-{
-    int start;
-    char *token;
-    t_list *head;
-    int     i;
-
-    head = NULL;
-    start = skip_spaces(cmd);
-    token = NULL;
-    i = 0;
-    if(cmd[0] == '|' && cmd[1] != '|')
-    {
-        write(1,"minishell: syntax error near unexpected token `|'\n",50);
-        *error = 258;
-        return(0);
-    }
-    while (cmd[i])
-    {
-        if(cmd[i] == '|' && cmd[i + 1] == '|')
-        {
-            write(1,"minishell: syntax error near unexpected token `||'\n",51);
-            *error = 258;
-            return(0);
-        }
-        i++;
-    }
-    while (start <= (int)ft_strlen(cmd))
-    {
-        if(cmd[start] != ' ')
-        {
-            token = get_token(cmd,&start);
-            if(start == -1)
-            {
-                *error = 1;
-                break;
-            }
-            list_tokens(&head,token);
-        }
-        start++;
-    }
-    if(*error != -1)
-        *error = check_tokens(head,*error,env_list,data);
-    return(0);
+	env_list->allocation = NULL;
+	var.head = NULL;
+	var.start = skip_spaces(cmd);
+	var.token = NULL;
+	*error = check_pipe(cmd, var.start);
+	if (*error)
+		return (0);
+	while (var.start < (int)ft_strlen(cmd))
+	{
+		if (cmd[var.start] != ' ')
+		{
+			var.token = get_token(cmd, &var.start, env_list);
+			if (var.start == -1)
+			{
+				*error = 1;
+				break ;
+			}
+			list_tokens(&var.head, var.token, env_list);
+		}
+		var.start++;
+	}
+	*error = continue_error(var.head, *error, env_list, data);
+	return (0);
 }

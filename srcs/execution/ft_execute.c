@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:02 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/14 11:50:25 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/15 11:20:41 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,9 @@ int		ft_execute(char **args, int *fd, t_envp **env_list)
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(args[0], 2);
 	perror(" ");
+	printf("TEST\n");
+	if (access(pathname, X_OK) == -1)
+		return (126);
 	return (127);
 	//exit(123);
 }

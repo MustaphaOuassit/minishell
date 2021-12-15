@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 12:11:25 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/14 16:02:59 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/14 16:15:10 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ int    ft_exit(char **args)
     {	
         ft_putstr_fd("bash: ", 2);
         ft_putstr_fd(args[1], 2);
-        ft_putstr_fd(": numeric argument required\n ", 2);
+        ft_putstr_fd(": numeric argument required", 2);
         exit(255);
     }
     if (args[2])
     {
-        ft_putstr_fd("bash: exit: too many arguments\n", 2);
+        ft_putstr_fd("bash: exit: too many arguments", 2);
         return (1);
     }
     exit(ft_atoi(args[1]) % 256);

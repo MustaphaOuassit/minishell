@@ -6,7 +6,7 @@
 #    By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/29 13:06:02 by mouassit          #+#    #+#              #
-#    Updated: 2021/12/14 15:33:29 by ayafdel          ###   ########.fr        #
+#    Updated: 2021/12/15 11:38:32 by ayafdel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,31 @@ SRC =./srcs/main.c \
 	  ./srcs/parsing/parsing.c \
 	  ./srcs/parsing/linkedlist.c \
 	  ./srcs/parsing/fill_data.c \
+	  ./srcs/parsing/add_dollar.c \
+	  ./srcs/parsing/check_dlm.c \
+	  ./srcs/parsing/check_indice.c\
+	  ./srcs/parsing/check_position.c \
+	  ./srcs/parsing/check_status.c \
+	  ./srcs/parsing/continue_dollar.c \
+	  ./srcs/parsing/dollar_handler.c \
+	  ./srcs/parsing/error_redirection.c \
+	  ./srcs/parsing/error_value.c \
+	  ./srcs/parsing/file_args.c \
+	  ./srcs/parsing/fill_convert.c \
+	  ./srcs/parsing/fill_data_ambiguous.c \
+	  ./srcs/parsing/fill_file.c \
+	  ./srcs/parsing/filter_value.c\
+	  ./srcs/parsing/get_allocation.c\
+	  ./srcs/parsing/get_dollar_value.c \
+	  ./srcs/parsing/get_env.c \
+	  ./srcs/parsing/get_token.c \
+	  ./srcs/parsing/initialisation.c \
+	  ./srcs/parsing/is_couts.c \
+	  ./srcs/parsing/list_tokens.c \
+	  ./srcs/parsing/redirection_token.c \
+	  ./srcs/parsing/skip_spaces.c \
+	  ./srcs/parsing/skip_string.c \
+	  ./srcs/parsing/skip_value.c\
 	  ./srcs/execution/ft_exit.c \
 	  ./srcs/execution/free_struct.c \
 	  ./srcs/execution/ft_unset.c \
@@ -41,7 +66,7 @@ all : $(NAME)
 $(NAME):
 	@make -s -C ./libraries/libft
 	@gcc -Wall -Wextra -Werror -lreadline -L /goinfre/ayafdel/ayafdel/.brew/opt/readline/lib \
-	-I /goinfre/ayafdel/ayafdel/.brew/opt/readline/include   -fsanitize=address  -I .  $(SRC) $(LIBFT)  -o $(NAME)
+	-I /goinfre/ayafdel/ayafdel/.brew/opt/readline/include    -I .  $(SRC) $(LIBFT)  -o $(NAME)
 
 
 clean:

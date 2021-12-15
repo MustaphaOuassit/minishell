@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 10:15:21 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/11/26 15:28:46 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/14 18:37:29 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,11 @@ int		ft_cd(t_data *data, t_envp **env_list)
 		}
 		if (home == NULL)
 			return (0);
-		change_directory(home);
+		if (change_directory(home) == 1)
+		{
+			free(home);			
+			return (1);
+		}
 		free(home);
 	}
 	else
