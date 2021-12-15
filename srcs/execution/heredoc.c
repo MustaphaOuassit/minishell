@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 11:59:25 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/15 12:30:21 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/15 15:46:43 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void    fill_heredoc_file(int i_node, t_redirection *tmp1, t_envp *list)
     char *str;
     char *buf = ft_calloc(1,1);
 
-    fd_heredoc = open(ft_strjoin("/tmp/heredoc",ft_itoa(i_node)), O_TRUNC | O_CREAT| O_WRONLY, 0777);
+    str = ft_strjoin("/tmp/heredoc",ft_itoa(i_node));
+    fd_heredoc = open(str, O_TRUNC | O_CREAT| O_WRONLY, 0777);
+    free(str);
     while (1)
     {
         str = readline(">");
@@ -36,8 +38,6 @@ void    fill_heredoc_file(int i_node, t_redirection *tmp1, t_envp *list)
         if (*buf)
             buf = ft_free_first(buf,ft_strjoin(buf,"\n"));
         buf = ft_free_first(buf, ft_strjoin(buf,str));
-        // write(fd_heredoc,str,ft_strlen(str));
-            // write(fd_heredoc,"\n",1);  
     }
 }
 

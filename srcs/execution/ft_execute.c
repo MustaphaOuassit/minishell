@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:02 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/15 11:20:41 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/15 18:14:02 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		fetch_pathname(char **pathname, char	*cmd, t_envp **env_list)
 			//printf("%s\n", *pathname);
 		i++;
 		free(*pathname);
-		if (path[i] == 0)
+		if (path_tab[i] == 0)
 			error_command(cmd);
 	}
 	ft_free_split(path_tab);
@@ -119,7 +119,7 @@ int		ft_execute(char **args, int *fd, t_envp **env_list)
 	ret = 127;
 	ft_dup(fd);
 
-	if (args[0][0] == '/' || !ft_strncmp(args[0], "./", 2))
+	if (ft_strchr(args[0], '/'))
 		pathname = ft_strdup(args[0]);
 	else
 	{
@@ -129,13 +129,26 @@ int		ft_execute(char **args, int *fd, t_envp **env_list)
 	}
 	//printf("fd[1]=%d\n", fd[1]);
 	//printf("%d", fd[0]);
+	
+	if (access(pathname, F_OK) == 0 && access(pathname, X_OK) == -1)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(args[0], 2);
+		ft_putstr_fd(": Permission denied\n", 2);		
+		return (126);
+	}
+	if (opendir(pathname))
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(args[0], 2);
+		ft_putstr_fd(" : is a directory\n", 2);
+		return(126);
+	}
 	execve(pathname, args, convert_list_to_envp(env_list));
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(args[0], 2);
-	perror(" ");
-	printf("TEST\n");
-	if (access(pathname, X_OK) == -1)
-		return (126);
+	ft_putstr_fd(" : No such file or directory\n", 2);
+	// printf("TEST\n");
 	return (127);
 	//exit(123);
 }

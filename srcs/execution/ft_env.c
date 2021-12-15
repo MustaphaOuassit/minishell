@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:11 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/15 12:17:23 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/15 17:47:59 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,10 @@ int		fetch_fd(t_redirection *red, int *fd, int i_node)
 
 void	error_command(char	*str)
 {
+	ft_putstr_fd("bash ", 2);
 	if (str)
 		ft_putstr_fd(str, 2);
-	ft_putstr_fd(" : command not found\n", 2);
+	ft_putstr_fd(": command not found\n", 2);
 	exit(127);
 }
 

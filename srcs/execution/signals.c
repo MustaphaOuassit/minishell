@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:04:34 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/13 18:19:05 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/15 15:57:08 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void    ft_signal(int sig_place)
         signal(SIGINT, handler);
 		signal(SIGQUIT, handler);
     }
+	
     else if (sig_place == PRECHILD_SIG)
     {
         signal(SIGINT, ignore);		

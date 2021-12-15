@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/15 12:32:22 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/15 18:09:29 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # include "../../libraries/libft/libft.h"
 # include <fcntl.h>
 # include <limits.h>
-
+#include <sys/types.h>
+#include <dirent.h>
 
 typedef struct s_initialisation
 {
