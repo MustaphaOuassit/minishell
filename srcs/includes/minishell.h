@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/15 18:09:29 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/16 12:14:36 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <limits.h>
 #include <sys/types.h>
 #include <dirent.h>
+
 
 typedef struct s_initialisation
 {
@@ -132,6 +133,7 @@ typedef		struct s_pipe{
 	int tmp;
 }			t_pipe;
 
+int g_signal_flag;
 //exec
 int		ft_builtins(t_data *data, t_envp **env_list);
 int		is_builtin(char *cmd);

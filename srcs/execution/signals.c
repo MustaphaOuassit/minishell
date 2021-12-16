@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:04:34 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/15 15:57:08 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/16 12:19:09 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void handler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_signal_flag = 1;
 		ft_putstr_fd("-> minishell ", 1);
 		ft_putstr_fd(rl_line_buffer, 1);
 		ft_putstr_fd("  \b\b\n", 1);
@@ -39,6 +40,15 @@ void handler(int sig)
 	
 }
 
+void heredoc_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		close(0);
+		// exit(1);
+	}
+}
+
 void    ft_signal(int sig_place)
 {
     if (sig_place == FIRST_SIG)
@@ -53,5 +63,5 @@ void    ft_signal(int sig_place)
 		signal(SIGQUIT, ignore);
     }
     else if (sig_place == HEREDOC_SIG)
-        signal(SIGINT, SIG_DFL);
+        signal(SIGINT, heredoc_handler);
 }

@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/15 12:29:24 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/16 12:33:41 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,11 @@ int main(int argc, char **argv, char **envp)
         return(-1);
 	fetch_envp(&env_list, envp);
 	
+	ret = 0;
+	env_list->exit_status = 0;
 	while(1)
 	{
+		g_signal_flag = 0;
 		ft_signal(FIRST_SIG);		
 		str = readline("-> minishell ");
 		add_history(str);
@@ -61,7 +64,10 @@ int main(int argc, char **argv, char **envp)
 		free(str);
 		ft_signal(PRECHILD_SIG);
 		if (ret != 0 || here_document(data, env_list))
+		{
+			env_list->exit_status = ret;
 			continue;
+		}
 		if (data->next == NULL && is_builtin(data->arguments[0]))
 		{
 			ret = builtin_only(data, &env_list);
@@ -71,7 +77,8 @@ int main(int argc, char **argv, char **envp)
 		// exit(0);
 		data = NULL;
 		//ft_free_split(data->arguments);
-		printf("$? = %d \n", ret);
+		env_list->exit_status = ret;
+		//printf("$? = %d \n", ret);
 	}
 		return (0);
 }

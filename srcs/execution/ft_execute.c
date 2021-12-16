@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:02 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/15 18:14:02 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/15 20:14:54 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,25 @@ char ** convert_list_to_envp(t_envp **env_list)
 	return (envp);
 }
 
+int		error_file(char *pathname)
+{
+	if (access(pathname, F_OK) == 0 && access(pathname, X_OK) == -1)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(pathname, 2);
+		ft_putstr_fd(": Permission denied\n", 2);		
+		return (1);
+	}
+	else if (opendir(pathname))
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(pathname, 2);
+		ft_putstr_fd(" : is a directory\n", 2);
+		return(1);
+	}
+	return (0);
+}
+
 int		ft_execute(char **args, int *fd, t_envp **env_list)
 {
 	char *pathname;
@@ -127,28 +146,12 @@ int		ft_execute(char **args, int *fd, t_envp **env_list)
 		if (ret != 0)
 			return (ret);
 	}
-	//printf("fd[1]=%d\n", fd[1]);
-	//printf("%d", fd[0]);
-	
-	if (access(pathname, F_OK) == 0 && access(pathname, X_OK) == -1)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(args[0], 2);
-		ft_putstr_fd(": Permission denied\n", 2);		
+
+	if (error_file(pathname))
 		return (126);
-	}
-	if (opendir(pathname))
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(args[0], 2);
-		ft_putstr_fd(" : is a directory\n", 2);
-		return(126);
-	}
 	execve(pathname, args, convert_list_to_envp(env_list));
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(args[0], 2);
 	ft_putstr_fd(" : No such file or directory\n", 2);
-	// printf("TEST\n");
 	return (127);
-	//exit(123);
 }
