@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/17 09:28:05 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/17 11:00:26 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <limits.h>
 #include <sys/types.h>
 #include <dirent.h>
-
+#include <errno.h>
 
 typedef struct s_initialisation
 {
@@ -280,5 +280,6 @@ void	single_couts(char *value, int *start, int *i, t_envp *env_list);
 char	*get_env_couts(char *value, t_envp *env_list);
 int		len_couts(char *value);
 void	add_data_arguments(t_data *node, char **str);
- 
+void	free_itmes(t_free *allocation);
+void	free_data(t_data *data);
 #endif

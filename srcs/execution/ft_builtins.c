@@ -6,14 +6,13 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:12:46 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/14 15:31:16 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/17 12:33:11 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/minishell.h"
 int		ft_builtins(t_data *data, t_envp **env_list)
 {
-
 		if (ft_strcmp(data->arguments[0],"echo") == 0)
 			return (ft_echo(data)); 
 		if (ft_strcmp(data->arguments[0], "pwd") == 0)
@@ -34,6 +33,8 @@ int		ft_builtins(t_data *data, t_envp **env_list)
 
 int		is_builtin(char *cmd)
 {
+		if (cmd == 0)
+			return (0);
 		if (ft_strcmp(cmd,"echo") == 0)
 			return (1);
 		if (ft_strcmp(cmd, "env") == 0)

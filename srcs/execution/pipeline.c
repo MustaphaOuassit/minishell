@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:14:29 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/14 18:09:34 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/17 12:27:30 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int     child_execute(t_data *data, t_pipe p, int i_node, t_envp **env_list)
         fd[1] = p.fd[1];
     if (fetch_fd(data->redirection, fd, i_node) == 1)
         return (1);
-    if (is_builtin(data->arguments[0]))
+    if (data->arguments && is_builtin(data->arguments[0]))
     {
         ft_dup(fd);
         exit(ft_builtins(data, env_list));

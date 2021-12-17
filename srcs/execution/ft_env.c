@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:11 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/15 17:47:59 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/17 11:12:40 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ int fetch_heredoc(t_redirection *tmp, int *fd, int i_node)
 	return (0);
 }
 
+int		redirect_error(char *filename)
+{
+	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd(filename,2);
+	perror(": ");
+	// ft_putchar_fd('\n', 2);
+	return (1);
+}
 int		fetch_fd(t_redirection *red, int *fd, int i_node)
 {
 	t_redirection *tmp;
@@ -63,17 +71,20 @@ int		fetch_fd(t_redirection *red, int *fd, int i_node)
 		if (tmp->type == REDIRECT_IN)
 			fd[0] = open(tmp->file_name, O_RDONLY);
 			if (fd[0] == -1)
-				return (1);
+			{
+				
+				return (redirect_error(tmp->file_name));
+			}
 		if (fetch_heredoc(tmp, fd, i_node) == 1)
 			return (1);
 		if (tmp->type == REDIRECT_OUT)
-			fd[1] = open(tmp->file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
+			fd[1] = open(tmp->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		if (fd[1] == -1)
-			return (1);
+			return (redirect_error(tmp->file_name));
 		if (tmp->type == APPEND_OUT)
-			fd[1] = open(tmp->file_name, O_RDWR | O_CREAT | O_APPEND, 0777);
+			fd[1] = open(tmp->file_name, O_WRONLY | O_CREAT | O_APPEND, 0777);
 		if (fd[1] == -1)
-			return (1);
+			return (redirect_error(tmp->file_name));
 		tmp = tmp->next;
 	}
 	return (0);

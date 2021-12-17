@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:05:12 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/16 12:04:34 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/17 10:50:12 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	redirect(int *fd, int *tmp_fd)
 	if (fd[0] != 0)
 	{
 		tmp_fd[0] = dup(0);
-		dup2(fd[0], STDOUT_FILENO);
+		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 	}	
 	return (0);
