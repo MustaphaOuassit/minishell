@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/17 11:00:26 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/17 20:19:28 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ int		put_in_parcer(t_tokens **head, char *value, int type,t_envp *env_list);
 int		check_dividers(int value, t_init *var);
 char	*put_diveder(char *data, int value, t_init *var, t_envp *env_list);
 void	print_error_rdt(char *value,t_envp *env_list);
-int		redirection_token(t_redirection	**head,int type, char *file_name, t_envp *env_list);
+int		redirection_token(t_redirection	**head,int type, char *file_name);
 char 	**filter_args(char *value,t_envp *env_list);
 int		args_token(t_args	**head, char *args, t_envp *env_list);
 int		redirection_value(t_tokens *tokens,t_envp *env_list,t_init *var);
@@ -282,4 +282,5 @@ int		len_couts(char *value);
 void	add_data_arguments(t_data *node, char **str);
 void	free_itmes(t_free *allocation);
 void	free_data(t_data *data);
+void	initialisation_parsing(t_init *var, char *cmd, t_envp *env_list);
 #endif

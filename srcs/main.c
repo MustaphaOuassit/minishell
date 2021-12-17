@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/17 12:32:36 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/17 18:47:13 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int main(int argc, char **argv, char **envp)
 	if (argc != 1 && !argv[0]) 
         return(-1);
 	fetch_envp(&env_list, envp);
-	
 	ret = 0;
 	env_list->exit_status = 0;
 	while(1)
@@ -59,25 +58,38 @@ int main(int argc, char **argv, char **envp)
 		add_history(str);
 		ctrl_d_main(str);
 		if (!*str || empty_line(str))
-			continue;
-		parsing(str,&ret,env_list,&data);
-		free(str);
-		ft_signal(PRECHILD_SIG);
-		if (ret != 0 || here_document(data, env_list))
 		{
-			env_list->exit_status = ret;
+			free(str);
+				continue;
+		}
+
+		data = NULL;
+		
+		parsing(str,&ret,env_list,&data);
+		//printf("%s\n", data->redirection->file_name);
+		//printf("address = %p\n", data->arguments);
+		if (ret != 0)
+		{
+			free(str);
 			continue;
 		}
-		if (data->next == NULL && is_builtin(data->arguments[0]))
+		free(str);
+		ft_signal(PRECHILD_SIG);
+		// if (here_document(data, env_list))
+		// {
+		// 	env_list->exit_status = ret;
+		// 	free_data(data);
+		// 	continue;
+		// }
+	
+		if (data->arguments && data->next == NULL && is_builtin(data->arguments[0]))
 		{
 			ret = builtin_only(data, &env_list);
 		}
 		else
 			ret = ft_pipeline(data, &env_list);
-		free_itmes(env_list->allocation);
-		//free_data(data);
+		free_data(data);
 		// exit(0);
-		data = NULL;
 		//ft_free_split(data->arguments);
 		env_list->exit_status = ret;
 		//printf("$? = %d \n", ret);

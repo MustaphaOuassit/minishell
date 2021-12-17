@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 16:25:08 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/17 02:14:42 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/12/17 20:24:44 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	free_data(t_data *data)
 	while (data != NULL)
 	{
 		tmp_rdt = data->next;
-		free_two(data->arguments);
+		if (data->arguments)
+			free_two(data->arguments);
 		free(data);
 		data = tmp_rdt;
 	}
@@ -71,12 +72,23 @@ void	add_data_arguments(t_data *node, char **str)
 	i = 0;
 	while (str[i])
 		i++;
-	node->arguments = (char **)malloc(sizeof(char *) * (i + 1));
-	node->arguments[i] = 0;
-	i = 0;
-	while (str[i])
+	if (i)
 	{
-		node->arguments[i] = ft_strdup(str[i]);
-		i++;
+		node->arguments = (char **)malloc(sizeof(char *) * (i + 1));
+		node->arguments[i] = 0;
+		i = 0;
+		while (str[i])
+		{
+			node->arguments[i] = ft_strdup(str[i]);
+			i++;
+		}
 	}
+}
+
+void	initialisation_parsing(t_init *var, char *cmd, t_envp *env_list)
+{
+	var->head = NULL;
+	var->start = skip_spaces(cmd);
+	var->token = NULL;
+	env_list->allocation = NULL;
 }

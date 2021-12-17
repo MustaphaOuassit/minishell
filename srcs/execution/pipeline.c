@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:14:29 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/17 12:27:30 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/17 17:15:46 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int     child_execute(t_data *data, t_pipe p, int i_node, t_envp **env_list)
     close(p.fd[0]);
     exit(ft_execute(data->arguments, fd, env_list));
 }
+
 
 int		ft_pipeline(t_data *data, t_envp **env_list)
 {

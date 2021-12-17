@@ -5,7 +5,9 @@ file
 file2
 heredoc1
 heredoc2
+la
 libraries
+ls
 minishell
 minishell.dSYM
 srcs

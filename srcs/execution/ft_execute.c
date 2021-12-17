@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:02 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/17 12:46:21 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/17 20:21:01 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		fetch_pathname(char **pathname, char	*cmd, t_envp **env_list)
 	//path[0] = ft_free_first(path[0], ft_strdup(ft_strrchr(path[0], '=') + 1));
 	while (path_tab[i])
 	{
-		if (path_tab[i] == 0 || cmd[0] == '\0')
+		if (cmd[0] == '\0')
 			error_command(cmd);
 		*pathname = ft_strjoin_char(path_tab[i], cmd, '/');
 		if (access(*pathname, F_OK) == 0)
@@ -77,6 +77,8 @@ int		fetch_pathname(char **pathname, char	*cmd, t_envp **env_list)
 			//printf("%s\n", *pathname);
 		i++;
 		free(*pathname);
+		if (path_tab[i] == 0)
+			error_command(cmd);
 	}
 	ft_free_split(path_tab);
 	return (0);
@@ -138,9 +140,11 @@ int		ft_execute(char **args, int *fd, t_envp **env_list)
 	pathname = NULL;
 	ret = 127;
 	if (args == 0)
+	{
+		printf("HELLO\n");
 		return (0);
+	}
 	ft_dup(fd);
-
 	if (ft_strchr(args[0], '/'))
 		pathname = ft_strdup(args[0]);
 	else
@@ -149,7 +153,6 @@ int		ft_execute(char **args, int *fd, t_envp **env_list)
 		if (ret != 0)
 			return (ret);
 	}
-
 	if (error_file(pathname))
 		return (126);
 	execve(pathname, args, convert_list_to_envp(env_list));
