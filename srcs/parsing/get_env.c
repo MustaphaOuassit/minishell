@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 01:50:26 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/16 12:21:36 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/16 22:04:28 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,7 @@ char	*get_env(char *value, t_envp *env_list)
 	len = 0;
 	tmp = env_list;
 	if (value[0] == '?')
-	{
-		if (g_signal_flag == 1)
-			return (ft_itoa(1));
-		else
-			return (ft_itoa(env_list->exit_status));
-	}
+		return (ft_itoa(env_list->exit_status));
 	dollar = dollar_allocation(value, &len, env_list);
 	dollar = fill_dollar_two(dollar, value, len, env_list);
 	if (env_list->type == 5)
@@ -72,12 +67,7 @@ char	*get_env_couts(char *value, t_envp *env_list)
 
 	tmp = env_list;
 	if (value[0] == '?')
-	{
-		if (g_signal_flag == 1)
-			return (ft_itoa(1));
-		else
-			return (ft_itoa(env_list->exit_status));
-	}
+		return (ft_itoa(env_list->exit_status));
 	dollar = fill_dollar_one(value, env_list);
 	if (env_list->type == 5)
 		return (dollar);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_position.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 03:00:47 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/15 11:47:27 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/17 02:15:24 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ int	all_data(t_data	**head, t_init *var, t_envp *env_list)
 	t_data	*line;
 
 	new_node = malloc(sizeof(t_data));
-	//free_in_parcer(&env_list->allocation, new_node, NULL);
 	line = *head;
-	new_node->arguments = var->arguments;
+	add_data_arguments(new_node, var->arguments);
 	new_node->redirection = var->rdt;
 	new_node->nb_heredoc = env_list->nb_herdoc;
 	new_node->next = NULL;
@@ -63,9 +62,7 @@ int	all_data(t_data	**head, t_init *var, t_envp *env_list)
 		return (0);
 	}
 	while (line->next != NULL)
-	{
 		line = line->next;
-	}
 	line->next = new_node;
 	return (0);
 }

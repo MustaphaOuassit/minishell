@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_dlm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 02:06:23 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/16 12:22:04 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/16 22:27:15 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,7 @@ char	*get_env_hrd(char *value, t_envp *env_list)
 
 	tmp = env_list;
 	if (value[0] == '?')
-	{
-		if (g_signal_flag == 1)
-			return (ft_itoa(1));
-		else
-			return (ft_itoa(env_list->exit_status));
-	}
+		return (ft_itoa(env_list->exit_status));
 	while (tmp != NULL)
 	{
 		if (!ft_strcmp(tmp->key, value))
