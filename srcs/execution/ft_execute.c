@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:02 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/17 20:21:01 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/18 12:48:11 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		fetch_pathname(char **pathname, char	*cmd, t_envp **env_list)
 	// 	return (ft_strdup(cmd));
 	if (fetch_env_path(&path, env_list) == 1)
 	{
-		ft_putstr_fd("bash: ",2);
+		ft_putstr_fd("-> minishell: ",2);
 		ft_putstr_fd(cmd,2);
 		ft_putstr_fd(" No such file or directory\n",2);
 		return (127);
@@ -117,14 +117,14 @@ int		error_file(char *pathname)
 {
 	if (access(pathname, F_OK) == 0 && access(pathname, X_OK) == -1)
 	{
-		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd("-> minishell: ", 2);
 		ft_putstr_fd(pathname, 2);
 		ft_putstr_fd(": Permission denied\n", 2);		
 		return (1);
 	}
 	else if (opendir(pathname))
 	{
-		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd("-> minishell: ", 2);
 		ft_putstr_fd(pathname, 2);
 		ft_putstr_fd(" : is a directory\n", 2);
 		return(1);
@@ -156,7 +156,7 @@ int		ft_execute(char **args, int *fd, t_envp **env_list)
 	if (error_file(pathname))
 		return (126);
 	execve(pathname, args, convert_list_to_envp(env_list));
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("-> minishell: ", 2);
 	ft_putstr_fd(args[0], 2);
 	ft_putstr_fd(" : No such file or directory\n", 2);
 	return (127);

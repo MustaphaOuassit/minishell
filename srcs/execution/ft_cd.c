@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 10:15:21 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/14 18:37:29 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/18 12:48:11 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		change_directory(char *str)
 {
 	if (chdir(str) == -1)
 	{
-		ft_putstr_fd("bash: cd: ", 1);
+		ft_putstr_fd("-> minishell: cd: ", 1);
 		ft_putstr_fd(str, 1);
 		perror(" ");
 		return (1);
@@ -99,7 +99,7 @@ int		ft_cd(t_data *data, t_envp **env_list)
 	{
 		if (fetch_home(env_list, &home) == 1)
 		{
-			ft_putstr_fd("bash: cd: HOME not set\n", 2);
+			ft_putstr_fd("-> minishell: cd: HOME not set\n", 2);
 			return (1);
 		}
 		if (home == NULL)

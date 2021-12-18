@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/17 20:19:28 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/18 12:33:41 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int		ft_unset(char **args, t_envp **env_list);
 void    free_envp(t_envp **env);
 int		fetch_fd(t_redirection *red, int *fd, int i_node);
 int		ft_exit();
-int     fetch_envp(t_envp **env_list, char **envp);
+int     fetch_envp(char **argv, int argc, t_envp **env_list, char **envp);
 int		builtin_only(t_data *data, t_envp **env_list);
 
 int		here_document(t_data *data, t_envp *list);
@@ -186,7 +186,7 @@ int     env_key_error(char *var);
 	function expand : expand_value();
 */
 
-int    parsing(char *cmd, int *error,t_envp *env_list, t_data **data);
+int    parsing(char *cmd,t_envp *env_list, t_data **data);
 int    list_tokens(t_list **head, char *data, t_envp *env_list);
 int    check_tokens(t_list *head, int error,t_envp *env_list, t_data **dt);
 int     fill_data(t_tokens *tokens, t_data **data, t_envp *env_list);
@@ -281,6 +281,6 @@ char	*get_env_couts(char *value, t_envp *env_list);
 int		len_couts(char *value);
 void	add_data_arguments(t_data *node, char **str);
 void	free_itmes(t_free *allocation);
-void	free_data(t_data *data);
+void	free_data(t_data **data);
 void	initialisation_parsing(t_init *var, char *cmd, t_envp *env_list);
 #endif

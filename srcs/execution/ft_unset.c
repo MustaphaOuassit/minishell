@@ -53,7 +53,7 @@ int     ft_unset(char **args, t_envp **env_list)
     {
         if (env_key_error(args[i]))
         {
-            printf("bash: unset: `%s`: not a valid identifier\n", args[i]);
+            printf("-> minishell: unset: `%s`: not a valid identifier\n", args[i]);
             ret = 1;
         }
         else

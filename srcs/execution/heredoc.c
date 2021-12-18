@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 11:59:25 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/16 12:33:05 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/18 12:14:25 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@ void    fill_heredoc_file(int i_node, t_redirection *tmp1, t_envp *list)
 {
     int fd_heredoc;   
     char *str;
+    char *name;
 
-    str = ft_strjoin("/tmp/heredoc",ft_itoa(i_node));
+    name = ft_itoa(i_node);    
+    str = ft_strjoin("/tmp/heredoc", name);
     fd_heredoc = open(str, O_TRUNC | O_CREAT| O_WRONLY, 0777);
+    free(name);
     free(str);
     while (1)
     {
@@ -31,8 +34,10 @@ void    fill_heredoc_file(int i_node, t_redirection *tmp1, t_envp *list)
         if (ft_strcmp(tmp1->file_name, str) == 0)
             break;
         if (tmp1->type == HEREDOC)
-            str = expand_value(str, list);
+            str = ft_free_first(str,expand_value(str, list));
         ft_putstr_fd(str, fd_heredoc);
+        ft_putchar_fd('\n', fd_heredoc);
+        free(str);
     }
     // exit(0);
 }
@@ -85,7 +90,11 @@ int     here_document(t_data *data, t_envp *list)
         // dup2(fd, 0);
             //rl_replace_line("\n",0);
 
-        // close(0);   
+        // close(0);  
+        	free_data(&data);
+
+ 			list->exit_status = 1;
+
         return (1);
     }
     if (WIFSIGNALED(status)) 
@@ -96,8 +105,11 @@ int     here_document(t_data *data, t_envp *list)
             //close(0);
             rl_redisplay();
             // dup2(fd, 0);
-            printf("HELLO\n");
+            // printf("HELLO\n");
             // printf(">\n");
+            			free_data(&data);
+
+            			list->exit_status = 1;
 			return(1);
         }
     }

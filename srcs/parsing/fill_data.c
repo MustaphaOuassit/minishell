@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 16:25:08 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/17 20:24:44 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/18 12:10:59 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,27 @@ void	free_itmes(t_free *allocation)
 	}
 }
 
-void	free_data(t_data *data)
-{
-	t_data	*tmp_rdt;
+void	free_data(t_data **data)
+{ 
+	t_data	*tmp_data;
+	t_redirection *tmp_rdt;
 
-	while (data != NULL)
+	while (*data != NULL)
 	{
-		tmp_rdt = data->next;
-		if (data->arguments)
-			free_two(data->arguments);
-		free(data);
-		data = tmp_rdt;
+		tmp_data = (*data)->next;
+		while ((*data)->redirection)
+		{
+			tmp_rdt = (*data)->redirection->next;
+			free((*data)->redirection->file_name);
+			free((*data)->redirection);
+			(*data)->redirection = tmp_rdt;
+		}
+		if ((*data)->arguments)
+			free_two((*data)->arguments);
+		free((*data));
+		(*data) = tmp_data;
 	}
+	(*data) = NULL;
 }
 
 void	add_data_arguments(t_data *node, char **str)

@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:11 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/17 11:12:40 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/18 12:48:11 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int fetch_heredoc(t_redirection *tmp, int *fd, int i_node)
 
 int		redirect_error(char *filename)
 {
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("-> minishell: ", 2);
 	ft_putstr_fd(filename,2);
 	perror(": ");
 	// ft_putchar_fd('\n', 2);
@@ -95,7 +95,7 @@ int		fetch_fd(t_redirection *red, int *fd, int i_node)
 
 void	error_command(char	*str)
 {
-	ft_putstr_fd("bash ", 2);
+	ft_putstr_fd("-> minishell ", 2);
 	if (str)
 		ft_putstr_fd(str, 2);
 	ft_putstr_fd(": command not found\n", 2);
