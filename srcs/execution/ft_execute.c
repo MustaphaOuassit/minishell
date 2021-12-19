@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:02 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/18 12:48:11 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/19 11:31:04 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ size_t	env_list_len(t_envp **env_list)
 		tmp = tmp->next;
 	}
 	return (i);
+}
+
+int		error_return(char *str1, char *str2, char *str3, int ret)
+{
+	ft_putstr_fd(str1, 2);
+	ft_putstr_fd(str2, 2);
+	ft_putstr_fd(str3, 2);
+	return (ret);		
 }
 
 int		fetch_env_path(char **path, t_envp **env_list)
@@ -53,20 +61,9 @@ int		fetch_pathname(char **pathname, char	*cmd, t_envp **env_list)
 	int		i;
 
 	i = 0;
-
-	// if (!cmd)
-	// 	error_command(NULL);
-	// if (access(cmd, F_OK) == 0 && cmd[0] == '/')
-	// 	return (ft_strdup(cmd));
 	if (fetch_env_path(&path, env_list) == 1)
-	{
-		ft_putstr_fd("-> minishell: ",2);
-		ft_putstr_fd(cmd,2);
-		ft_putstr_fd(" No such file or directory\n",2);
-		return (127);
-	}// no path
+		return(error_return("-> minishell: ", cmd, " : No such file or directory\n", 127));
 	path_tab = ft_split(path, ':');
-	//path[0] = ft_free_first(path[0], ft_strdup(ft_strrchr(path[0], '=') + 1));
 	while (path_tab[i])
 	{
 		if (cmd[0] == '\0')
@@ -74,7 +71,6 @@ int		fetch_pathname(char **pathname, char	*cmd, t_envp **env_list)
 		*pathname = ft_strjoin_char(path_tab[i], cmd, '/');
 		if (access(*pathname, F_OK) == 0)
 			break ;
-			//printf("%s\n", *pathname);
 		i++;
 		free(*pathname);
 		if (path_tab[i] == 0)
@@ -104,7 +100,6 @@ char ** convert_list_to_envp(t_envp **env_list)
 			{
 				envp[i] = ft_free_first(envp[i], ft_strjoin(envp[i], tmp->value));
 			}
-			//printf("%s\n", envp[i]);
 		}
 		i++;
 		tmp = tmp->next;
@@ -156,8 +151,5 @@ int		ft_execute(char **args, int *fd, t_envp **env_list)
 	if (error_file(pathname))
 		return (126);
 	execve(pathname, args, convert_list_to_envp(env_list));
-	ft_putstr_fd("-> minishell: ", 2);
-	ft_putstr_fd(args[0], 2);
-	ft_putstr_fd(" : No such file or directory\n", 2);
-	return (127);
+	return(error_return("-> minishell: ", args[0], " : No such file or directory\n", 127));
 }

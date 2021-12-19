@@ -104,6 +104,13 @@ void	add_to_env(t_envp **head, t_envp *node)
 	tmp->next = node;
 }
 
+void	env_key_error(int *ret, t_envp *node, char *arg)
+{
+	free_envp(&node);
+	printf("-> minishell: export: `%s`: not a valid identifier\n", arg);
+	*ret = 1;
+}
+
 int		ft_export(t_data *data, t_envp **env_list)
 {
     int		i;
@@ -119,13 +126,8 @@ int		ft_export(t_data *data, t_envp **env_list)
         while (data->arguments[i])
         {
             node = fill_envp(data->arguments[i]);
-            if (env_key_error(node->key) || (node->equal == 0 && node->plus == 1))
-			{
-				free_envp(&node);	
-                printf("-> minishell: export: `%s`: not a valid identifier\n",\
-				data->arguments[i]);
-				ret = 1;
-			}
+            if (check_env_key_error(node->key) || (node->equal == 0 && node->plus == 1))
+				env_key_error(&ret, node, data->arguments[i]);
             else
                 add_to_env(env_list, node);
     		i++;

@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/18 12:33:41 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/19 12:59:04 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ int		ft_export(t_data *data, t_envp **env_list);
 void	add_str_to_node(t_envp **head, char *str);
 void	add_to_env(t_envp **head, t_envp *node);
 t_envp* fill_envp(char *str);
-int     env_key_error(char *var);
+int     check_env_key_error(char *var);
 int		ft_unset(char **args, t_envp **env_list);
 void    free_envp(t_envp **env);
 int		fetch_fd(t_redirection *red, int *fd, int i_node);
@@ -154,13 +154,12 @@ int		ft_exit();
 int     fetch_envp(char **argv, int argc, t_envp **env_list, char **envp);
 int		builtin_only(t_data *data, t_envp **env_list);
 
-int		here_document(t_data *data, t_envp *list);
+int		here_document(t_data **data, t_envp *list);
 int		ft_pipeline(t_data *data, t_envp **env_list);
 void	ft_dup(int *fd);
 int		ft_execute(char **args, int *fd, t_envp **env_list);
 void	error_command(char	*str);
 void    ft_signal(int sig_place);
-int     env_key_error(char *var);
 
 
 #define REDIRECT_OUT 2
@@ -280,7 +279,10 @@ void	single_couts(char *value, int *start, int *i, t_envp *env_list);
 char	*get_env_couts(char *value, t_envp *env_list);
 int		len_couts(char *value);
 void	add_data_arguments(t_data *node, char **str);
-void	free_itmes(t_free *allocation);
+void	free_itmes(t_free **allocation);
 void	free_data(t_data **data);
 void	initialisation_parsing(t_init *var, char *cmd, t_envp *env_list);
+int		check_pipe(char *cmd, int start);
+void	parsing_errors(t_init *var, t_envp *env_list, t_data **data, char *cmd);
+int	continue_error(t_list *head, int error, t_envp *env_list, t_data **data);
 #endif

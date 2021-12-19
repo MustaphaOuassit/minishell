@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 16:25:08 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/18 12:10:59 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/19 12:02:09 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,25 @@ int	fill_data(t_tokens *tokens, t_data **data, t_envp *env_list)
 	return (0);
 }
 
-void	free_itmes(t_free *allocation)
+void	free_itmes(t_free **allocation)
 {
 	t_free	*tmp;
 
-	while (allocation != NULL)
+	while (*allocation != NULL)
 	{
-		tmp = allocation->next;
-		free(allocation->value);
-		free(allocation->table);
-		free(allocation);
-		allocation = tmp;
+		tmp = (*allocation)->next;
+		free((*allocation)->value);
+		free((*allocation)->table);
+		free((*allocation));
+		(*allocation) = tmp;
 	}
+	*allocation = NULL;
 }
 
 void	free_data(t_data **data)
-{ 
-	t_data	*tmp_data;
-	t_redirection *tmp_rdt;
+{
+	t_data			*tmp_data;
+	t_redirection	*tmp_rdt;
 
 	while (*data != NULL)
 	{
@@ -100,4 +101,5 @@ void	initialisation_parsing(t_init *var, char *cmd, t_envp *env_list)
 	var->start = skip_spaces(cmd);
 	var->token = NULL;
 	env_list->allocation = NULL;
+	var->error = check_pipe(cmd, var->start);
 }

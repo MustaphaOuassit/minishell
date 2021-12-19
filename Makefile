@@ -6,7 +6,7 @@
 #    By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/29 13:06:02 by mouassit          #+#    #+#              #
-#    Updated: 2021/12/17 20:25:39 by ayafdel          ###   ########.fr        #
+#    Updated: 2021/12/19 13:01:19 by ayafdel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC =./srcs/main.c \
 	  ./srcs/parsing/skip_spaces.c \
 	  ./srcs/parsing/skip_string.c \
 	  ./srcs/parsing/skip_value.c\
+	  ./srcs/parsing/parsing_errors.c \
 	  ./srcs/execution/ft_exit.c \
 	  ./srcs/execution/free_struct.c \
 	  ./srcs/execution/ft_unset.c \
@@ -57,7 +58,6 @@ SRC =./srcs/main.c \
 	   ./srcs/execution/pipeline.c \
 	   ./srcs/execution/ft_execute.c \
 	   ./srcs/execution/signals.c \
-	   ./srcs/execution/ft_free.c \
 
 LIBFT = ./libraries/libft/libft.a
 

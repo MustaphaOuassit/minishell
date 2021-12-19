@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 10:26:07 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/18 12:27:43 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/18 13:17:08 by mouassit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,13 @@ int	continue_error(t_list *head, int error, t_envp *env_list, t_data **data)
 int	parsing(char *cmd, t_envp *env_list, t_data **data)
 {
 	t_init	var;
-	int error;
 
-	error = 0;
 	initialisation_parsing(&var, cmd, env_list);
-	error = check_pipe(cmd, var.start);
-	if (error)
+	if (var.error)
 	{
 		free(cmd);
-		env_list->exit_status = error;
-		return (error);
+		env_list->exit_status = var.error;
+		return (var.error);
 	}
 	while (var.start < (int)ft_strlen(cmd))
 	{
@@ -82,18 +79,13 @@ int	parsing(char *cmd, t_envp *env_list, t_data **data)
 			var.token = get_token(cmd, &var.start, env_list);
 			if (var.start == -1)
 			{
-				error = 1;
+				var.error = 1;
 				break ;
 			}
 			list_tokens(&var.head, var.token, env_list);
 		}
 		var.start++;
 	}
-	error = continue_error(var.head, error, env_list, data);
-	free_itmes(env_list->allocation);
-	free(cmd);
-	if (error == 258)
-		free_data(data);
-	env_list->exit_status = error;
-	return (error);
+	parsing_errors(&var, env_list, data, cmd);
+	return (var.error);
 }

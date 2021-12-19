@@ -26,7 +26,7 @@ void	remove_from_env(t_envp **head, char *key)
     free_envp(&tmp);
 }
 
-int     env_key_error(char *var)
+int     check_env_key_error(char *var)
 {
     int i;
 
@@ -51,7 +51,7 @@ int     ft_unset(char **args, t_envp **env_list)
     i = 1;
     while (args[i])
     {
-        if (env_key_error(args[i]))
+        if (check_env_key_error(args[i]))
         {
             printf("-> minishell: unset: `%s`: not a valid identifier\n", args[i]);
             ret = 1;

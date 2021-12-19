@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/18 12:47:42 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/19 12:58:22 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int main(int argc, char **argv, char **envp)
 		if (empty_line(str) || parsing(str, env_list,&data))
 			continue;
 		ft_signal(PRECHILD_SIG);
-		if (here_document(data, env_list))
+		if (here_document(&data, env_list))
 			continue;
 		if (data->arguments && data->next == NULL && is_builtin(data->arguments[0]))
 			env_list->exit_status = builtin_only(data, &env_list);
