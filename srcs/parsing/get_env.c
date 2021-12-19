@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 01:50:26 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/17 17:36:02 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/12/19 16:56:26 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	*get_env(char *value, t_envp *env_list)
 	tmp = env_list;
 	if (value[0] == '?')
 	{
+		if(g_signal_flag)
+			return("1");
 		str = ft_itoa(env_list->exit_status);
 		free_in_parcer(&env_list->allocation, str, NULL);
 		return (str);
@@ -76,6 +78,8 @@ char	*get_env_couts(char *value, t_envp *env_list)
 	tmp = env_list;
 	if (value[0] == '?')
 	{
+		if(g_signal_flag)
+			return("1");
 		str = ft_itoa(env_list->exit_status);
 		free_in_parcer(&env_list->allocation, str, NULL);
 		return (str);

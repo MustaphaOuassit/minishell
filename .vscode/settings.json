@@ -3,5 +3,6 @@
         "limits.h": "c",
         "types.h": "c",
         "stdio.h": "c"
-    }
+    },
+    "DockerRun.DisableAutoGenerateConfig": true
 }

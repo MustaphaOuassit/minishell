@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:14:29 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/17 17:15:46 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/19 17:06:16 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int     child_status(int pid)
 		}
 		if (WTERMSIG(status) == 3)
 		{
-			write(2, "Quit: 3", 7);
+			ft_putstr_fd("Quit: 3\n", 2);
 			return(WTERMSIG(status) + 128);
 		}
   	}

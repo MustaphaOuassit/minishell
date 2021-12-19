@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip_spaces.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 01:40:40 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/14 06:38:03 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/12/19 17:49:27 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,14 @@ int	skip_spaces(char *cmd)
 
 int	check_close(char *value, int i, int ele)
 {
+	printf("//%d\n",i);
 	while (value[i])
 	{
 		if (value[i] == ele)
+		{
+			printf("--%s\n",value);
 			return (1);
+		}
 		i++;
 	}
 	return (0);
