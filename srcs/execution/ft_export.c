@@ -1,38 +1,20 @@
-# include "../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/20 12:26:03 by ayafdel           #+#    #+#             */
+/*   Updated: 2021/12/20 16:03:19 by ayafdel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void print_exp(t_envp *head) {
-    t_envp *current_node;
-    
-    current_node = head;
+#include "../includes/minishell.h"
 
-   	while (current_node != NULL)
-    {
-        ft_putstr_fd("declare -x ", 1);
-        ft_putstr_fd(current_node->key, 1);
-        if (current_node->equal)
-        {
-            ft_putstr_fd("=\"", 1);
-            if (current_node->value)
-                ft_putstr_fd(current_node->value, 1);
-            ft_putstr_fd("\"", 1);
-        }
-        ft_putstr_fd("\n", 1);
-        current_node = current_node->next;
-    }
-}
-
-int		init_envp_node(t_envp **node)
+t_envp	*fill_envp(char *str)
 {
-	*node = malloc(sizeof(t_envp));
-	(*node)->value = 0;
-	(*node)->key = 0;
-	(*node)->plus = 0;
-	(*node)->equal = 0;
-	return (0);
-}
-t_envp*	fill_envp(char *str)
-{
-	t_envp *node;
+	t_envp	*node;
 
 	init_envp_node(&node);
 	if (ft_strchr(str, '='))
@@ -45,22 +27,21 @@ t_envp*	fill_envp(char *str)
 		}
 		else
 			node->key = ft_substr(str, 0, ft_indexof(str, '='));
-		if (*(ft_strchr(str,'=') + 1))
-			node->value = ft_strdup(ft_strchr(str,'=') + 1);
+		if (*(ft_strchr(str, '=') + 1))
+			node->value = ft_strdup(ft_strchr(str, '=') + 1);
 		else
 			node->value = 0;
 	}
 	else
 		node->key = ft_strdup(str);
-	node->next=NULL;
-	return node;
+	node->next = NULL;
+	return (node);
 }
-
 
 void	env_replace(t_envp **tmp1, t_envp **node1)
 {
-	t_envp *tmp;
-	t_envp *node;
+	t_envp	*tmp;
+	t_envp	*node;
 
 	tmp = *tmp1;
 	node = *node1;
@@ -68,27 +49,26 @@ void	env_replace(t_envp **tmp1, t_envp **node1)
 	{
 		tmp->equal = 1;
 		if (node->value)
-		{
-			tmp->value = ft_free_first(tmp->value, ft_strjoin(tmp->value, node->value));
-		}
+			tmp->value = ft_free_first(tmp->value, \
+			ft_strjoin(tmp->value, node->value));
 	}
 	else if (node->equal)
 	{
 		tmp->equal = 1;
 		tmp->value = ft_free_first(tmp->value, ft_strdup_null(node->value));
 	}
-	free_envp(&node);	
+	free_envp(&node);
 }
 
 void	add_to_env(t_envp **head, t_envp *node)
 {
-	t_envp *tmp;
+	t_envp	*tmp;
 
 	tmp = (*head);
 	if (tmp == NULL)
 	{
 		*head = node;
-		return;
+		return ;
 	}
 	while (tmp != NULL)
 	{
@@ -98,7 +78,7 @@ void	add_to_env(t_envp **head, t_envp *node)
 			return ;
 		}
 		if (tmp->next == NULL)
-			break;
+			break ;
 		tmp = tmp->next;
 	}
 	tmp->next = node;
@@ -111,27 +91,28 @@ void	env_key_error(int *ret, t_envp *node, char *arg)
 	*ret = 1;
 }
 
-int		ft_export(t_data *data, t_envp **env_list)
+int	ft_export(t_data	*data, t_envp	**env_list)
 {
-    int		i;
+	int		i;
 	t_envp	*node;
 	int		ret;
 
 	ret = 0;
-    i = 1;
-    if (data->arguments[1] == NULL)
-        print_exp(*env_list);
-    else
-    {
-        while (data->arguments[i])
-        {
-            node = fill_envp(data->arguments[i]);
-            if (check_env_key_error(node->key) || (node->equal == 0 && node->plus == 1))
+	i = 1;
+	if (data->arguments[1] == NULL)
+		print_exp(*env_list);
+	else
+	{
+		while (data->arguments[i])
+		{
+			node = fill_envp(data->arguments[i]);
+			if (check_env_key_error(node->key) \
+			|| (node->equal == 0 && node->plus == 1))
 				env_key_error(&ret, node, data->arguments[i]);
-            else
-                add_to_env(env_list, node);
-    		i++;
-        }
-    }
+			else
+				add_to_env(env_list, node);
+			i++;
+		}
+	}
 	return (ret);
 }

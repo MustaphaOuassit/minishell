@@ -1,12 +1,22 @@
-//#include<stdio.h>
-# include "../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/20 12:52:48 by ayafdel           #+#    #+#             */
+/*   Updated: 2021/12/20 12:53:17 by ayafdel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int		is_n(char *str)
+#include "../includes/minishell.h"
+
+int	is_n(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	
 	if (str == NULL)
 		return (0);
 	if (ft_strlen(str) < 2)
@@ -21,15 +31,15 @@ int		is_n(char *str)
 	}
 	return (0);
 }
-int		ft_echo(t_data *data)
+
+int	ft_echo(t_data *data)
 {
-	int i;
-	int	n_flag;
+	int		i;
+	int		n_flag;
 
 	i = 1;
-	n_flag = 0;	
-
-	while(is_n(data->arguments[i]))
+	n_flag = 0;
+	while (is_n(data->arguments[i]))
 		i++;
 	if (i > 1)
 		n_flag = 1;

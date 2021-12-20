@@ -6,29 +6,15 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 10:15:21 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/18 12:48:11 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/20 16:06:00 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
-char	*fetch_pwd(t_envp **env_list)
+int	change_old_pwd(t_envp **env_list)
 {
-	t_envp *tmp;
-
-	tmp = *env_list;
-	while (tmp != NULL)
-	{
-		if (!ft_strcmp(tmp->key, "PWD"))
-			return (tmp->value);
-		tmp = tmp->next;
-	}
-	return (0);	
-}
-
-int		change_old_pwd(t_envp **env_list)
-{
-	t_envp *tmp;
+	t_envp	*tmp;
 
 	tmp = *env_list;
 	while (tmp != NULL)
@@ -36,16 +22,18 @@ int		change_old_pwd(t_envp **env_list)
 		if (!ft_strcmp(tmp->key, "OLDPWD"))
 		{
 			tmp->equal = 1;
-			tmp->value = ft_free_first(tmp->value, ft_strdup_null(fetch_pwd(env_list)));
+			tmp->value = ft_free_first(tmp->value, ft_strdup_null(
+						fetch_pwd(env_list)));
 		}
 		tmp = tmp->next;
 	}	
 	return (0);
 }
-int		change_pwd(t_envp **env_list)
+
+int	change_pwd(t_envp **env_list)
 {
-	t_envp *tmp;
-	char cwd[PATH_MAX];
+	t_envp	*tmp;
+	char	cwd[PATH_MAX];
 
 	tmp = *env_list;
 	while (tmp != NULL)
@@ -53,7 +41,8 @@ int		change_pwd(t_envp **env_list)
 		if (!ft_strcmp(tmp->key, "PWD"))
 		{
 			tmp->equal = 1;
-			tmp->value = ft_free_first(tmp->value, ft_strdup_null(getcwd(cwd, sizeof(cwd))));
+			tmp->value = ft_free_first(tmp->value, ft_strdup_null(
+						getcwd(cwd, sizeof(cwd))));
 			return (0);
 		}
 		tmp = tmp->next;
@@ -61,9 +50,9 @@ int		change_pwd(t_envp **env_list)
 	return (0);
 }
 
-int		fetch_home(t_envp **env_list, char **home)
+int	fetch_home(t_envp **env_list, char **home)
 {
-	t_envp *tmp;
+	t_envp	*tmp;
 
 	tmp = *env_list;
 	while (tmp != NULL)
@@ -73,13 +62,14 @@ int		fetch_home(t_envp **env_list, char **home)
 			if (tmp->equal == 0)
 				return (1);
 			*home = ft_strdup_null(tmp->value);
-			return (0);			
+			return (0);
 		}
 		tmp = tmp->next;
 	}		
-	return (1);	
+	return (1);
 }
-int		change_directory(char *str)
+
+int	change_directory(char *str)
 {
 	if (chdir(str) == -1)
 	{
@@ -91,9 +81,9 @@ int		change_directory(char *str)
 	return (0);
 }
 
-int		ft_cd(t_data *data, t_envp **env_list)
+int	ft_cd(t_data *data, t_envp **env_list)
 {
-	char *home;
+	char	*home;
 
 	if (data->arguments[1] == NULL)
 	{
@@ -106,7 +96,7 @@ int		ft_cd(t_data *data, t_envp **env_list)
 			return (0);
 		if (change_directory(home) == 1)
 		{
-			free(home);			
+			free(home);
 			return (1);
 		}
 		free(home);

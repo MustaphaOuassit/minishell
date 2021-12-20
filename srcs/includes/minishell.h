@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/19 12:59:04 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/20 15:17:22 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,11 @@ void	ft_dup(int *fd);
 int		ft_execute(char **args, int *fd, t_envp **env_list);
 void	error_command(char	*str);
 void    ft_signal(int sig_place);
-
-
+char	*fetch_pwd(t_envp **env_list);
+int		error_return(char *str1, char *str2, char *str3, int ret);
+int		error_file(char	*pathname);
+void	print_exp(t_envp *head);
+int		init_envp_node(t_envp **node);
 #define REDIRECT_OUT 2
 #define APPEND_OUT 3
 #define REDIRECT_IN 4
