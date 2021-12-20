@@ -1,15 +1,26 @@
-# include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_indexof.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/20 20:10:53 by ayafdel           #+#    #+#             */
+/*   Updated: 2021/12/20 20:11:26 by ayafdel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int		ft_indexof(char *str, char c)
+#include "libft.h"
+
+int	ft_indexof(char *str, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
-
-	while(str[i] != '\0')
+	while (str[i] != '\0')
 	{
 		if (str[i] == c)
-			break;
+			break ;
 		i++;
 	}
 	if (str[i] == '\0')
