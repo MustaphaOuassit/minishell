@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 01:40:40 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/19 17:49:27 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/19 17:54:26 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,10 @@ int	skip_spaces(char *cmd)
 
 int	check_close(char *value, int i, int ele)
 {
-	printf("//%d\n",i);
 	while (value[i])
 	{
 		if (value[i] == ele)
 		{
-			printf("--%s\n",value);
 			return (1);
 		}
 		i++;
@@ -44,12 +42,7 @@ int	check_close(char *value, int i, int ele)
 int	check_double_couts(char *value, int *i, int *len, int *close)
 {
 	*i = *i + 1;
-	*close = check_close(value, *i, '\"');
-	if (!*close)
-	{
-		*len = -1;
-		return (*len);
-	}
+	*close = 0;
 	*len = *len + 1;
 	while (value[*i])
 	{
@@ -64,13 +57,8 @@ int	check_double_couts(char *value, int *i, int *len, int *close)
 int	check_single_couts(char *value, int *i, int *len, int *close)
 {
 	*i = *i + 1;
-	*close = check_close(value, *i, '\'');
-	if (!*close)
-	{
-		*len = -1;
-		return (*len);
-	}
 	*len = *len + 1;
+	*close = 0;
 	while (value[*i])
 	{
 		if (value[*i] == '\'')

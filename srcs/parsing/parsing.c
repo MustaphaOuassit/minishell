@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 10:26:07 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/19 17:42:53 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/19 19:20:46 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	parsing(char *cmd, t_envp *env_list, t_data **data)
 	t_init	var;
 
 	initialisation_parsing(&var, cmd, env_list);
-	printf("error : %d\n",var.error);
 	if (var.error)
 	{
 		free(cmd);

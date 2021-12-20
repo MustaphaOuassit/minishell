@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:09:13 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/19 17:37:28 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/19 18:52:09 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int main(int argc, char **argv, char **envp)
 		add_history(str);
 		if (empty_line(str) || parsing(str, env_list,&data))
 			continue;
-		continue;
 		ft_signal(PRECHILD_SIG);
 		if (here_document(&data, env_list))
 			continue;

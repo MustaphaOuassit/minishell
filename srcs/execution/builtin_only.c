@@ -6,13 +6,13 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:05:12 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/17 10:50:12 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/20 10:39:31 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	redirect(int *fd, int *tmp_fd)
+int		redirect(int	*fd, int	*tmp_fd)
 {
 	if (fd[1] != 1)
 	{

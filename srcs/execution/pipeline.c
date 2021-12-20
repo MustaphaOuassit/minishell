@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:14:29 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/19 17:06:16 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/19 21:06:26 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		ft_pipeline(t_data *data, t_envp **env_list)
 		pipe(p.fd);
 		pid = fork();
 		if (pid == 0)
-            child_execute(data, p, i_node, env_list);
+            exit(child_execute(data, p, i_node, env_list));
 		else
 		{
 			if (p.tmp != 0)
