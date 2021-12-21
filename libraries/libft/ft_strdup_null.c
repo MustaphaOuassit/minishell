@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strdup_null.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/20 20:08:42 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/20 20:08:48 by ayafdel          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 static char	*ft_strcpy(char *dest, char *src)
@@ -30,8 +18,8 @@ char	*ft_strdup_null(const char *s)
 {
 	char	*dst;
 
-	if (s == 0)
-		return (0);
+    if (s == 0)
+        return (0);
 	dst = malloc(ft_strlen(s) + 1);
 	if (dst == NULL)
 		return (NULL);

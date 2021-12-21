@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_dollar_value.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 02:07:51 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/20 10:53:56 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/12/19 13:25:31 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ void	initialisation_expand(t_init *var, char *value, t_envp *env_list)
 	var->j = 0;
 	var->tmp = 0;
 	var->exp = NULL;
+
 	var->len = len_expand(value, env_list);
 	var->dollar = (char *)malloc(sizeof(char) * (var->len + 1));
+	// free_in_parcer(&env_list->allocation, var->dollar, NULL);
 	var->dollar[var->len] = '\0';
 	var->env = NULL;
 }
@@ -73,12 +75,14 @@ char	*expand_value(char *value, t_envp *env_list)
 {
 	t_init	var;
 
+
 	initialisation_expand(&var, value, env_list);
 	while (var.tmp < var.len)
 	{
 		if (value[var.i] == '$' && check_dlm(value[var.i + 1]))
 		{
 			var.exp = get_dollar_value(value, &var.i, env_list);
+			//printf("%s\n", var.exp);
 			var.env = ft_strdup(get_env_hrd(var.exp, env_list));
 			free_in_parcer(&env_list->allocation, var.env, NULL);
 			var.j = 0;
