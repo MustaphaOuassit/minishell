@@ -62,12 +62,14 @@ SRC =./srcs/main.c \
 
 LIBFT = ./libraries/libft/libft.a
 
+READLINE = -lreadline  -L /goinfre/$(USER)/$(USER)/.brew/opt/readline/lib \
+	-I /goinfre/$(USER)/$(USER)/.brew/opt/readline/include
+
 all : $(NAME)
 
-$(NAME):
+$(NAME): $(SRC)
 	@make -s -C ./libraries/libft
-	@gcc -Wall -Wextra -Werror -lreadline  -L /goinfre/ayafdel/ayafdel/.brew/opt/readline/lib \
-	-I /goinfre/ayafdel/ayafdel/.brew/opt/readline/include    -I .  $(SRC) $(LIBFT)  -o $(NAME)
+	@gcc -Wall -Wextra -Werror $(READLINE) $(SRC) $(LIBFT) -o $(NAME)
 
 
 clean:

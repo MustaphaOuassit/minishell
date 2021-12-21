@@ -52,8 +52,8 @@ char	*get_env_hrd(char *value, t_envp *env_list)
 	tmp = env_list;
 	if (value[0] == '?')
 	{
-		if(g_signal_flag)
-			return("1");
+		if (g_signal_flag)
+			return ("1");
 		str = ft_itoa(env_list->exit_status);
 		free_in_parcer(&env_list->allocation, str, NULL);
 		return (str);

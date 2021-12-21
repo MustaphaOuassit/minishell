@@ -21,3 +21,10 @@ void	parsing_errors(t_init *var, t_envp *env_list, t_data **data, char *cmd)
 		free_data(data);
 	env_list->exit_status = var->error;
 }
+
+void	initial_env(char **str, int *len, t_envp **tmp, t_envp *env)
+{
+	*str = NULL;
+	*len = 0;
+	*tmp = env;
+}
