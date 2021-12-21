@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 16:25:08 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/19 12:02:09 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/21 09:41:15 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	fill_data(t_tokens *tokens, t_data **data, t_envp *env_list)
 	return (0);
 }
 
-void	free_itmes(t_free **allocation)
+void	free_items(t_free **allocation)
 {
 	t_free	*tmp;
 

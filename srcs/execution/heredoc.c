@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 11:59:25 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/20 11:55:07 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/21 09:39:01 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_heredoc(char *str, int fd_heredoc, t_envp *list)
 	ft_putstr_fd(str, fd_heredoc);
 	ft_putchar_fd('\n', fd_heredoc);
 	free(str);
-	free_itmes(&list->allocation);
+	free_items(&list->allocation);
 }
 
 void	fill_heredoc_file(int i_node, t_redirection *tmp1, t_envp *list)
