@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:26:11 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/20 13:24:50 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/21 11:35:28 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void	print_env(t_envp **head)
 			ft_putstr_fd("=", 1);
 		}
 		if (current_node->value)
+		{
 			ft_putstr_fd(current_node->value, 1);
-		ft_putstr_fd("\n", 1);
+			ft_putstr_fd("\n", 1);
+		}
 		current_node = current_node->next;
 	}
 }
@@ -68,6 +70,9 @@ int	fetch_fd(t_redirection *red, int *fd, int i_node)
 	tmp = red;
 	while (tmp != NULL)
 	{
+		if (tmp->type == AMBIGUOUS)
+			return (error_return("minishell: ", \
+			tmp->file_name, ": ambiguous redirect\n", 1));
 		if (tmp->type == REDIRECT_IN)
 			fd[0] = open(tmp->file_name, O_RDONLY);
 		if (fd[0] == -1)

@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:55:33 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/21 09:45:58 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/21 10:27:06 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	remove_from_env(t_envp **head, char *key)
 	tmp = (*head);
 	if (tmp == NULL)
 		return ;
-	if (!strcmp(key, tmp->key))
+	if (!ft_strcmp(key, tmp->key))
 	{
 		(*head) = tmp->next;
-		return ;
 		free_envp(&tmp);
+		return ;
 	}
 	while (tmp != NULL && ft_strcmp(key, tmp->key))
 	{

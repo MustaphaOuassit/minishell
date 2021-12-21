@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:12:46 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/20 13:22:08 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/21 10:45:53 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_builtins(t_data *data, t_envp **env_list)
 	return (0);
 }
 
-int	is_builtin(char *cmd)
+int	is_bt(char *cmd)
 {
 	if (cmd == 0)
 		return (0);

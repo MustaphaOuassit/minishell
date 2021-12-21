@@ -6,7 +6,7 @@
 #    By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/29 13:06:02 by mouassit          #+#    #+#              #
-#    Updated: 2021/12/20 15:19:00 by ayafdel          ###   ########.fr        #
+#    Updated: 2021/12/21 12:26:54 by ayafdel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ SRC =./srcs/main.c \
 	   ./srcs/execution/fetch_pwd.c \
 	   ./srcs/execution/error_return.c \
 
-LIBFT = ./libraries/libft/libft.a
+LIBFT = ./libft/libft.a
 
 READLINE = -lreadline  -L /goinfre/$(USER)/$(USER)/.brew/opt/readline/lib \
 	-I /goinfre/$(USER)/$(USER)/.brew/opt/readline/include
@@ -68,15 +68,15 @@ READLINE = -lreadline  -L /goinfre/$(USER)/$(USER)/.brew/opt/readline/lib \
 all : $(NAME)
 
 $(NAME): $(SRC)
-	@make -s -C ./libraries/libft
-	@gcc -Wall -Wextra -Werror $(READLINE) $(SRC) $(LIBFT) -o $(NAME)
+	@make -s -C ./libft
+	@gcc -Wall -Wextra -Werror -g $(READLINE) $(SRC) $(LIBFT) -o $(NAME)
 
 
 clean:
-	@make -s -C ./libraries/libft clean
+	@make -s -C ./libft clean
 
 fclean: clean
-	@make -s -C ./libraries/libft fclean
+	@make -s -C ./libft fclean
 	@rm -rf $(NAME)
 
 re: fclean all

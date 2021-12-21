@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:55:14 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/21 09:43:08 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/21 12:27:38 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../../libraries/libft/libft.h"
+# include "../../libft/libft.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <sys/types.h>
@@ -134,7 +134,7 @@ typedef struct s_pipe{
 int	g_signal_flag;
 
 int		ft_builtins(t_data *data, t_envp **env_list);
-int		is_builtin(char *cmd);
+int		is_bt(char *cmd);
 int		exec_cmd(t_data *data, char **envp);
 int		ft_cd(t_data *data, t_envp **env_list);
 int		ft_pwd(void);
