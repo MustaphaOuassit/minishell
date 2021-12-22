@@ -108,10 +108,7 @@ int	ft_execute(char **args, int *fd, t_envp **env_list)
 	pathname = NULL;
 	ret = 127;
 	if (args == 0)
-	{
-		printf("HELLO\n");
 		return (0);
-	}
 	ft_dup(fd);
 	if (ft_strchr(args[0], '/'))
 		pathname = ft_strdup(args[0]);

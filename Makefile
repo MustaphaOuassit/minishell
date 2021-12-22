@@ -69,7 +69,7 @@ all : $(NAME)
 
 $(NAME): $(SRC)
 	@make -s -C ./libft
-	@gcc -Wall -Wextra -Werror -g $(READLINE) $(SRC) $(LIBFT) -o $(NAME)
+	@gcc -Wall -Wextra -Werror -fsanitize=address -g $(READLINE) $(SRC) $(LIBFT) -o $(NAME)
 
 
 clean:

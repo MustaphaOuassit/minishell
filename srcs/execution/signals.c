@@ -29,7 +29,7 @@ void	handler(int sig)
 		ft_putstr_fd(rl_line_buffer, 1);
 		ft_putstr_fd("  \b\b\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	if (sig == SIGQUIT)

@@ -60,7 +60,7 @@ char	*get_env_hrd(char *value, t_envp *env_list)
 	}
 	while (tmp != NULL)
 	{
-		if (!ft_strcmp(tmp->key, value))
+		if (tmp->value != NULL && !ft_strcmp(tmp->key, value))
 			return (tmp->value);
 		tmp = tmp->next;
 	}

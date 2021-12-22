@@ -27,8 +27,9 @@ void	print_env(t_envp **head)
 		if (current_node->value)
 		{
 			ft_putstr_fd(current_node->value, 1);
-			ft_putstr_fd("\n", 1);
 		}
+		if (current_node->equal || current_node->value)
+			ft_putstr_fd("\n", 1);
 		current_node = current_node->next;
 	}
 }

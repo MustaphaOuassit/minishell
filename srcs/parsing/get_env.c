@@ -34,7 +34,7 @@ char	*get_env(char *value, t_envp *env_list)
 		return (dollar);
 	while (tmp != NULL)
 	{
-		if (!ft_strcmp(tmp->key, value))
+		if (tmp->value != NULL && !ft_strcmp(tmp->key, value))
 			return (tmp->value);
 		tmp = tmp->next;
 	}
@@ -87,7 +87,7 @@ char	*get_env_couts(char *value, t_envp *env_list)
 		return (dollar);
 	while (tmp != NULL)
 	{
-		if (!ft_strcmp(tmp->key, value))
+		if (tmp->value != NULL && !ft_strcmp(tmp->key, value))
 			return (tmp->value);
 		tmp = tmp->next;
 	}
