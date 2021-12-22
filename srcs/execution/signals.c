@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:04:34 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/20 11:10:23 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/22 16:21:18 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	handler(int sig)
 		ft_putstr_fd(rl_line_buffer, 1);
 		ft_putstr_fd("  \b\b\n", 1);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	if (sig == SIGQUIT)

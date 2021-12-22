@@ -6,7 +6,7 @@
 /*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 12:11:25 by ayafdel           #+#    #+#             */
-/*   Updated: 2021/12/20 12:34:25 by ayafdel          ###   ########.fr       */
+/*   Updated: 2021/12/22 16:22:04 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ int	is_int(char *str)
 	int	i;
 
 	i = 0;
-	if (ft_strcmp(str, "9223372036854775807") > 0 && ft_strlen(str) > 18)
+	if ((ft_strcmp(str, "9223372036854775807") \
+	> 0 && ft_strlen(str) > 18) || ft_strlen(str) > 18)
 		return (0);
-	if (*str == '-' && ft_strcmp(str, \
-	"-9223372036854775808") > 0 && ft_strlen(str) > 19)
+	if ((*str == '-' && ft_strcmp(str, "-9223372036854775808") \
+	> 0 && ft_strlen(str) > 19) || ft_strlen(str) > 19)
 		return (0);
 	if (str[0] == '-' && ft_strlen(str) >= 2)
 		i++;
@@ -38,12 +39,12 @@ int	ft_exit(char **args)
 	int	i;
 
 	i = 0;
-	ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd("exit\n", 1);
 	if (!args[1])
 		exit(0);
 	if (!is_int(args[1]))
 	{	
-		ft_putstr_fd("-> minishell: ", 2);
+		ft_putstr_fd("-> minishell: exit: ", 2);
 		ft_putstr_fd(args[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		exit(255);

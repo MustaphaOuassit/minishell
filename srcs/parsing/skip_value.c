@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip_value.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouassit <mouassit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayafdel <ayafdel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 02:57:28 by mouassit          #+#    #+#             */
-/*   Updated: 2021/12/17 01:56:04 by mouassit         ###   ########.fr       */
+/*   Updated: 2021/12/22 16:21:06 by ayafdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	**check_len_values(char *value, int *len, int nb)
 	if (*len <= 0)
 		*len = 0;
 	*len = *len + i;
-	if (*len == 0)
+	if (*len == 0 && value[0] != '$')
 		*len = 1;
 	return (split);
 }
